@@ -22,7 +22,7 @@ $ npm install -g @gr4vy/cli
 $ gr4vy COMMAND
 running command...
 $ gr4vy (--version)
-@gr4vy/cli/1.0.0 darwin-arm64 node-v16.20.0
+@gr4vy/cli/0.1.0 darwin-arm64 node-v16.20.0
 $ gr4vy --help [COMMAND]
 USAGE
   $ gr4vy COMMAND
@@ -58,17 +58,13 @@ More details on each command is available below.
 
 # Commands
 <!-- commands -->
-- [Gr4vy CLI](#gr4vy-cli)
-- [Usage](#usage)
-- [Getting started](#getting-started)
-- [Commands](#commands)
-  - [`gr4vy autocomplete [SHELL]`](#gr4vy-autocomplete-shell)
-  - [`gr4vy commands`](#gr4vy-commands)
-  - [`gr4vy embed 1299 USD buyer_external_identifier=user-123`](#gr4vy-embed-1299-usd-buyer_external_identifieruser-123)
-  - [`gr4vy help [COMMANDS]`](#gr4vy-help-commands)
-  - [`gr4vy init acme sandbox private_key.pem`](#gr4vy-init-acme-sandbox-private_keypem)
-  - [`gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`](#gr4vy-token-expiresin10d---scopebuyersread---scopebuyerswrite)
-  - [`gr4vy update [CHANNEL]`](#gr4vy-update-channel)
+* [`gr4vy autocomplete [SHELL]`](#gr4vy-autocomplete-shell)
+* [`gr4vy commands`](#gr4vy-commands)
+* [`gr4vy embed 1299 USD buyer_external_identifier=user-123`](#gr4vy-embed-1299-usd-buyer_external_identifieruser-123)
+* [`gr4vy help [COMMANDS]`](#gr4vy-help-commands)
+* [`gr4vy init acme sandbox private_key.pem`](#gr4vy-init-acme-sandbox-private_keypem)
+* [`gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`](#gr4vy-token-expiresin10d---scopebuyersread---scopebuyerswrite)
+* [`gr4vy update [CHANNEL]`](#gr4vy-update-channel)
 
 ## `gr4vy autocomplete [SHELL]`
 
@@ -152,7 +148,7 @@ FLAGS
 DESCRIPTION
   Generate a token for use with Gr4vy Embed.
 
-  This token can be used with Enmbed as it is
+  This token can be used with Embed as it is
   restricted to frontend scopes only.
 
   It accepts any number of key=value pairs as additional data to be
@@ -165,7 +161,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v1.0.0/dist/commands/embed.ts)_
+_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.0/dist/commands/embed.ts)_
 
 ## `gr4vy help [COMMANDS]`
 
@@ -206,7 +202,7 @@ DESCRIPTION
   Generates a config file that can be used to generate the token.
 ```
 
-_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v1.0.0/dist/commands/init.ts)_
+_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.0/dist/commands/init.ts)_
 
 ## `gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`
 
@@ -257,7 +253,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v1.0.0/dist/commands/token.ts)_
+_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.0/dist/commands/token.ts)_
 
 ## `gr4vy update [CHANNEL]`
 

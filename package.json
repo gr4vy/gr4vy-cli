@@ -57,7 +57,10 @@
       "@oclif/plugin-commands",
       "@oclif/plugin-update",
       "@oclif/plugin-warn-if-update-available"
-    ]
+    ],
+    "macos": {
+      "identifier": "com.gr4vy.cli"
+    }
   },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
