@@ -22,7 +22,7 @@ $ npm install -g @gr4vy/cli
 $ gr4vy COMMAND
 running command...
 $ gr4vy (--version)
-@gr4vy/cli/0.1.1 darwin-arm64 node-v16.20.0
+@gr4vy/cli/0.1.2 darwin-arm64 node-v16.20.0
 $ gr4vy --help [COMMAND]
 USAGE
   $ gr4vy COMMAND
@@ -127,7 +127,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.1/dist/commands/embed.ts)_
+_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/embed.ts)_
 
 ## `gr4vy help [COMMANDS]`
 
@@ -168,7 +168,7 @@ DESCRIPTION
   Generates a config file that can be used to generate the token.
 ```
 
-_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.1/dist/commands/init.ts)_
+_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/init.ts)_
 
 ## `gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`
 
@@ -219,5 +219,5 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.1/dist/commands/token.ts)_
+_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/token.ts)_
 <!-- commandsstop -->
