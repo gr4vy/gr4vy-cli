@@ -59,12 +59,10 @@ More details on each command is available below.
 # Commands
 <!-- commands -->
 * [`gr4vy autocomplete [SHELL]`](#gr4vy-autocomplete-shell)
-* [`gr4vy commands`](#gr4vy-commands)
 * [`gr4vy embed 1299 USD buyer_external_identifier=user-123`](#gr4vy-embed-1299-usd-buyer_external_identifieruser-123)
 * [`gr4vy help [COMMANDS]`](#gr4vy-help-commands)
 * [`gr4vy init acme sandbox private_key.pem`](#gr4vy-init-acme-sandbox-private_keypem)
 * [`gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`](#gr4vy-token-expiresin10d---scopebuyersread---scopebuyerswrite)
-* [`gr4vy update [CHANNEL]`](#gr4vy-update-channel)
 
 ## `gr4vy autocomplete [SHELL]`
 
@@ -96,38 +94,6 @@ EXAMPLES
 ```
 
 _See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v2.3.0/src/commands/autocomplete/index.ts)_
-
-## `gr4vy commands`
-
-list all the commands
-
-```
-USAGE
-  $ gr4vy commands [--json] [-h] [--hidden] [--tree] [--columns <value> | -x] [--sort <value>] [--filter
-    <value>] [--output csv|json|yaml |  | [--csv | --no-truncate]] [--no-header | ]
-
-FLAGS
-  -h, --help         Show CLI help.
-  -x, --extended     show extra columns
-  --columns=<value>  only show provided columns (comma-separated)
-  --csv              output is csv format [alias: --output=csv]
-  --filter=<value>   filter property by partial string matching, ex: name=foo
-  --hidden           show hidden commands
-  --no-header        hide table header from output
-  --no-truncate      do not truncate output to fit screen
-  --output=<option>  output in a more machine friendly format
-                     <options: csv|json|yaml>
-  --sort=<value>     property to sort by (prepend '-' for descending)
-  --tree             show tree of commands
-
-GLOBAL FLAGS
-  --json  Format output as json.
-
-DESCRIPTION
-  list all the commands
-```
-
-_See code: [@oclif/plugin-commands](https://github.com/oclif/plugin-commands/blob/v2.2.16/src/commands/commands.ts)_
 
 ## `gr4vy embed 1299 USD buyer_external_identifier=user-123`
 
@@ -254,41 +220,4 @@ FLAG DESCRIPTIONS
 ```
 
 _See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.1/dist/commands/token.ts)_
-
-## `gr4vy update [CHANNEL]`
-
-update the gr4vy CLI
-
-```
-USAGE
-  $ gr4vy update [CHANNEL] [-a] [-v <value> | -i] [--force]
-
-FLAGS
-  -a, --available        Install a specific version.
-  -i, --interactive      Interactively select version to install. This is ignored if a channel is provided.
-  -v, --version=<value>  Install a specific version.
-  --force                Force a re-download of the requested version.
-
-DESCRIPTION
-  update the gr4vy CLI
-
-EXAMPLES
-  Update to the stable channel:
-
-    $ gr4vy update stable
-
-  Update to a specific version:
-
-    $ gr4vy update --version 1.0.0
-
-  Interactively select version:
-
-    $ gr4vy update --interactive
-
-  See available versions:
-
-    $ gr4vy update --available
-```
-
-_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v3.1.19/src/commands/update.ts)_
 <!-- commandsstop -->

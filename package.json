@@ -20,10 +20,7 @@
     "@gr4vy/node": "^0.48.0",
     "@oclif/core": "^2",
     "@oclif/plugin-autocomplete": "^2.3.0",
-    "@oclif/plugin-commands": "^2.2.16",
-    "@oclif/plugin-help": "^5",
-    "@oclif/plugin-update": "^3.1.19",
-    "@oclif/plugin-warn-if-update-available": "^2.0.39"
+    "@oclif/plugin-help": "^5"
   },
   "devDependencies": {
     "@oclif/test": "^2.3.22",
@@ -53,10 +50,7 @@
     "commands": "./dist/commands",
     "plugins": [
       "@oclif/plugin-help",
-      "@oclif/plugin-autocomplete",
-      "@oclif/plugin-commands",
-      "@oclif/plugin-update",
-      "@oclif/plugin-warn-if-update-available"
+      "@oclif/plugin-autocomplete"
     ],
     "macos": {
       "identifier": "com.gr4vy.cli"
