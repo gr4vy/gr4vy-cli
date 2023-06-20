@@ -26,7 +26,7 @@
     "@oclif/plugin-warn-if-update-available": "^2.0.39"
   },
   "devDependencies": {
-    "@oclif/test": "^2.3.22",
+    "@oclif/test": "^2.3.23",
     "@types/chai": "^4",
     "@types/mocha": "^9.0.0",
     "@types/node": "^18.15.10",
