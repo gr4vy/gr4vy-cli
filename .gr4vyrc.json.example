@@ -1,0 +1,5 @@
+{
+  "gr4vyId": "acme",
+  "environment": "sandbox",
+  "privateKey": "./path/to/private_key.pem"
+}
