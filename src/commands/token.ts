@@ -12,11 +12,11 @@ restricted to any specific frontend scopes only.
   static usage = "token expiresIn=10d --scope=buyers.read --scope=buyers.write";
 
   static flags = {
-    expires: Flags.string({
+    expiresIn: Flags.string({
       char: "e",
       summary: "The expiry of the token",
       description:
-        'The expiration of the token in shorthand notation, for example "1h" or 1d" for 1 hour and 1 day.',
+        "The expiration expressed in seconds or a string describing a time span vercel/ms.",
       multiple: false,
       default: "1h",
       required: false,
@@ -91,7 +91,7 @@ restricted to any specific frontend scopes only.
     const client = new Client(this.clientConfig as any);
     const token = await client.getBearerToken(
       flags.scopes as JWTScope[],
-      flags.expiration
+      flags.expiresIn
     );
 
     if (flags.debug) {

@@ -179,7 +179,7 @@ USAGE
   $ gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write
 
 FLAGS
-  -e, --expires=<value>
+  -e, --expiresIn=<value>
       [default: 1h] The expiry of the token
 
   -s, --scope=<option>...
@@ -204,7 +204,7 @@ DESCRIPTION
 
 
 FLAG DESCRIPTIONS
-  -e, --expires=<value>  The expiry of the token
+  -e, --expiresIn=<value>  The expiry of the token
 
     The expiration of the token in shorthand notation, for example "1h" or 1d" for 1 hour and 1 day.
 
