@@ -22,7 +22,7 @@ $ npm install -g @gr4vy/cli
 $ gr4vy COMMAND
 running command...
 $ gr4vy (--version)
-@gr4vy/cli/0.1.2 darwin-arm64 node-v16.20.0
+@gr4vy/cli/0.1.3 darwin-arm64 node-v16.20.0
 $ gr4vy --help [COMMAND]
 USAGE
   $ gr4vy COMMAND
@@ -127,7 +127,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/embed.ts)_
+_See code: [dist/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.3/dist/commands/embed.ts)_
 
 ## `gr4vy help [COMMANDS]`
 
@@ -168,7 +168,7 @@ DESCRIPTION
   Generates a config file that can be used to generate the token.
 ```
 
-_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/init.ts)_
+_See code: [dist/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.3/dist/commands/init.ts)_
 
 ## `gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`
 
@@ -206,7 +206,7 @@ DESCRIPTION
 FLAG DESCRIPTIONS
   -e, --expiresIn=<value>  The expiry of the token
 
-    The expiration of the token in shorthand notation, for example "1h" or 1d" for 1 hour and 1 day.
+    The expiration expressed in seconds or a string describing a time span vercel/ms.
 
   -s, --scope=all.read|all.write|*.read|*.write|anti-fraud-service-definitions.read|anti-fraud-service-definitions.write|anti-fraud-services.read|anti-fraud-services.write|buyers.read|buyers.write|buyers.billing-details.read|buyers.billing-details.write|connections.read|connections.write|digital-wallets.read|digital-wallets.write|flows.read|flows.write|payment-methods.read|payment-methods.write|payment-options.read|payment-options.write|payment-service-definitions.read|payment-service-definitions.write|payment-services.read|payment-services.write|reports.read|reports.write|roles.read|roles.write|transactions.read|transactions.write|audit-logs.read|audit-logs.write|checkout-sessions.read|checkout-sessions.write|card-scheme-definitions.read|card-scheme-definitions.write|payment-method-definitions.read|payment-method-definitions.write|reset.read|reset.write|merchant-accounts.read|merchant-accounts.write...
 
@@ -219,5 +219,5 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.2/dist/commands/token.ts)_
+_See code: [dist/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.1.3/dist/commands/token.ts)_
 <!-- commandsstop -->
