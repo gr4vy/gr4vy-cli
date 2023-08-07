@@ -1,6 +1,6 @@
 {
   "name": "@gr4vy/cli",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "The Gr4vy CLI",
   "author": "Gr4vy, Inc <code@gr4vy.com>",
   "bin": {
