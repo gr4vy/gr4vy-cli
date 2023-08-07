@@ -90,7 +90,7 @@ restricted to any specific frontend scopes only.
 
     const client = new Client(this.clientConfig as any);
     const token = await client.getBearerToken(
-      flags.scopes as JWTScope[],
+      flags.scope as JWTScope[],
       flags.expiresIn
     );
 
