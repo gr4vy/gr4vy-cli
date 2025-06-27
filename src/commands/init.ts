@@ -4,7 +4,7 @@ import path from "path";
 import os from 'os';
 
 export default class Token extends Command {
-  static summary = "Generate sample .gr4vyrc.json file";
+  static summary = "Store configuration into a .gr4vyrc.json file";
 
   static description = `Generates a config file that can be used to generate the token.
 `;

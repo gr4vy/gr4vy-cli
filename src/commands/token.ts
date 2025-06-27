@@ -1,4 +1,4 @@
-import { Client, JWTScope } from "@gr4vy/node";
+import { getToken, JWTScope } from "@gr4vy/sdk";
 import { Flags } from "@oclif/core";
 import { BaseCommand } from "../base";
 import { decodeJWT } from "../helpers/decode";
@@ -73,7 +73,7 @@ restricted to any specific frontend scopes only.
         "merchant-accounts.read",
         "merchant-accounts.write",
       ],
-      parse: async (input) => input.replace("all.", "*."),
+      parse: async (input: string) => input.replace("all.", "*."),
       default: ["*.read", "*.write"],
       required: false,
     }),
@@ -88,11 +88,12 @@ restricted to any specific frontend scopes only.
   public async run(): Promise<void> {
     const { flags } = await this.parse(Token);
 
-    const client = new Client(this.clientConfig as any);
-    const token = await client.getBearerToken(
-      flags.scope as JWTScope[],
-      flags.expiresIn
-    );
+
+    const token = await getToken({
+      privateKey: this.clientConfig.privateKey,
+      expiresIn: flags.expiresIn as string,
+      scopes: flags.scope as JWTScope[]
+    })
 
     if (flags.debug) {
       const data = decodeJWT(token);
