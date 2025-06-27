@@ -1,4 +1,4 @@
-import { Client } from "@gr4vy/node";
+import { getEmbedToken } from "@gr4vy/sdk";
 import { Args, Flags } from "@oclif/core";
 import { BaseCommand } from "../base";
 import { decodeJWT } from "../helpers/decode";
@@ -41,10 +41,12 @@ pinned in the token.
 
   public async run(): Promise<void> {
     const { flags, args } = await this.parse(Token);
-    const data = parseEmbedParams(args.amount, args.currency, this.argv);
+    const embedParams = parseEmbedParams(args.amount, args.currency, this.argv);
 
-    const client = new Client(this.clientConfig as any);
-    const token = await client.getEmbedToken(data);
+    const token = await getEmbedToken({
+      privateKey: this.clientConfig.privateKey,
+      embedParams
+    });
 
     if (flags.debug) {
       const data = decodeJWT(token);

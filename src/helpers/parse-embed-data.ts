@@ -1,4 +1,4 @@
-import {EmbedParams} from '@gr4vy/node/dist/sdk/authentication'
+import {EmbedParams} from '@gr4vy/sdk'
 
 export const parseEmbedParams = (amount: number, currency: string, argv: string[]): EmbedParams => {
   const params: Record<string, any> = {
