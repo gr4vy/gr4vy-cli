@@ -22,6 +22,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.release.tag_name || inputs.tag }}
+          token: ${{ secrets.SVC_CLI_BOT_GITHUB_TOKEN }}
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -33,14 +34,9 @@ jobs:
       - name: Upgrade npm for trusted publishing
         run: npm install -g npm@^11.5.1
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build
-        run: yarn build
-
-      - name: Generate oclif manifest
-        run: yarn prepack
-
-      - name: Publish to npm
-        run: npm publish --provenance --access public
+      - name: Create Release
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+          yarn prepack
+          npm publish --provenance --access public
