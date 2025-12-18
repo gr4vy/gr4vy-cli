@@ -54,6 +54,12 @@
       "identifier": "com.gr4vy.cli"
     }
   },
+  "auto": {
+    "plugins": [
+      "npm",
+      "released"
+    ]
+  },
   "scripts": {
     "build": "shx rm -rf dist && tsc -b",
     "lint": "eslint . --ext .ts --config .eslintrc.js",
@@ -61,7 +67,8 @@
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest && oclif readme",
     "test": "echo \"No tests\"",
-    "version": "oclif readme && git add README.md"
+    "version": "oclif readme && git add README.md",
+    "release": "auto shipit"
   },
   "engines": {
     "node": ">=12.0.0"
@@ -70,5 +77,10 @@
   "keywords": [
     "oclif"
   ],
-  "types": "dist/index.d.ts"
+  "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "provenance": true
+  }
 }
