@@ -36,7 +36,10 @@ jobs:
         run: npm install -g npm@^11.5.1
 
       - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          NPM_TOKEN: '' # placeholder to prevent yarn from failing on ${NPM_TOKEN} expansion (OIDC token is written to ~/.npmrc by auto)
         run: |
           yarn install --frozen-lockfile
-          yarn prepack
-          npm publish --provenance --access public
+          yarn build
+          yarn release
