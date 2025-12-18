@@ -22,7 +22,7 @@ $ npm install -g @gr4vy/cli
 $ gr4vy COMMAND
 running command...
 $ gr4vy (--version)
-@gr4vy/cli/0.2.0 darwin-arm64 node-v22.15.0
+@gr4vy/cli/0.2.2 linux-x64 node-v24.12.0
 $ gr4vy --help [COMMAND]
 USAGE
   $ gr4vy COMMAND
@@ -74,7 +74,7 @@ USAGE
   $ gr4vy autocomplete [SHELL] [-r]
 
 ARGUMENTS
-  SHELL  (zsh|bash|powershell) Shell type
+  [SHELL]  (zsh|bash|powershell) Shell type
 
 FLAGS
   -r, --refresh-cache  Refresh cache (ignores displaying instructions)
@@ -94,7 +94,7 @@ EXAMPLES
   $ gr4vy autocomplete --refresh-cache
 ```
 
-_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.2.31/src/commands/autocomplete/index.ts)_
+_See code: [@oclif/plugin-autocomplete](https://github.com/oclif/plugin-autocomplete/blob/v3.2.39/src/commands/autocomplete/index.ts)_
 
 ## `gr4vy checkout-session --merchant-account-id=default`
 
@@ -124,7 +124,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [src/commands/checkout-session.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.0/src/commands/checkout-session.ts)_
+_See code: [src/commands/checkout-session.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.2/src/commands/checkout-session.ts)_
 
 ## `gr4vy embed 1299 USD buyer_external_identifier=user-123`
 
@@ -158,7 +158,7 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [src/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.0/src/commands/embed.ts)_
+_See code: [src/commands/embed.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.2/src/commands/embed.ts)_
 
 ## `gr4vy help [COMMAND]`
 
@@ -169,7 +169,7 @@ USAGE
   $ gr4vy help [COMMAND...] [-n]
 
 ARGUMENTS
-  COMMAND...  Command to show help for.
+  [COMMAND...]  Command to show help for.
 
 FLAGS
   -n, --nested-commands  Include all nested commands in the output.
@@ -178,7 +178,7 @@ DESCRIPTION
   Display help for gr4vy.
 ```
 
-_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.29/src/commands/help.ts)_
+_See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v6.2.36/src/commands/help.ts)_
 
 ## `gr4vy init acme sandbox private_key.pem`
 
@@ -199,7 +199,7 @@ DESCRIPTION
   Generates a config file that can be used to generate the token.
 ```
 
-_See code: [src/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.0/src/commands/init.ts)_
+_See code: [src/commands/init.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.2/src/commands/init.ts)_
 
 ## `gr4vy token expiresIn=10d --scope=buyers.read --scope=buyers.write`
 
@@ -250,5 +250,5 @@ FLAG DESCRIPTIONS
     Returns the decoded header and claim from the JWT token without the signature
 ```
 
-_See code: [src/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.0/src/commands/token.ts)_
+_See code: [src/commands/token.ts](https://github.com/gr4vy/gr4vy-cli/blob/v0.2.2/src/commands/token.ts)_
 <!-- commandsstop -->
