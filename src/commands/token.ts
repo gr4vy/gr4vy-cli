@@ -2,6 +2,7 @@ import { getToken, JWTScope } from "@gr4vy/sdk";
 import { Flags } from "@oclif/core";
 import { BaseCommand } from "../base";
 import { decodeJWT } from "../helpers/decode";
+import type { StringValue } from "ms";
 
 export default class Token extends BaseCommand {
   static summary = "Generate a bearer token for server-to-server API calls.";
@@ -91,7 +92,7 @@ restricted to any specific frontend scopes only.
 
     const token = await getToken({
       privateKey: this.clientConfig.privateKey,
-      expiresIn: flags.expiresIn as string,
+      expiresIn: flags.expiresIn as StringValue,
       scopes: flags.scope as JWTScope[]
     })
 
