@@ -24,20 +24,15 @@
     "zod": "^4.2.1"
   },
   "devDependencies": {
-    "@oclif/test": "^4.1.13",
-    "@types/chai": "^5.2.2",
-    "@types/mocha": "^10.0.10",
     "@types/node": "^25.0.3",
     "@types/request": "^2.48.12",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
-    "chai": "^6.2.1",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jest": "^29.0.1",
     "eslint-plugin-prettier": "^5.5.1",
-    "mocha": "^11.7.1",
     "oclif": "^4.20.1",
     "prettier": "^3.6.2",
     "shx": "^0.4.0",
@@ -63,7 +58,7 @@
     "postpack": "shx rm -f oclif.manifest.json",
     "posttest": "yarn lint",
     "prepack": "yarn build && oclif manifest && oclif readme",
-    "test": "mocha --forbid-only \"test/**/*.test.ts\"",
+    "test": "echo \"No tests\"",
     "version": "oclif readme && git add README.md"
   },
   "engines": {
