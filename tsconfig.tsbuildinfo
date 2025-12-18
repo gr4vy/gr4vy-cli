@@ -1,1 +1,1 @@
-{"root":["./src/base.ts","./src/commands/checkout-session.ts","./src/commands/embed.ts","./src/commands/init.ts","./src/commands/token.ts","./src/helpers/decode.ts","./src/helpers/parse-embed-data.ts"],"version":"5.8.3"}
+{"root":["./src/base.ts","./src/commands/checkout-session.ts","./src/commands/embed.ts","./src/commands/init.ts","./src/commands/token.ts","./src/helpers/decode.ts","./src/helpers/parse-embed-data.ts"],"version":"5.9.3"}
