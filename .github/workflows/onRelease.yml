@@ -34,14 +34,9 @@ jobs:
       - name: Upgrade npm for trusted publishing
         run: npm install -g npm@^11.5.1
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build
-        run: yarn build
-
-      - name: Generate oclif manifest
-        run: yarn prepack
-
-      - name: Publish to npm
-        run: npm publish --provenance --access public
+      - name: Create Release
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+          yarn prepack
+          npm publish --provenance --access public
