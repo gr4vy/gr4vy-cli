@@ -7,12 +7,12 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
         with:
           token: ${{ secrets.SVC_CLI_BOT_GITHUB_TOKEN }}
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@d360fad3a42feca6462f72c97c165d60a02d4bf2
+        uses: TriPSs/conventional-changelog-action@d360fad3a42feca6462f72c97c165d60a02d4bf2 # d360fad3a42feca6462f72c97c165d60a02d4bf2
         # overriding some of the basic behaviors to just get the changelog
         with:
           git-user-name: svc-cli-bot
@@ -22,13 +22,13 @@ jobs:
           # always do the release, even if there are no semantic commits
           skip-on-empty: false
           tag-prefix: ''
-      - uses: notiz-dev/github-action-json-property@2192e246737701f108a4571462b76c75e7376216
+      - uses: notiz-dev/github-action-json-property@2192e246737701f108a4571462b76c75e7376216 # 2192e246737701f108a4571462b76c75e7376216
         id: packageVersion
         with:
           path: 'package.json'
           prop_path: 'version'
       - name: Create Github Release
-        uses: actions/create-release@v1
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
         env:
           GITHUB_TOKEN: ${{ secrets.SVC_CLI_BOT_GITHUB_TOKEN }}
         with:

@@ -6,5 +6,5 @@ on:
 
 jobs:
   automerge:
-    uses: oclif/github-workflows/.github/workflows/automerge.yml@main
+    uses: oclif/github-workflows/.github/workflows/automerge.yml@56d34995157cd6b3376597d9d2feb1e10af998bd # main
     secrets: inherit
