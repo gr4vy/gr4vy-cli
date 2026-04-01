@@ -22,7 +22,7 @@
     "@oclif/plugin-autocomplete": "^3.2.31",
     "@oclif/plugin-help": "^6.2.29",
     "auto": "^11.3.6",
-    "zod": "^4.2.1"
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@types/ms": "^2.1.0",
