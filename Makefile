@@ -33,7 +33,10 @@ fmt:
 	gofmt -w .
 
 lint: vet
-	gofmt -l .
+	@unformatted=$$(gofmt -l .); \
+	if [ -n "$$unformatted" ]; then \
+		echo "gofmt needed on:"; echo "$$unformatted"; exit 1; \
+	fi
 
 tidy:
 	go mod tidy

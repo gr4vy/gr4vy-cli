@@ -50,6 +50,9 @@ func newConfigImportCmd() *cobra.Command {
 		Short: "Import the legacy ~/.gr4vyrc.json into a profile",
 		Args:  cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, _ []string) error {
+			if name == "" {
+				return clierr.Usage(fmt.Errorf("--name must not be empty"))
+			}
 			if from == "" {
 				home, err := os.UserHomeDir()
 				if err != nil {

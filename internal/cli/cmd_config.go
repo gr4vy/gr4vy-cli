@@ -125,6 +125,9 @@ func newConfigAddCmd() *cobra.Command {
 // runAddProfile builds a profile from flags (prompting when interactive),
 // stores any provided key, and writes it to the config.
 func runAddProfile(cmd *cobra.Command, name string, pf *profileFlags, interactive bool) error {
+	if name == "" {
+		return clierr.Usage(fmt.Errorf("profile name must not be empty"))
+	}
 	cfg, path, err := app.LoadConfig(cmd)
 	if err != nil {
 		return err
