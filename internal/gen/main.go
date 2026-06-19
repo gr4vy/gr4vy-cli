@@ -69,6 +69,16 @@ func run() error {
 		}
 	}
 
+	// Refuse to write a partial command surface: an unmappable operation must
+	// be surfaced (extend the generator or its overrides), not silently dropped.
+	if len(skipped) > 0 {
+		fmt.Fprintf(os.Stderr, "skipped %d of %d operations:\n", len(skipped), total)
+		for _, s := range skipped {
+			fmt.Fprintln(os.Stderr, "  -", s)
+		}
+		return fmt.Errorf("refusing to generate: %d operation(s) could not be mapped; extend internal/gen", len(skipped))
+	}
+
 	sort.Slice(gens, func(i, j int) bool {
 		if gens[i].Group != gens[j].Group {
 			return gens[i].Group < gens[j].Group
@@ -81,12 +91,6 @@ func run() error {
 	}
 
 	fmt.Fprintf(os.Stderr, "generated %d/%d operations into %s\n", len(gens), total, outPath)
-	if len(skipped) > 0 {
-		fmt.Fprintf(os.Stderr, "skipped %d operations:\n", len(skipped))
-		for _, s := range skipped {
-			fmt.Fprintln(os.Stderr, "  -", s)
-		}
-	}
 	return nil
 }
 
