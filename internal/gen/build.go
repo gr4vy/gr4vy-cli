@@ -25,18 +25,20 @@ type genOp struct {
 }
 
 // buildGenOp classifies a method signature and produces the closure body and
-// command metadata.
-func buildGenOp(op specOp, res resourceInfo, m *types.Func) (*genOp, error) {
+// command metadata. group is the dotted-kebab resource path, verb the kebab
+// method name.
+func buildGenOp(group, verb string, res resourceInfo, m *types.Func, docs map[string]string) (*genOp, error) {
 	sig := m.Type().(*types.Signature)
 	core := coreParams(sig)
 	selector := "c." + strings.Join(res.goPath, ".") + "." + m.Name()
 
+	short, long := describe(docs[res.named.Obj().Name()+"."+m.Name()], verb, group)
 	g := &genOp{
-		Group:  op.Group,
-		Name:   op.Name,
-		Short:  short(op),
-		Long:   strings.TrimSpace(op.Description),
-		IsList: op.Name == "list",
+		Group:  group,
+		Name:   verb,
+		Short:  short,
+		Long:   long,
+		IsList: verb == "list",
 	}
 
 	if len(core) == 1 {
@@ -425,11 +427,31 @@ func tagName(v string) string {
 	return ""
 }
 
-func short(op specOp) string {
-	if op.Summary != "" {
-		return op.Summary
+// describe derives the Short (one-line) and Long help from a method's doc
+// comment. Speakeasy doc comments read like "Method - Summary\n\nDetails…"; the
+// "Method - " prefix is stripped for the Short. Falls back to a generated
+// summary when there is no doc comment.
+func describe(doc, verb, group string) (short, long string) {
+	fallback := capitalize(verb) + " " + strings.ReplaceAll(group, ".", " ")
+	doc = strings.TrimSpace(doc)
+	if doc == "" {
+		return fallback, ""
 	}
-	return capitalize(op.Name) + " " + strings.ReplaceAll(op.Group, ".", " ")
+	parts := strings.SplitN(doc, "\n", 2)
+	first := strings.TrimSpace(parts[0])
+	if idx := strings.Index(first, " - "); idx >= 0 {
+		first = strings.TrimSpace(first[idx+3:]) // drop the "Method - " prefix
+	}
+	if first == "" {
+		first = fallback
+	}
+	long = first
+	if len(parts) == 2 {
+		if rest := strings.TrimSpace(parts[1]); rest != "" {
+			long = first + "\n\n" + rest
+		}
+	}
+	return first, long
 }
 
 var usageOverrides = map[string]string{

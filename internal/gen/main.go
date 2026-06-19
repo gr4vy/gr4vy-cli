@@ -1,17 +1,18 @@
-// Command gen reads the committed OpenAPI spec and the gr4vy-go SDK's Go types,
-// and emits one typed cobra-backed command per SDK operation into
-// internal/commands/generated. It is run via `go generate ./...` / `go run
-// ./internal/gen` and is never compiled into the shipped binary.
+// Command gen reads the gr4vy-go SDK's Go types and emits one typed,
+// cobra-backed command per SDK operation into internal/commands/generated. It
+// is run via `go generate ./...` / `go run ./internal/gen` and is never
+// compiled into the shipped binary.
 //
-// Source of truth:
-//   - internal/spec/openapi.json — command tree (x-speakeasy-group / name),
-//     help text, and which operations exist.
-//   - the gr4vy-go package types — the exact method signatures the generated
-//     code calls (so `go build` verifies the wiring).
+// The SDK is the single source of truth: the command tree comes from the
+// resource struct fields, the verbs from the method names, the flags/types from
+// the method signatures (so `go build` verifies the wiring), and the help text
+// from the methods' doc comments. There is intentionally no dependency on the
+// OpenAPI spec — a typed CLI can only expose what gr4vy-go ships anyway.
 package main
 
 import (
 	"fmt"
+	"go/ast"
 	"go/types"
 	"os"
 	"sort"
@@ -25,8 +26,7 @@ const (
 	compPkg = rootPkg + "/models/components"
 	opsPkg  = rootPkg + "/models/operations"
 
-	specPath = "internal/spec/openapi.json"
-	outPath  = "internal/commands/generated/zz_generated_commands.go"
+	outPath = "internal/commands/generated/zz_generated_commands.go"
 )
 
 func main() {
@@ -37,35 +37,36 @@ func main() {
 }
 
 func run() error {
-	ops, err := parseSpec(specPath)
-	if err != nil {
-		return err
-	}
 	pkgs, err := loadPackages()
 	if err != nil {
 		return err
 	}
-	resources := buildResourceMap(pkgs[rootPkg])
+	root := pkgs[rootPkg]
+	resources := buildResourceMap(root)
+	docs := extractDocs(root)
+
+	// Deterministic resource order for stable output.
+	groups := make([]string, 0, len(resources))
+	for g := range resources {
+		groups = append(groups, g)
+	}
+	sort.Strings(groups)
 
 	var gens []*genOp
 	var skipped []string
-	for _, op := range ops {
-		res, ok := resources[op.Group]
-		if !ok {
-			skipped = append(skipped, fmt.Sprintf("%s.%s (no resource for group)", op.Group, op.Name))
-			continue
+	total := 0
+	for _, group := range groups {
+		res := resources[group]
+		for _, m := range operationMethods(res.named) {
+			total++
+			verb := kebab(m.Name())
+			g, err := buildGenOp(group, verb, res, m, docs)
+			if err != nil {
+				skipped = append(skipped, fmt.Sprintf("%s.%s (%v)", group, verb, err))
+				continue
+			}
+			gens = append(gens, g)
 		}
-		m := findMethod(res.named, op.Name)
-		if m == nil {
-			skipped = append(skipped, fmt.Sprintf("%s.%s (no method)", op.Group, op.Name))
-			continue
-		}
-		g, err := buildGenOp(op, res, m)
-		if err != nil {
-			skipped = append(skipped, fmt.Sprintf("%s.%s (%v)", op.Group, op.Name, err))
-			continue
-		}
-		gens = append(gens, g)
 	}
 
 	sort.Slice(gens, func(i, j int) bool {
@@ -79,7 +80,7 @@ func run() error {
 		return err
 	}
 
-	fmt.Fprintf(os.Stderr, "generated %d/%d operations into %s\n", len(gens), len(ops), outPath)
+	fmt.Fprintf(os.Stderr, "generated %d/%d operations into %s\n", len(gens), total, outPath)
 	if len(skipped) > 0 {
 		fmt.Fprintf(os.Stderr, "skipped %d operations:\n", len(skipped))
 		for _, s := range skipped {
@@ -93,7 +94,8 @@ func run() error {
 
 func loadPackages() (map[string]*packages.Package, error) {
 	cfg := &packages.Config{
-		Mode: packages.NeedName | packages.NeedTypes | packages.NeedTypesInfo | packages.NeedDeps | packages.NeedImports,
+		Mode: packages.NeedName | packages.NeedTypes | packages.NeedTypesInfo |
+			packages.NeedDeps | packages.NeedImports | packages.NeedSyntax,
 	}
 	loaded, err := packages.Load(cfg, rootPkg, compPkg, opsPkg)
 	if err != nil {
@@ -164,21 +166,52 @@ func buildResourceMap(root *packages.Package) map[string]resourceInfo {
 	return out
 }
 
-func findMethod(named *types.Named, name string) *types.Func {
-	want := normalizeName(name)
+// operationMethods returns the resource's exported operation methods — those
+// whose first parameter is a context.Context — in deterministic order.
+func operationMethods(named *types.Named) []*types.Func {
+	var out []*types.Func
 	ms := types.NewMethodSet(types.NewPointer(named))
 	for i := 0; i < ms.Len(); i++ {
 		fn, ok := ms.At(i).Obj().(*types.Func)
 		if !ok || !fn.Exported() {
 			continue
 		}
-		if normalizeName(fn.Name()) == want {
-			return fn
+		sig, ok := fn.Type().(*types.Signature)
+		if !ok || sig.Params().Len() == 0 || !isContext(sig.Params().At(0).Type()) {
+			continue
 		}
+		out = append(out, fn)
 	}
-	return nil
+	sort.Slice(out, func(i, j int) bool { return out[i].Name() < out[j].Name() })
+	return out
 }
 
-func normalizeName(s string) string {
-	return strings.ToLower(strings.NewReplacer("_", "", "-", "").Replace(s))
+// extractDocs maps "<ReceiverType>.<Method>" to the method's doc comment, read
+// from the root package's syntax trees.
+func extractDocs(root *packages.Package) map[string]string {
+	docs := map[string]string{}
+	for _, file := range root.Syntax {
+		for _, decl := range file.Decls {
+			fd, ok := decl.(*ast.FuncDecl)
+			if !ok || fd.Recv == nil || fd.Doc == nil || len(fd.Recv.List) == 0 {
+				continue
+			}
+			recv := recvTypeName(fd.Recv.List[0].Type)
+			if recv == "" {
+				continue
+			}
+			docs[recv+"."+fd.Name.Name] = strings.TrimSpace(fd.Doc.Text())
+		}
+	}
+	return docs
+}
+
+func recvTypeName(e ast.Expr) string {
+	if star, ok := e.(*ast.StarExpr); ok {
+		e = star.X
+	}
+	if id, ok := e.(*ast.Ident); ok {
+		return id.Name
+	}
+	return ""
 }

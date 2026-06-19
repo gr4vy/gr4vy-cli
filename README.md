@@ -120,17 +120,18 @@ Lists accept `--limit` and `--cursor`; the `next_cursor` is returned for paging.
 
 ## How it stays up to date
 
-The CLI generates one typed command per SDK operation from the committed OpenAPI spec
-(`internal/spec/openapi.json`) and the `gr4vy-go` types. When the API changes, a scheduled
-workflow refreshes the spec, bumps the SDK, regenerates, and opens a draft PR — so the CLI
-self-maintains.
+The CLI generates one typed command per SDK operation directly from the `gr4vy-go` types —
+the resource tree, method signatures, and doc comments. When a new SDK is published (an
+`sdk_updated` dispatch, or a daily cron), a workflow bumps `gr4vy-go`, regenerates, and opens
+a draft PR — so the CLI self-maintains. There's no dependency on the OpenAPI spec: a typed
+CLI can only expose what the SDK ships.
 
 ## Development
 
 ```sh
 make build        # build ./gr4vy with version info
-make gen          # regenerate commands from the committed spec
-make gen-refresh  # fetch the latest spec, then regenerate
+make gen          # regenerate commands from the gr4vy-go SDK types
+make gen-refresh  # bump gr4vy-go to latest, then regenerate
 make test         # unit + golden tests
 make e2e          # live e2e suite (needs PRIVATE_KEY or ./private_key.pem)
 ```

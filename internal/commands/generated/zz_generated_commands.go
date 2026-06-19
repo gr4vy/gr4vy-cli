@@ -24,7 +24,7 @@ func init() {
 		Group:    "account-updater.jobs",
 		Name:     "create",
 		Short:    "Create account updater job",
-		Long:     "Schedule one or more stored cards for an account update.",
+		Long:     "Create account updater job\n\nSchedule one or more stored cards for an account update.",
 		HasBody:  true,
 		BodyType: "AccountUpdaterJobCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -45,7 +45,7 @@ func init() {
 		Group:  "audit-logs",
 		Name:   "list",
 		Short:  "List audit log entries",
-		Long:   "Returns a list of activity by dashboard users.",
+		Long:   "List audit log entries\n\nReturns a list of activity by dashboard users.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -76,7 +76,7 @@ func init() {
 		Group:    "buyers",
 		Name:     "create",
 		Short:    "Add a buyer",
-		Long:     "Create a new buyer record.",
+		Long:     "Add a buyer\n\nCreate a new buyer record.",
 		HasBody:  true,
 		BodyType: "BuyerCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -97,7 +97,7 @@ func init() {
 		Group:      "buyers",
 		Name:       "delete",
 		Short:      "Delete a buyer",
-		Long:       "Permanently removes a buyer record.",
+		Long:       "Delete a buyer\n\nPermanently removes a buyer record.",
 		PathParams: []string{"buyer-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -108,7 +108,7 @@ func init() {
 		Group:      "buyers",
 		Name:       "get",
 		Short:      "Get a buyer",
-		Long:       "Fetches a buyer by its ID.",
+		Long:       "Get a buyer\n\nFetches a buyer by its ID.",
 		PathParams: []string{"buyer-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -123,7 +123,7 @@ func init() {
 		Group:  "buyers",
 		Name:   "list",
 		Short:  "List all buyers",
-		Long:   "List all buyers or search for a specific buyer.",
+		Long:   "List all buyers\n\nList all buyers or search for a specific buyer.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -149,7 +149,7 @@ func init() {
 		Group:      "buyers",
 		Name:       "update",
 		Short:      "Update a buyer",
-		Long:       "Updates a buyer record.",
+		Long:       "Update a buyer\n\nUpdates a buyer record.",
 		PathParams: []string{"buyer-id"},
 		HasBody:    true,
 		BodyType:   "BuyerUpdate",
@@ -171,7 +171,7 @@ func init() {
 		Group:  "buyers.gift-cards",
 		Name:   "list",
 		Short:  "List gift cards for a buyer",
-		Long:   "List all the stored gift cards for a specific buyer.",
+		Long:   "List gift cards for a buyer\n\nList all the stored gift cards for a specific buyer.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "buyer-external-identifier", Usage: "buyer-external-identifier parameter", Kind: commands.KindString},
@@ -203,7 +203,7 @@ func init() {
 		Group:  "buyers.payment-methods",
 		Name:   "list",
 		Short:  "List payment methods for a buyer",
-		Long:   "List all the stored payment methods for a specific buyer.",
+		Long:   "List payment methods for a buyer\n\nList all the stored payment methods for a specific buyer.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "buyer-id", Usage: "buyer-id parameter", Kind: commands.KindString},
@@ -239,7 +239,7 @@ func init() {
 		Group:      "buyers.shipping-details",
 		Name:       "create",
 		Short:      "Add buyer shipping details",
-		Long:       "Associate shipping details to a buyer.",
+		Long:       "Add buyer shipping details\n\nAssociate shipping details to a buyer.",
 		PathParams: []string{"buyer-id"},
 		HasBody:    true,
 		BodyType:   "ShippingDetailsCreate",
@@ -261,7 +261,7 @@ func init() {
 		Group:      "buyers.shipping-details",
 		Name:       "delete",
 		Short:      "Delete a buyer's shipping details",
-		Long:       "Delete the shipping details associated to a specific buyer.",
+		Long:       "Delete a buyer's shipping details\n\nDelete the shipping details associated to a specific buyer.",
 		PathParams: []string{"buyer-id", "shipping-details-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -272,7 +272,7 @@ func init() {
 		Group:      "buyers.shipping-details",
 		Name:       "get",
 		Short:      "Get buyer shipping details",
-		Long:       "Get a buyer's shipping details.",
+		Long:       "Get buyer shipping details\n\nGet a buyer's shipping details.",
 		PathParams: []string{"buyer-id", "shipping-details-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -287,7 +287,7 @@ func init() {
 		Group:      "buyers.shipping-details",
 		Name:       "list",
 		Short:      "List a buyer's shipping details",
-		Long:       "List all the shipping details associated to a specific buyer.",
+		Long:       "List a buyer's shipping details\n\nList all the shipping details associated to a specific buyer.",
 		PathParams: []string{"buyer-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -303,7 +303,7 @@ func init() {
 		Group:      "buyers.shipping-details",
 		Name:       "update",
 		Short:      "Update a buyer's shipping details",
-		Long:       "Update the shipping details associated to a specific buyer.",
+		Long:       "Update a buyer's shipping details\n\nUpdate the shipping details associated to a specific buyer.",
 		PathParams: []string{"buyer-id", "shipping-details-id"},
 		HasBody:    true,
 		BodyType:   "ShippingDetailsUpdate",
@@ -325,7 +325,7 @@ func init() {
 		Group:  "card-scheme-definitions",
 		Name:   "list",
 		Short:  "List card scheme definitions",
-		Long:   "Fetch a list of the definitions of each card scheme.",
+		Long:   "List card scheme definitions\n\nFetch a list of the definitions of each card scheme.",
 		IsList: true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -340,7 +340,7 @@ func init() {
 		Group:    "checkout-sessions",
 		Name:     "create",
 		Short:    "Create checkout session",
-		Long:     "Create a new checkout session.",
+		Long:     "Create checkout session\n\nCreate a new checkout session.",
 		HasBody:  true,
 		BodyType: "CheckoutSessionCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -363,7 +363,7 @@ func init() {
 		Group:      "checkout-sessions",
 		Name:       "delete",
 		Short:      "Delete checkout session",
-		Long:       "Delete a checkout session and all of its (PCI) data.",
+		Long:       "Delete checkout session\n\nDelete a checkout session and all of its (PCI) data.",
 		PathParams: []string{"session-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -374,7 +374,7 @@ func init() {
 		Group:      "checkout-sessions",
 		Name:       "get",
 		Short:      "Get checkout session",
-		Long:       "Retrieve the information stored on a checkout session.",
+		Long:       "Get checkout session\n\nRetrieve the information stored on a checkout session.",
 		PathParams: []string{"session-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -389,7 +389,7 @@ func init() {
 		Group:      "checkout-sessions",
 		Name:       "update",
 		Short:      "Update checkout session",
-		Long:       "Update the information stored on a checkout session.",
+		Long:       "Update checkout session\n\nUpdate the information stored on a checkout session.",
 		PathParams: []string{"session-id"},
 		HasBody:    true,
 		BodyType:   "CheckoutSessionCreate",
@@ -411,7 +411,7 @@ func init() {
 		Group:    "digital-wallets",
 		Name:     "create",
 		Short:    "Register digital wallet",
-		Long:     "Register a digital wallet like Apple Pay, Google Pay, or Click to Pay.",
+		Long:     "Register digital wallet\n\nRegister a digital wallet like Apple Pay, Google Pay, or Click to Pay.",
 		HasBody:  true,
 		BodyType: "DigitalWalletCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -432,7 +432,7 @@ func init() {
 		Group:      "digital-wallets",
 		Name:       "delete",
 		Short:      "Delete digital wallet",
-		Long:       "Delete a configured digital wallet.",
+		Long:       "Delete digital wallet\n\nDelete a configured digital wallet.",
 		PathParams: []string{"digital-wallet-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -443,7 +443,7 @@ func init() {
 		Group:      "digital-wallets",
 		Name:       "get",
 		Short:      "Get digital wallet",
-		Long:       "Fetch the details a digital wallet.",
+		Long:       "Get digital wallet\n\nFetch the details a digital wallet.",
 		PathParams: []string{"digital-wallet-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -458,7 +458,7 @@ func init() {
 		Group:  "digital-wallets",
 		Name:   "list",
 		Short:  "List digital wallets",
-		Long:   "List configured digital wallets.",
+		Long:   "List digital wallets\n\nList configured digital wallets.",
 		IsList: true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -473,7 +473,7 @@ func init() {
 		Group:      "digital-wallets",
 		Name:       "update",
 		Short:      "Update digital wallet",
-		Long:       "Update a digital wallet.",
+		Long:       "Update digital wallet\n\nUpdate a digital wallet.",
 		PathParams: []string{"digital-wallet-id"},
 		HasBody:    true,
 		BodyType:   "DigitalWalletUpdate",
@@ -495,7 +495,7 @@ func init() {
 		Group:      "digital-wallets.domains",
 		Name:       "create",
 		Short:      "Register a digital wallet domain",
-		Long:       "Register a digital wallet domain (Apple Pay only).",
+		Long:       "Register a digital wallet domain\n\nRegister a digital wallet domain (Apple Pay only).",
 		PathParams: []string{"digital-wallet-id"},
 		HasBody:    true,
 		BodyType:   "DigitalWalletDomain",
@@ -517,7 +517,7 @@ func init() {
 		Group:      "digital-wallets.domains",
 		Name:       "delete",
 		Short:      "Remove a digital wallet domain",
-		Long:       "Remove a digital wallet domain (Apple Pay only).",
+		Long:       "Remove a digital wallet domain\n\nRemove a digital wallet domain (Apple Pay only).",
 		PathParams: []string{"digital-wallet-id"},
 		HasBody:    true,
 		BodyType:   "DigitalWalletDomain",
@@ -533,9 +533,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "apple_pay",
+		Name:     "apple-pay",
 		Short:    "Create a Apple Pay session",
-		Long:     "Create a session for use with Apple Pay.",
+		Long:     "Create a Apple Pay session\n\nCreate a session for use with Apple Pay.",
 		HasBody:  true,
 		BodyType: "ApplePaySessionRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -554,9 +554,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "click_to_pay",
+		Name:     "click-to-pay",
 		Short:    "Create a Click to Pay session",
-		Long:     "Create a session for use with Click to Pay.",
+		Long:     "Create a Click to Pay session\n\nCreate a session for use with Click to Pay.",
 		HasBody:  true,
 		BodyType: "ClickToPaySessionRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -575,9 +575,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "google_pay",
+		Name:     "google-pay",
 		Short:    "Create a Google Pay session",
-		Long:     "Create a session for use with Google Pay.",
+		Long:     "Create a Google Pay session\n\nCreate a session for use with Google Pay.",
 		HasBody:  true,
 		BodyType: "GooglePaySessionRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -598,7 +598,7 @@ func init() {
 		Group:    "digital-wallets.sessions",
 		Name:     "paze",
 		Short:    "Create a Paze session",
-		Long:     "Create a session for use with Paze.",
+		Long:     "Create a Paze session\n\nCreate a session for use with Paze.",
 		HasBody:  true,
 		BodyType: "PazeSessionRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -617,9 +617,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "paze_mobile_session_complete",
+		Name:     "paze-mobile-session-complete",
 		Short:    "Complete a Paze session",
-		Long:     "Complete a Paze checkout session and retrieve the secure payload required to settle the payment.",
+		Long:     "Complete a Paze session\n\nComplete a Paze checkout session and retrieve the secure payload required to settle the payment.",
 		HasBody:  true,
 		BodyType: "PazeSessionCompleteRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -638,9 +638,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "paze_mobile_session_create",
+		Name:     "paze-mobile-session-create",
 		Short:    "Create a Paze mobile session",
-		Long:     "Create a mobile session for use with Paze.",
+		Long:     "Create a Paze mobile session\n\nCreate a mobile session for use with Paze.",
 		HasBody:  true,
 		BodyType: "PazeMobileSessionCreateRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -659,9 +659,9 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:    "digital-wallets.sessions",
-		Name:     "paze_mobile_session_review",
+		Name:     "paze-mobile-session-review",
 		Short:    "Review a Paze session",
-		Long:     "Review a Paze checkout session and retrieve the selected card, consumer, and shipping address details.",
+		Long:     "Review a Paze session\n\nReview a Paze checkout session and retrieve the selected card, consumer, and shipping address details.",
 		HasBody:  true,
 		BodyType: "PazeSessionReviewRequest",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -682,7 +682,7 @@ func init() {
 		Group:    "gift-cards",
 		Name:     "create",
 		Short:    "Create gift card",
-		Long:     "Store a new gift card in the vault.",
+		Long:     "Create gift card\n\nStore a new gift card in the vault.",
 		HasBody:  true,
 		BodyType: "GiftCardCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -703,7 +703,7 @@ func init() {
 		Group:      "gift-cards",
 		Name:       "delete",
 		Short:      "Delete a gift card",
-		Long:       "Removes a gift card from our system.",
+		Long:       "Delete a gift card\n\nRemoves a gift card from our system.",
 		PathParams: []string{"gift-card-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -714,7 +714,7 @@ func init() {
 		Group:      "gift-cards",
 		Name:       "get",
 		Short:      "Get gift card",
-		Long:       "Fetch details about a gift card.",
+		Long:       "Get gift card\n\nFetch details about a gift card.",
 		PathParams: []string{"gift-card-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -729,7 +729,7 @@ func init() {
 		Group:  "gift-cards",
 		Name:   "list",
 		Short:  "List gift cards",
-		Long:   "Browser all gift cards.",
+		Long:   "List gift cards\n\nBrowser all gift cards.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "buyer-external-identifier", Usage: "buyer-external-identifier parameter", Kind: commands.KindString},
@@ -755,7 +755,7 @@ func init() {
 		Group:    "gift-cards.balances",
 		Name:     "list",
 		Short:    "List gift card balances",
-		Long:     "Fetch the balances for one or more gift cards.",
+		Long:     "List gift card balances\n\nFetch the balances for one or more gift cards.",
 		HasBody:  true,
 		BodyType: "GiftCardBalanceRequest",
 		IsList:   true,
@@ -777,7 +777,7 @@ func init() {
 		Group:    "merchant-accounts",
 		Name:     "create",
 		Short:    "Create a merchant account",
-		Long:     "Create a new merchant account in an instance.",
+		Long:     "Create a merchant account\n\nCreate a new merchant account in an instance.",
 		HasBody:  true,
 		BodyType: "MerchantAccountCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -798,7 +798,7 @@ func init() {
 		Group:      "merchant-accounts",
 		Name:       "get",
 		Short:      "Get a merchant account",
-		Long:       "Get info about a merchant account in an instance.",
+		Long:       "Get a merchant account\n\nGet info about a merchant account in an instance.",
 		PathParams: []string{"merchant-account-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -813,7 +813,7 @@ func init() {
 		Group:  "merchant-accounts",
 		Name:   "list",
 		Short:  "List all merchant accounts",
-		Long:   "List all merchant accounts in an instance.",
+		Long:   "List all merchant accounts\n\nList all merchant accounts in an instance.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -833,7 +833,7 @@ func init() {
 		Group:      "merchant-accounts",
 		Name:       "update",
 		Short:      "Update a merchant account",
-		Long:       "Update info for a merchant account in an instance.",
+		Long:       "Update a merchant account\n\nUpdate info for a merchant account in an instance.",
 		PathParams: []string{"merchant-account-id"},
 		HasBody:    true,
 		BodyType:   "MerchantAccountUpdate",
@@ -855,7 +855,7 @@ func init() {
 		Group:      "merchant-accounts.three-ds-configuration",
 		Name:       "create",
 		Short:      "Create 3DS configuration for merchant",
-		Long:       "Create a new 3DS configuration for a merchant account.",
+		Long:       "Create 3DS configuration for merchant\n\nCreate a new 3DS configuration for a merchant account.",
 		PathParams: []string{"merchant-account-id"},
 		HasBody:    true,
 		BodyType:   "MerchantAccountThreeDSConfigurationCreate",
@@ -877,7 +877,7 @@ func init() {
 		Group:      "merchant-accounts.three-ds-configuration",
 		Name:       "delete",
 		Short:      "Delete 3DS configuration for a merchant",
-		Long:       "Delete a 3DS configuration for a merchant account.",
+		Long:       "Delete 3DS configuration for a merchant\n\nDelete a 3DS configuration for a merchant account.",
 		PathParams: []string{"merchant-account-id", "three-ds-configuration-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -888,7 +888,7 @@ func init() {
 		Group:      "merchant-accounts.three-ds-configuration",
 		Name:       "list",
 		Short:      "List 3DS configurations for merchant",
-		Long:       "List all 3DS configurations for a merchant account.",
+		Long:       "List 3DS configurations for merchant\n\nList all 3DS configurations for a merchant account.",
 		PathParams: []string{"merchant-account-id"},
 		IsList:     true,
 		Optionals: []commands.Flag{
@@ -907,7 +907,7 @@ func init() {
 		Group:      "merchant-accounts.three-ds-configuration",
 		Name:       "update",
 		Short:      "Edit 3DS configuration",
-		Long:       "Update the 3DS configuration for a merchant account.",
+		Long:       "Edit 3DS configuration\n\nUpdate the 3DS configuration for a merchant account.",
 		PathParams: []string{"merchant-account-id", "three-ds-configuration-id"},
 		HasBody:    true,
 		BodyType:   "MerchantAccountThreeDSConfigurationUpdate",
@@ -929,7 +929,7 @@ func init() {
 		Group:    "payment-links",
 		Name:     "create",
 		Short:    "Add a payment link",
-		Long:     "Create a new payment link.",
+		Long:     "Add a payment link\n\nCreate a new payment link.",
 		HasBody:  true,
 		BodyType: "PaymentLinkCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -950,7 +950,7 @@ func init() {
 		Group:      "payment-links",
 		Name:       "expire",
 		Short:      "Expire a payment link",
-		Long:       "Expire an existing payment link.",
+		Long:       "Expire a payment link\n\nExpire an existing payment link.",
 		PathParams: []string{"payment-link-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -961,7 +961,7 @@ func init() {
 		Group:      "payment-links",
 		Name:       "get",
 		Short:      "Get payment link",
-		Long:       "Fetch the details for a payment link.",
+		Long:       "Get payment link\n\nFetch the details for a payment link.",
 		PathParams: []string{"payment-link-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -976,7 +976,7 @@ func init() {
 		Group:  "payment-links",
 		Name:   "list",
 		Short:  "List all payment links",
-		Long:   "List all created payment links.",
+		Long:   "List all payment links\n\nList all created payment links.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -996,7 +996,7 @@ func init() {
 		Group:    "payment-methods",
 		Name:     "create",
 		Short:    "Create payment method",
-		Long:     "Store a new payment method.",
+		Long:     "Create payment method\n\nStore a new payment method.",
 		HasBody:  true,
 		BodyType: "Body",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1017,7 +1017,7 @@ func init() {
 		Group:      "payment-methods",
 		Name:       "delete",
 		Short:      "Delete payment method",
-		Long:       "Delete a payment method.",
+		Long:       "Delete payment method\n\nDelete a payment method.",
 		PathParams: []string{"payment-method-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1028,7 +1028,7 @@ func init() {
 		Group:      "payment-methods",
 		Name:       "get",
 		Short:      "Get payment method",
-		Long:       "Retrieve a payment method.",
+		Long:       "Get payment method\n\nRetrieve a payment method.",
 		PathParams: []string{"payment-method-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1043,7 +1043,7 @@ func init() {
 		Group:  "payment-methods",
 		Name:   "list",
 		Short:  "List all payment methods",
-		Long:   "List all stored payment method.",
+		Long:   "List all payment methods\n\nList all stored payment method.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1071,7 +1071,7 @@ func init() {
 		Group:      "payment-methods",
 		Name:       "update",
 		Short:      "Update payment method",
-		Long:       "Update the details of a stored payment method.",
+		Long:       "Update payment method\n\nUpdate the details of a stored payment method.",
 		PathParams: []string{"payment-method-id"},
 		HasBody:    true,
 		BodyType:   "PaymentMethodUpdate",
@@ -1093,7 +1093,7 @@ func init() {
 		Group:      "payment-methods.network-tokens",
 		Name:       "create",
 		Short:      "Provision network token",
-		Long:       "Provision a network token for a payment method.",
+		Long:       "Provision network token\n\nProvision a network token for a payment method.",
 		PathParams: []string{"payment-method-id"},
 		HasBody:    true,
 		BodyType:   "NetworkTokenCreate",
@@ -1115,7 +1115,7 @@ func init() {
 		Group:      "payment-methods.network-tokens",
 		Name:       "delete",
 		Short:      "Delete network token",
-		Long:       "Delete a network token for a payment method.",
+		Long:       "Delete network token\n\nDelete a network token for a payment method.",
 		PathParams: []string{"payment-method-id", "network-token-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1126,7 +1126,7 @@ func init() {
 		Group:      "payment-methods.network-tokens",
 		Name:       "list",
 		Short:      "List network tokens",
-		Long:       "List all network tokens stored for a payment method.",
+		Long:       "List network tokens\n\nList all network tokens stored for a payment method.",
 		PathParams: []string{"payment-method-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1142,7 +1142,7 @@ func init() {
 		Group:      "payment-methods.network-tokens",
 		Name:       "resume",
 		Short:      "Resume network token",
-		Long:       "Resume a suspended network token for a payment method.",
+		Long:       "Resume network token\n\nResume a suspended network token for a payment method.",
 		PathParams: []string{"payment-method-id", "network-token-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1157,7 +1157,7 @@ func init() {
 		Group:      "payment-methods.network-tokens",
 		Name:       "suspend",
 		Short:      "Suspend network token",
-		Long:       "Suspend a network token for a payment method.",
+		Long:       "Suspend network token\n\nSuspend a network token for a payment method.",
 		PathParams: []string{"payment-method-id", "network-token-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1172,7 +1172,7 @@ func init() {
 		Group:      "payment-methods.network-tokens.cryptogram",
 		Name:       "create",
 		Short:      "Provision network token cryptogram",
-		Long:       "Provision a cryptogram for a network token.",
+		Long:       "Provision network token cryptogram\n\nProvision a cryptogram for a network token.",
 		PathParams: []string{"payment-method-id", "network-token-id"},
 		HasBody:    true,
 		BodyType:   "CryptogramCreate",
@@ -1194,7 +1194,7 @@ func init() {
 		Group:      "payment-methods.payment-service-tokens",
 		Name:       "create",
 		Short:      "Create payment service token",
-		Long:       "Create a gateway tokens for a payment method.",
+		Long:       "Create payment service token\n\nCreate a gateway tokens for a payment method.",
 		PathParams: []string{"payment-method-id"},
 		HasBody:    true,
 		BodyType:   "PaymentServiceTokenCreate",
@@ -1216,7 +1216,7 @@ func init() {
 		Group:      "payment-methods.payment-service-tokens",
 		Name:       "delete",
 		Short:      "Delete payment service token",
-		Long:       "Delete a gateway tokens for a payment method.",
+		Long:       "Delete payment service token\n\nDelete a gateway tokens for a payment method.",
 		PathParams: []string{"payment-method-id", "payment-service-token-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1227,7 +1227,7 @@ func init() {
 		Group:      "payment-methods.payment-service-tokens",
 		Name:       "list",
 		Short:      "List payment service tokens",
-		Long:       "List all gateway tokens stored for a payment method.",
+		Long:       "List payment service tokens\n\nList all gateway tokens stored for a payment method.",
 		PathParams: []string{"payment-method-id"},
 		IsList:     true,
 		Optionals: []commands.Flag{
@@ -1246,7 +1246,7 @@ func init() {
 		Group:    "payment-options",
 		Name:     "list",
 		Short:    "List payment options",
-		Long:     "List the payment options available at checkout. filtering by country, currency, and additional fields passed to Flow rules.",
+		Long:     "List payment options\n\nList the payment options available at checkout. filtering by country, currency, and additional fields passed to Flow rules.",
 		HasBody:  true,
 		BodyType: "PaymentOptionRequest",
 		IsList:   true,
@@ -1268,7 +1268,7 @@ func init() {
 		Group:      "payment-service-definitions",
 		Name:       "get",
 		Short:      "Get a payment service definition",
-		Long:       "Get the definition of a payment service that can be configured.",
+		Long:       "Get a payment service definition\n\nGet the definition of a payment service that can be configured.",
 		PathParams: []string{"payment-service-definition-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1283,7 +1283,7 @@ func init() {
 		Group:  "payment-service-definitions",
 		Name:   "list",
 		Short:  "List payment service definitions",
-		Long:   "List the definitions of each payment service that can be configured.",
+		Long:   "List payment service definitions\n\nList the definitions of each payment service that can be configured.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1302,7 +1302,7 @@ func init() {
 		Group:      "payment-service-definitions",
 		Name:       "session",
 		Short:      "Create a session for a payment service definition",
-		Long:       "Creates a session for a payment service that supports sessions.",
+		Long:       "Create a session for a payment service definition\n\nCreates a session for a payment service that supports sessions.",
 		PathParams: []string{"payment-service-definition-id"},
 		HasBody:    true,
 		BodyType:   "",
@@ -1324,7 +1324,7 @@ func init() {
 		Group:    "payment-services",
 		Name:     "create",
 		Short:    "Configure a payment service",
-		Long:     "Configures a new payment service for use by merchants.",
+		Long:     "Configure a payment service\n\nConfigures a new payment service for use by merchants.",
 		HasBody:  true,
 		BodyType: "PaymentServiceCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1345,7 +1345,7 @@ func init() {
 		Group:      "payment-services",
 		Name:       "delete",
 		Short:      "Delete a configured payment service",
-		Long:       "Deletes all the configuration of a payment service.",
+		Long:       "Delete a configured payment service\n\nDeletes all the configuration of a payment service.",
 		PathParams: []string{"payment-service-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1356,7 +1356,7 @@ func init() {
 		Group:      "payment-services",
 		Name:       "get",
 		Short:      "Get payment service",
-		Long:       "Get the details of a configured payment service.",
+		Long:       "Get payment service\n\nGet the details of a configured payment service.",
 		PathParams: []string{"payment-service-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1371,7 +1371,7 @@ func init() {
 		Group:  "payment-services",
 		Name:   "list",
 		Short:  "List payment services",
-		Long:   "List the configured payment services.",
+		Long:   "List payment services\n\nList the configured payment services.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "method", Usage: "method parameter", Kind: commands.KindString},
@@ -1400,7 +1400,7 @@ func init() {
 		Group:      "payment-services",
 		Name:       "session",
 		Short:      "Create a session for a payment service definition",
-		Long:       "Creates a session for a payment service that supports sessions.",
+		Long:       "Create a session for a payment service definition\n\nCreates a session for a payment service that supports sessions.",
 		PathParams: []string{"payment-service-id"},
 		HasBody:    true,
 		BodyType:   "",
@@ -1422,7 +1422,7 @@ func init() {
 		Group:      "payment-services",
 		Name:       "update",
 		Short:      "Update a configured payment service",
-		Long:       "Updates the configuration of a payment service.",
+		Long:       "Update a configured payment service\n\nUpdates the configuration of a payment service.",
 		PathParams: []string{"payment-service-id"},
 		HasBody:    true,
 		BodyType:   "PaymentServiceUpdate",
@@ -1444,7 +1444,7 @@ func init() {
 		Group:    "payment-services",
 		Name:     "verify",
 		Short:    "Verify payment service credentials",
-		Long:     "Verify the credentials of a configured payment service",
+		Long:     "Verify payment service credentials\n\nVerify the credentials of a configured payment service",
 		HasBody:  true,
 		BodyType: "VerifyCredentials",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1465,7 +1465,7 @@ func init() {
 		Group:    "payouts",
 		Name:     "create",
 		Short:    "Create a payout",
-		Long:     "Creates a new payout.",
+		Long:     "Create a payout\n\nCreates a new payout.",
 		HasBody:  true,
 		BodyType: "PayoutCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1486,7 +1486,7 @@ func init() {
 		Group:      "payouts",
 		Name:       "get",
 		Short:      "Get a payout",
-		Long:       "Retrieves a payout.",
+		Long:       "Get a payout\n\nRetrieves a payout.",
 		PathParams: []string{"payout-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1501,7 +1501,7 @@ func init() {
 		Group:  "payouts",
 		Name:   "list",
 		Short:  "List payouts created",
-		Long:   "Returns a list of payouts made.",
+		Long:   "List payouts created\n\nReturns a list of payouts made.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1520,7 +1520,7 @@ func init() {
 		Group:      "refunds",
 		Name:       "get",
 		Short:      "Get refund",
-		Long:       "Fetch a refund.",
+		Long:       "Get refund\n\nFetch a refund.",
 		PathParams: []string{"refund-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1535,7 +1535,7 @@ func init() {
 		Group:  "report-executions",
 		Name:   "list",
 		Short:  "List executed reports",
-		Long:   "List all executed reports that have been generated.",
+		Long:   "List executed reports\n\nList all executed reports that have been generated.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1561,7 +1561,7 @@ func init() {
 		Group:    "reports",
 		Name:     "create",
 		Short:    "Add a report",
-		Long:     "Create a new report.",
+		Long:     "Add a report\n\nCreate a new report.",
 		HasBody:  true,
 		BodyType: "ReportCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1582,7 +1582,7 @@ func init() {
 		Group:      "reports",
 		Name:       "get",
 		Short:      "Get a report",
-		Long:       "Fetches a report by its ID.",
+		Long:       "Get a report\n\nFetches a report by its ID.",
 		PathParams: []string{"report-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1597,7 +1597,7 @@ func init() {
 		Group:  "reports",
 		Name:   "list",
 		Short:  "List configured reports",
-		Long:   "List all configured reports that can be generated.",
+		Long:   "List configured reports\n\nList all configured reports that can be generated.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1623,7 +1623,7 @@ func init() {
 		Group:      "reports",
 		Name:       "put",
 		Short:      "Update a report",
-		Long:       "Updates the configuration of a report.",
+		Long:       "Update a report\n\nUpdates the configuration of a report.",
 		PathParams: []string{"report-id"},
 		HasBody:    true,
 		BodyType:   "ReportUpdate",
@@ -1645,7 +1645,7 @@ func init() {
 		Group:      "reports.executions",
 		Name:       "get",
 		Short:      "Get executed report",
-		Long:       "Fetch a specific executed report.",
+		Long:       "Get executed report\n\nFetch a specific executed report.",
 		PathParams: []string{"report-execution-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1660,7 +1660,7 @@ func init() {
 		Group:      "reports.executions",
 		Name:       "list",
 		Short:      "List executions for report",
-		Long:       "List all executions of a specific report.",
+		Long:       "List executions for report\n\nList all executions of a specific report.",
 		PathParams: []string{"report-id"},
 		IsList:     true,
 		Optionals: []commands.Flag{
@@ -1680,7 +1680,7 @@ func init() {
 		Group:      "reports.executions",
 		Name:       "url",
 		Short:      "Create URL for executed report",
-		Long:       "Creates a download URL for a specific execution of a report.",
+		Long:       "Create URL for executed report\n\nCreates a download URL for a specific execution of a report.",
 		PathParams: []string{"report-id", "report-execution-id"},
 		HasBody:    true,
 		BodyType:   "ReportExecutionURLGenerate",
@@ -1704,7 +1704,7 @@ func init() {
 		Group:    "three-ds-scenarios",
 		Name:     "create",
 		Short:    "Create a 3DS scenario",
-		Long:     "Create a new 3DS scenario for a merchant account. Only available in sandbox environments.",
+		Long:     "Create a 3DS scenario\n\nCreate a new 3DS scenario for a merchant account. Only available in sandbox environments.",
 		HasBody:  true,
 		BodyType: "ThreeDSecureScenarioCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1725,7 +1725,7 @@ func init() {
 		Group:      "three-ds-scenarios",
 		Name:       "delete",
 		Short:      "Delete a 3DS scenario",
-		Long:       "Removes a 3DS scenario from our system. Only available in sandbox environments.",
+		Long:       "Delete a 3DS scenario\n\nRemoves a 3DS scenario from our system. Only available in sandbox environments.",
 		PathParams: []string{"three-ds-scenario-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1736,7 +1736,7 @@ func init() {
 		Group:  "three-ds-scenarios",
 		Name:   "list",
 		Short:  "List 3DS scenario",
-		Long:   "List all 3DS scenarios for a merchant account. Only available in sandbox environments.",
+		Long:   "List 3DS scenario\n\nList all 3DS scenarios for a merchant account. Only available in sandbox environments.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1755,7 +1755,7 @@ func init() {
 		Group:      "three-ds-scenarios",
 		Name:       "update",
 		Short:      "Update a 3DS scenario",
-		Long:       "Update a 3DS scenario. Only available in sandbox environments.",
+		Long:       "Update a 3DS scenario\n\nUpdate a 3DS scenario. Only available in sandbox environments.",
 		PathParams: []string{"three-ds-scenario-id"},
 		HasBody:    true,
 		BodyType:   "ThreeDSecureScenarioUpdate",
@@ -1777,7 +1777,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "cancel",
 		Short:      "Cancel transaction",
-		Long:       "Cancels a pending transaction. If the transaction was successfully authorized, or was already captured, the cancel will not be processed.",
+		Long:       "Cancel transaction\n\nCancels a pending transaction. If the transaction was successfully authorized, or was already captured, the cancel will not be processed.",
 		PathParams: []string{"transaction-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1792,7 +1792,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "capture",
 		Short:      "Capture transaction",
-		Long:       "Captures a previously authorized transaction. You can capture the full or a partial amount, as long as it does not exceed the authorized amount (unless over-capture is enabled).",
+		Long:       "Capture transaction\n\nCaptures a previously authorized transaction. You can capture the full or a partial amount, as long as it does not exceed the authorized amount (unless over-capture is enabled).",
 		PathParams: []string{"transaction-id"},
 		HasBody:    true,
 		BodyType:   "TransactionCaptureCreate",
@@ -1822,7 +1822,7 @@ func init() {
 		Group:    "transactions",
 		Name:     "create",
 		Short:    "Create transaction",
-		Long:     "Create a new transaction using a supported payment method. If additional buyer authorization is required, an approval URL will be returned. Duplicated gift card numbers are not supported.",
+		Long:     "Create transaction\n\nCreate a new transaction using a supported payment method. If additional buyer authorization is required, an approval URL will be returned. Duplicated gift card numbers are not supported.",
 		HasBody:  true,
 		BodyType: "TransactionCreate",
 		Optionals: []commands.Flag{
@@ -1847,7 +1847,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "get",
 		Short:      "Get transaction",
-		Long:       "Retrieve the details of a transaction by its unique identifier.",
+		Long:       "Get transaction\n\nRetrieve the details of a transaction by its unique identifier.",
 		PathParams: []string{"transaction-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1862,7 +1862,7 @@ func init() {
 		Group:  "transactions",
 		Name:   "list",
 		Short:  "List transactions",
-		Long:   "Returns a paginated list of transactions for the merchant account, sorted by most recently updated. You can filter, sort, and search transactions using query parameters.",
+		Long:   "List transactions\n\nReturns a paginated list of transactions for the merchant account, sorted by most recently updated. You can filter, sort, and search transactions using query parameters.",
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
@@ -1956,7 +1956,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "sync",
 		Short:      "Sync transaction",
-		Long:       "Synchronizes the status of a transaction with the underlying payment service provider. This is useful for transactions in a pending state to check if they've been completed or failed. Only available for some payment service providers.",
+		Long:       "Sync transaction\n\nSynchronizes the status of a transaction with the underlying payment service provider. This is useful for transactions in a pending state to check if they've been completed or failed. Only available for some payment service providers.",
 		PathParams: []string{"transaction-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1971,7 +1971,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "update",
 		Short:      "Manually update a transaction",
-		Long:       "Manually updates a transaction.",
+		Long:       "Manually update a transaction\n\nManually updates a transaction.",
 		PathParams: []string{"transaction-id"},
 		HasBody:    true,
 		BodyType:   "TransactionUpdate",
@@ -1993,7 +1993,7 @@ func init() {
 		Group:      "transactions",
 		Name:       "void",
 		Short:      "Void transaction",
-		Long:       "Voids a previously authorized transaction. If the transaction was not yet successfully authorized, or was already captured, the void will not be processed. This operation releases the hold on the buyer's funds. Captured transactions can be refunded instead.",
+		Long:       "Void transaction\n\nVoids a previously authorized transaction. If the transaction was not yet successfully authorized, or was already captured, the void will not be processed. This operation releases the hold on the buyer's funds. Captured transactions can be refunded instead.",
 		PathParams: []string{"transaction-id"},
 		Optionals: []commands.Flag{
 			{Name: "prefer", Usage: "preferred response resource type", Kind: commands.KindStringSlice},
@@ -2012,7 +2012,7 @@ func init() {
 		Group:      "transactions.actions",
 		Name:       "list",
 		Short:      "List transaction Flow rules",
-		Long:       "Retrieve the list of Flow rule actions that have been triggered for a transaction.",
+		Long:       "List transaction Flow rules\n\nRetrieve the list of Flow rule actions that have been triggered for a transaction.",
 		PathParams: []string{"transaction-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -2028,7 +2028,7 @@ func init() {
 		Group:      "transactions.captures",
 		Name:       "get",
 		Short:      "Get transaction capture",
-		Long:       "Retrieve a specific capture for a transaction by its unique identifier.",
+		Long:       "Get transaction capture\n\nRetrieve a specific capture for a transaction by its unique identifier.",
 		PathParams: []string{"transaction-id", "capture-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -2043,7 +2043,7 @@ func init() {
 		Group:      "transactions.captures",
 		Name:       "list",
 		Short:      "List transaction captures",
-		Long:       "List all captures for a specific transaction.",
+		Long:       "List transaction captures\n\nList all captures for a specific transaction.",
 		PathParams: []string{"transaction-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -2059,7 +2059,7 @@ func init() {
 		Group:      "transactions.events",
 		Name:       "list",
 		Short:      "List transaction events",
-		Long:       "Retrieve a paginated list of events related to processing a transaction, including status changes, API requests, and webhook delivery attempts. Events are listed in chronological order, with the most recent events first.",
+		Long:       "List transaction events\n\nRetrieve a paginated list of events related to processing a transaction, including status changes, API requests, and webhook delivery attempts. Events are listed in chronological order, with the most recent events first.",
 		PathParams: []string{"transaction-id"},
 		IsList:     true,
 		Optionals: []commands.Flag{
@@ -2079,7 +2079,7 @@ func init() {
 		Group:      "transactions.refunds",
 		Name:       "create",
 		Short:      "Create transaction refund",
-		Long:       "Create a refund for a transaction.",
+		Long:       "Create transaction refund\n\nCreate a refund for a transaction.",
 		PathParams: []string{"transaction-id"},
 		HasBody:    true,
 		BodyType:   "TransactionRefundCreate",
@@ -2104,7 +2104,7 @@ func init() {
 		Group:      "transactions.refunds",
 		Name:       "get",
 		Short:      "Get transaction refund",
-		Long:       "Fetch refund for a transaction.",
+		Long:       "Get transaction refund\n\nFetch refund for a transaction.",
 		PathParams: []string{"transaction-id", "refund-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -2119,7 +2119,7 @@ func init() {
 		Group:      "transactions.refunds",
 		Name:       "list",
 		Short:      "List transaction refunds",
-		Long:       "List refunds for a transaction.",
+		Long:       "List transaction refunds\n\nList refunds for a transaction.",
 		PathParams: []string{"transaction-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -2135,7 +2135,7 @@ func init() {
 		Group:      "transactions.refunds.all",
 		Name:       "create",
 		Short:      "Create batch transaction refund",
-		Long:       "Create a refund for all instruments on a transaction.",
+		Long:       "Create batch transaction refund\n\nCreate a refund for all instruments on a transaction.",
 		PathParams: []string{"transaction-id"},
 		HasBody:    true,
 		BodyType:   "TransactionRefundAllCreate",
@@ -2162,7 +2162,7 @@ func init() {
 		Group:      "transactions.settlements",
 		Name:       "get",
 		Short:      "Get transaction settlement",
-		Long:       "Retrieve a specific settlement for a transaction by its unique identifier.",
+		Long:       "Get transaction settlement\n\nRetrieve a specific settlement for a transaction by its unique identifier.",
 		PathParams: []string{"transaction-id", "settlement-id"},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -2177,7 +2177,7 @@ func init() {
 		Group:      "transactions.settlements",
 		Name:       "list",
 		Short:      "List transaction settlements",
-		Long:       "List all settlements for a specific transaction.",
+		Long:       "List transaction settlements\n\nList all settlements for a specific transaction.",
 		PathParams: []string{"transaction-id"},
 		IsList:     true,
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {

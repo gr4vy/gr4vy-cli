@@ -9,13 +9,14 @@ LDFLAGS := -s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.dat
 build:
 	go build -ldflags "$(LDFLAGS)" -o gr4vy .
 
-# Regenerate the command surface from the committed spec + gr4vy-go types.
+# Regenerate the command surface from the gr4vy-go SDK types.
 gen:
 	go generate ./...
 
-# Refresh the committed spec from the hosted source, then regenerate.
+# Bump gr4vy-go to its latest release, then regenerate (mirrors the regen CI job).
 gen-refresh:
-	curl -fsSL https://gr4vy.github.io/openapi/core/openapi.json -o internal/spec/openapi.json
+	go get -u github.com/gr4vy/gr4vy-go@latest
+	go mod tidy
 	go generate ./...
 
 test:

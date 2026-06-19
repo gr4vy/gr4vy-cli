@@ -1,12 +1,13 @@
-# Self-maintenance: regenerate the command surface and bump gr4vy-go when the
-# OpenAPI spec or the SDK changes, then open a draft PR for review.
+# Self-maintenance: when a new gr4vy-go SDK is published, bump it, regenerate the
+# command surface from its types, and open a draft PR for review. The command
+# surface is derived entirely from the SDK, so there is no spec trigger.
 name: regen
 
 on:
   repository_dispatch:
-    types: [openapi_published, sdk_updated]
+    types: [sdk_updated]
   schedule:
-    - cron: "0 1 * * *" # safety net, offset after gr4vy-go's regen
+    - cron: "0 1 * * *" # safety net, offset after gr4vy-go's own regen
   workflow_dispatch: {}
 
 permissions:
@@ -25,9 +26,6 @@ jobs:
         with:
           go-version-file: go.mod
           cache: true
-
-      - name: Fetch latest spec
-        run: curl -fSsL https://gr4vy.github.io/openapi/core/openapi.json -o internal/spec/openapi.json
 
       - name: Bump gr4vy-go
         run: |

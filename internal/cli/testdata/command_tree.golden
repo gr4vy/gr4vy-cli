@@ -31,13 +31,13 @@ gr4vy digital-wallets domains create  --data
 gr4vy digital-wallets domains delete  --data
 gr4vy digital-wallets get
 gr4vy digital-wallets list
-gr4vy digital-wallets sessions apple_pay  --data
-gr4vy digital-wallets sessions click_to_pay  --data
-gr4vy digital-wallets sessions google_pay  --data
+gr4vy digital-wallets sessions apple-pay  --data
+gr4vy digital-wallets sessions click-to-pay  --data
+gr4vy digital-wallets sessions google-pay  --data
 gr4vy digital-wallets sessions paze  --data
-gr4vy digital-wallets sessions paze_mobile_session_complete  --data
-gr4vy digital-wallets sessions paze_mobile_session_create  --data
-gr4vy digital-wallets sessions paze_mobile_session_review  --data
+gr4vy digital-wallets sessions paze-mobile-session-complete  --data
+gr4vy digital-wallets sessions paze-mobile-session-create  --data
+gr4vy digital-wallets sessions paze-mobile-session-review  --data
 gr4vy digital-wallets update  --data
 gr4vy embed  --checkout-session --mid --param
 gr4vy gift-cards balances list  --data
