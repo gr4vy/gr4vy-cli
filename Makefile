@@ -1,4 +1,4 @@
-.PHONY: build gen test lint fmt vet tidy e2e install
+.PHONY: build gen docs test lint fmt vet tidy e2e install
 
 # Build the binary with version metadata.
 VERSION ?= dev
@@ -9,9 +9,13 @@ LDFLAGS := -s -w -X main.version=$(VERSION) -X main.commit=$(COMMIT) -X main.dat
 build:
 	go build -ldflags "$(LDFLAGS)" -o gr4vy .
 
-# Regenerate the command surface from the gr4vy-go SDK types.
+# Regenerate the command surface (and docs) from the gr4vy-go SDK types.
 gen:
 	go generate ./...
+
+# Regenerate just the Markdown command reference under docs/.
+docs:
+	go run ./internal/gendocs
 
 # Bump gr4vy-go to its latest release, then regenerate (mirrors the regen CI job).
 gen-refresh:

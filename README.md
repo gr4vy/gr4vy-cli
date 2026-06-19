@@ -122,8 +122,39 @@ gr4vy embed 1299 USD --checkout-session # also creates a checkout session
 
 ## Output
 
-`-o, --output json|yaml|table` (defaults to `table` on a TTY, `json` otherwise).
+`-o, --output json|yaml|table` (defaults to `table` on a TTY, `json` otherwise; also
+settable via `GR4VY_OUTPUT`). `--compact` emits single-line JSON for piping to `jq`.
 Lists accept `--limit` and `--cursor`; the `next_cursor` is returned for paging.
+
+## Command reference
+
+Every command is documented under [`docs/`](docs/gr4vy.md) — one page per command with its
+arguments, flags, and the SDK operation it calls. The pages are generated from the CLI
+itself (`make docs`) and stay in sync with the command surface. You can also explore
+interactively:
+
+```sh
+gr4vy --help
+gr4vy transactions --help
+gr4vy transactions list --help
+```
+
+## Shell completion
+
+Completion is built in for bash, zsh, fish, and PowerShell. Generate a script with
+`gr4vy completion <shell>`:
+
+```sh
+# zsh
+gr4vy completion zsh > "${fpath[1]}/_gr4vy"
+# bash
+gr4vy completion bash > /usr/local/etc/bash_completion.d/gr4vy
+# fish
+gr4vy completion fish > ~/.config/fish/completions/gr4vy.fish
+```
+
+Run `gr4vy completion --help` for per-shell setup. Flags with fixed choices (e.g.
+`token --scope`) complete their values.
 
 ## How it stays up to date
 

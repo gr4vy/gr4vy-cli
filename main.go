@@ -3,6 +3,7 @@
 package main
 
 //go:generate go run ./internal/gen
+//go:generate go run ./internal/gendocs
 
 import "github.com/gr4vy/gr4vy-cli/internal/cli"
 
