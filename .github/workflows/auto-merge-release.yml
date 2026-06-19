@@ -1,7 +1,13 @@
-# Auto-approve and auto-merge the release-please PR, mirroring how the gr4vy
-# SDK repos auto-merge their bot PRs. Once CI passes, the "chore(main): release
-# X.Y.Z" PR merges itself, which tags the version and triggers goreleaser.
-name: auto-merge release
+# Auto-approve and auto-merge the two automated bot PRs, mirroring how the gr4vy
+# SDK repos auto-merge their bot PRs:
+#   - the release-please PR ("chore(main): release X.Y.Z") — merging it tags the
+#     version and triggers goreleaser; and
+#   - the regen PR ("auto/regen") that bumps gr4vy-go and regenerates the command
+#     surface.
+# Both merge themselves once `ci-complete` is green. The merge runs as
+# gr4vy-code (DISPATCH_ACCESS_TOKEN), which bypasses the review requirement but
+# NOT the required status check — so nothing merges on red CI.
+name: auto-merge bot PRs
 
 on:
   pull_request:
@@ -19,16 +25,14 @@ jobs:
   auto-merge:
     runs-on: ubuntu-latest
     steps:
-      # Approve the release PR so the required-review rule is satisfied. The
-      # default GITHUB_TOKEN approves as github-actions[bot] — a distinct
-      # identity from the PR author (gr4vy-code), so it counts as a review.
-      - name: Approve the release-please PR
-        if: ${{ github.event_name == 'pull_request' && startsWith(github.event.pull_request.head.ref, 'release-please--') }}
+      # Belt-and-suspenders approval (the gr4vy-code merge already bypasses the
+      # review rule). Approves as github-actions[bot], distinct from the author.
+      - name: Approve bot PRs
+        if: ${{ github.event_name == 'pull_request' && (startsWith(github.event.pull_request.head.ref, 'release-please--') || github.event.pull_request.head.ref == 'auto/regen') }}
         uses: hmarr/auto-approve-action@8f929096a962e83ccdfa8afcf855f39f12d4dac7 # v4
 
-      # Merge it once it's mergeable (required checks green + the approval
-      # above). Scoped to the release PR via its label; squash to match the
-      # SDKs. pascalgn merges via the API, so it respects branch protection.
+      # Merge the release PR (scoped by its label). pascalgn merges via the API,
+      # so branch protection (the ci-complete required check) is still enforced.
       - name: Auto-merge the release-please PR
         uses: pascalgn/automerge-action@7961b8b5eec56cc088c140b56d864285eabd3f67 # v0.16.4
         env:
@@ -38,5 +42,19 @@ jobs:
           MERGE_METHOD: squash
           MERGE_COMMIT_MESSAGE: pull-request-title
           MERGE_DELETE_BRANCH: false
+          MERGE_FORKS: false
+          MERGE_RETRY_SLEEP: "30000"
+
+      # Merge the SDK regen PR (scoped by its sdk-sync label); delete its branch
+      # so the next regen starts clean.
+      - name: Auto-merge the regen PR
+        uses: pascalgn/automerge-action@7961b8b5eec56cc088c140b56d864285eabd3f67 # v0.16.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          MERGE_LABELS: "sdk-sync"
+          MERGE_REQUIRED_APPROVALS: "0"
+          MERGE_METHOD: squash
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_DELETE_BRANCH: true
           MERGE_FORKS: false
           MERGE_RETRY_SLEEP: "30000"
