@@ -57,7 +57,12 @@ type Result struct {
 func (c *CLI) Run(t *testing.T, args ...string) Result {
 	t.Helper()
 	cmd := exec.Command(c.bin, args...)
-	cmd.Env = append(os.Environ(),
+	// Start from the inherited environment with every key we control stripped
+	// out, then append our overrides. Go's exec keeps the last value when a key
+	// is duplicated on most platforms, but stripping first avoids relying on
+	// that and keeps the subprocess deterministically hermetic regardless of
+	// any inherited GR4VY_*, HOME, or XDG_CONFIG_HOME.
+	cmd.Env = append(cleanEnv(),
 		"GR4VY_ID="+ServerID,
 		"GR4VY_SERVER="+Server,
 		"GR4VY_MERCHANT_ACCOUNT_ID="+c.mid,
@@ -91,6 +96,26 @@ func (c *CLI) MustRun(t *testing.T, args ...string) string {
 		t.Fatalf("`gr4vy %s` failed (exit %d): %s", strings.Join(args, " "), r.Code, r.Stderr)
 	}
 	return r.Stdout
+}
+
+// cleanEnv returns the inherited environment with every key the harness sets
+// itself removed, so the appended overrides are the only source of truth and
+// the subprocess can't pick up a stray GR4VY_*, HOME, or XDG_CONFIG_HOME from
+// the host.
+func cleanEnv() []string {
+	src := os.Environ()
+	out := make([]string, 0, len(src))
+	for _, kv := range src {
+		key := kv
+		if i := strings.IndexByte(kv, '='); i >= 0 {
+			key = kv[:i]
+		}
+		if strings.HasPrefix(key, "GR4VY_") || key == "HOME" || key == "XDG_CONFIG_HOME" {
+			continue
+		}
+		out = append(out, kv)
+	}
+	return out
 }
 
 func loadKey(t *testing.T) string {
