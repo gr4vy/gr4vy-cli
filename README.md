@@ -1,6 +1,18 @@
 Gr4vy CLI
 =================
 
+> [!WARNING]
+> **`@gr4vy/cli` is deprecated and no longer maintained.**
+> The Gr4vy CLI has been rewritten in Go and is no longer published to npm.
+> Install the new CLI instead:
+>
+> ```sh
+> brew install gr4vy/tap/gr4vy
+> ```
+>
+> See https://github.com/gr4vy/gr4vy-cli for documentation. This npm package will
+> not receive further updates.
+
 The Gr4vy CLI is a useful tool for developers to quickly generate tokens, 
 query data, and perform basic API manipulation. 
 
