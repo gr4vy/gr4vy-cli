@@ -25,12 +25,22 @@ const sessionPath = "/auth/sessions"
 const refreshSkew = 60 * time.Second
 
 // ReauthError indicates the stored session is missing or unrefreshable and the
-// user must log in again.
-type ReauthError struct{ Profile string }
+// user must log in again. Err, when set, carries the underlying cause (e.g. a
+// network or 5xx failure during refresh) so transient problems stay diagnosable.
+type ReauthError struct {
+	Profile string
+	Err     error
+}
 
 func (e *ReauthError) Error() string {
-	return fmt.Sprintf("not logged in (or session expired) for profile %q; run `gr4vy login`", e.Profile)
+	msg := fmt.Sprintf("not logged in (or session expired) for profile %q; run `gr4vy login`", e.Profile)
+	if e.Err != nil {
+		msg += ": " + e.Err.Error()
+	}
+	return msg
 }
+
+func (e *ReauthError) Unwrap() error { return e.Err }
 
 // storedSession is the persisted login bundle.
 type storedSession struct {
@@ -95,7 +105,7 @@ func (p *LoginTokenProvider) Token(ctx context.Context) (string, error) {
 	}
 	refreshed, err := p.refresh(ctx, s.RefreshToken)
 	if err != nil {
-		return "", &ReauthError{Profile: p.ProfileName}
+		return "", &ReauthError{Profile: p.ProfileName, Err: err}
 	}
 	if err := p.save(refreshed); err != nil {
 		return "", err

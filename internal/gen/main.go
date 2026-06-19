@@ -107,8 +107,13 @@ func loadPackages() (map[string]*packages.Package, error) {
 			errs = append(errs, e.Error())
 		}
 	})
+	if len(errs) > 0 {
+		// Fail fast: generating from packages that didn't type-check cleanly
+		// would silently produce an incomplete/incorrect command surface.
+		return nil, fmt.Errorf("gr4vy-go packages did not load cleanly: %s", strings.Join(errs, "; "))
+	}
 	if out[rootPkg] == nil {
-		return nil, fmt.Errorf("could not load %s (errors: %s)", rootPkg, strings.Join(errs, "; "))
+		return nil, fmt.Errorf("could not load %s", rootPkg)
 	}
 	return out, nil
 }
