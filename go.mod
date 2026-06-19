@@ -1,6 +1,6 @@
 module github.com/gr4vy/gr4vy-cli
 
-go 1.26.4
+go 1.26
 
 require (
 	github.com/gr4vy/gr4vy-go v1.12.110

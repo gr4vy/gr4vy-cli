@@ -9,9 +9,9 @@ import (
 )
 
 // AllScopes lists every JWT scope the SDK defines. It is hand-maintained
-// against gr4vy-go's constants; referencing the typed constants means a removed
-// scope breaks the build (a useful signal), and the regen workflow refreshes
-// additions.
+// against gr4vy-go's constants: referencing the typed constants means a removed
+// scope breaks the build (a useful signal). New scopes must be added here by
+// hand — the gr4vy-go bump in a regen PR is the prompt to do so.
 var AllScopes = []gr4vygo.JWTScope{
 	gr4vygo.ReadAll, gr4vygo.WriteAll, gr4vygo.Embed,
 	gr4vygo.AntiFraudServiceDefinitionsRead, gr4vygo.AntiFraudServiceDefinitionsWrite,
