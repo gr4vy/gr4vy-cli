@@ -19,6 +19,11 @@ export abstract class BaseCommand extends Command {
 
   public async init(): Promise<void> {
     await super.init();
+    process.stderr.write(
+      "⚠️  @gr4vy/cli is deprecated and no longer maintained. " +
+        "Install the new Go CLI instead: brew install gr4vy/tap/gr4vy " +
+        "(https://github.com/gr4vy/gr4vy-cli)\n"
+    );
     this.load();
   }
 }
