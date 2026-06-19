@@ -25,6 +25,9 @@ func newLoginCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
+			if err := requireProfile(s.Resolved.ProfileName); err != nil {
+				return err
+			}
 
 			if email == "" {
 				email = s.Resolved.Profile.Email
@@ -67,6 +70,15 @@ func newLoginCmd() *cobra.Command {
 	return cmd
 }
 
+// requireProfile fails when no named profile is in effect, so login sessions are
+// never stored or cleared under an empty profile key (which would be ambiguous).
+func requireProfile(name string) error {
+	if name == "" {
+		return clierr.Config(fmt.Errorf("no profile selected; run `gr4vy init` or pass --profile to choose one"))
+	}
+	return nil
+}
+
 func newLogoutCmd() *cobra.Command {
 	return &cobra.Command{
 		Use:   "logout",
@@ -75,6 +87,9 @@ func newLogoutCmd() *cobra.Command {
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			s, err := app.Resolve(cmd)
 			if err != nil {
+				return err
+			}
+			if err := requireProfile(s.Resolved.ProfileName); err != nil {
 				return err
 			}
 			if err := auth.Logout(cmd.Context(), s.Resolved, s.Store, nil); err != nil {

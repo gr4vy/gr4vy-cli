@@ -34,8 +34,8 @@ func decodeJWT(token string) (decodedJWT, error) {
 func decodeSegment(seg string) (map[string]any, error) {
 	data, err := base64.RawURLEncoding.DecodeString(seg)
 	if err != nil {
-		// Tolerate padded encodings.
-		data, err = base64.StdEncoding.DecodeString(seg)
+		// Tolerate padded base64url encodings.
+		data, err = base64.URLEncoding.DecodeString(seg)
 		if err != nil {
 			return nil, err
 		}
