@@ -165,9 +165,11 @@ func buildRequestStructOp(g *genOp, selector string, named *types.Named, sig *ty
 			g.HasBody = true
 			g.BodyType = typeName
 			if isPtr {
+				// Only allocate the pointer body when one was actually
+				// provided, so optional bodies stay nil (omitted).
 				pre = append(pre,
-					fmt.Sprintf("req.%s = new(%s)", field, strings.TrimPrefix(decl, "*")),
 					"if len(in.Body) > 0 {",
+					fmt.Sprintf("req.%s = new(%s)", field, strings.TrimPrefix(decl, "*")),
 					fmt.Sprintf("if err := json.Unmarshal(in.Body, req.%s); err != nil {", field),
 					"return nil, err", "}", "}",
 				)
@@ -413,7 +415,7 @@ func short(op specOp) string {
 	if op.Summary != "" {
 		return op.Summary
 	}
-	return strings.Title(op.Name) + " " + strings.ReplaceAll(op.Group, ".", " ")
+	return capitalize(op.Name) + " " + strings.ReplaceAll(op.Group, ".", " ")
 }
 
 var usageOverrides = map[string]string{

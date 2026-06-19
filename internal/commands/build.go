@@ -53,7 +53,7 @@ func ensureParents(parents map[string]*cobra.Command, group string) *cobra.Comma
 		}
 		c := &cobra.Command{
 			Use:   seg,
-			Short: "Manage " + strings.ReplaceAll(group, ".", " "),
+			Short: "Manage " + strings.ReplaceAll(path, ".", " "),
 		}
 		parent.AddCommand(c)
 		parents[path] = c
@@ -125,9 +125,8 @@ func runOperation(cmd *cobra.Command, op *Operation, args []string) error {
 	return s.Render(cmd.OutOrStdout(), res)
 }
 
-// loadBody resolves the --data flag into raw JSON bytes. For operations that
-// take a body, an unset --data yields an empty object so optional-body
-// operations work and required-body ones get a clear server-side error.
+// loadBody resolves the --data flag into raw JSON bytes. An unset --data yields
+// a nil body, so the generated closures omit the request body entirely.
 func loadBody(cmd *cobra.Command, hasBody bool) ([]byte, error) {
 	if !hasBody {
 		return nil, nil
@@ -135,7 +134,10 @@ func loadBody(cmd *cobra.Command, hasBody bool) ([]byte, error) {
 	v, _ := cmd.Flags().GetString("data")
 	switch {
 	case v == "":
-		return []byte("{}"), nil
+		// No --data: omit the body entirely. Optional-body operations send
+		// nothing; required-body ones get a clear server-side error. Send an
+		// explicit empty object with --data '{}' if that's intended.
+		return nil, nil
 	case v == "-":
 		data, err := io.ReadAll(os.Stdin)
 		if err != nil {

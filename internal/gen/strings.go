@@ -27,6 +27,17 @@ func kebab(s string) string {
 // pascalToKebab is kebab for resource field names.
 func pascalToKebab(s string) string { return kebab(s) }
 
+// capitalize upper-cases the first rune of s (a replacement for the deprecated
+// strings.Title, sufficient for single-word command verbs).
+func capitalize(s string) string {
+	if s == "" {
+		return s
+	}
+	r := []rune(s)
+	r[0] = unicode.ToUpper(r[0])
+	return string(r)
+}
+
 // snakeToKebab converts snake_case (from spec/tag names) to kebab-case.
 func snakeToKebab(s string) string {
 	out := make([]rune, 0, len(s))

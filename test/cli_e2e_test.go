@@ -74,8 +74,7 @@ func TestCommandCoverage(t *testing.T) {
 		{"transactions", "refunds", "create", "--help"},
 		{"payment-methods", "--help"},
 	} {
-		if r := c.Run(t, append(args, "")...); r.Code != 0 && r.Code != 2 {
-			// help exits 0; bad arg count exits 2 — both acceptable here.
+		if r := c.Run(t, args...); r.Code != 0 {
 			t.Errorf("`gr4vy %s` unexpected exit %d: %s", strings.Join(args, " "), r.Code, r.Stderr)
 		}
 	}
