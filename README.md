@@ -141,20 +141,29 @@ gr4vy transactions list --help
 
 ## Shell completion
 
-Completion is built in for bash, zsh, fish, and PowerShell. Generate a script with
-`gr4vy completion <shell>`:
+Completion is built in for bash, zsh, fish, and PowerShell. Load it in your current
+shell to try it:
 
 ```sh
-# zsh
-gr4vy completion zsh > "${fpath[1]}/_gr4vy"
-# bash
-gr4vy completion bash > /usr/local/etc/bash_completion.d/gr4vy
+source <(gr4vy completion zsh)     # or: bash / fish
+```
+
+Install it permanently:
+
+```sh
+# zsh — make sure `autoload -U compinit; compinit` is in your ~/.zshrc, then:
+gr4vy completion zsh > $(brew --prefix)/share/zsh/site-functions/_gr4vy   # macOS (Homebrew)
+gr4vy completion zsh > "${fpath[1]}/_gr4vy"                                # Linux
+
+# bash (Linux)
+gr4vy completion bash > /etc/bash_completion.d/gr4vy
+
 # fish
 gr4vy completion fish > ~/.config/fish/completions/gr4vy.fish
 ```
 
-Run `gr4vy completion --help` for per-shell setup. Flags with fixed choices (e.g.
-`token --scope`) complete their values.
+Run `gr4vy completion <shell> --help` for exact per-shell setup. Flags with fixed
+choices (e.g. `token --scope`) complete their values.
 
 ## How it stays up to date
 
