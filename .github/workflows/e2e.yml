@@ -1,5 +1,7 @@
 # Live e2e suite against the shared sandbox (api.sandbox.e2e.gr4vy.app),
-# mirroring the gr4vy SDK repos. Skips on fork PRs (no secret access).
+# mirroring the gr4vy SDK repos. Skips when PRIVATE_KEY is unavailable (fork PRs,
+# or before the secret is configured). Set the repo variable REQUIRE_E2E=true to
+# fail instead of skip on trusted refs once the secret exists.
 name: e2e
 
 on:
@@ -28,13 +30,14 @@ jobs:
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           IS_FORK_PR: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+          REQUIRE_E2E: ${{ vars.REQUIRE_E2E }}
         run: |
           if [ -z "$PRIVATE_KEY" ]; then
-            if [ "$IS_FORK_PR" = "true" ]; then
-              echo "Fork PR without secrets — skipping live e2e suite."
-              exit 0
+            if [ "$REQUIRE_E2E" = "true" ] && [ "$IS_FORK_PR" != "true" ]; then
+              echo "::error::PRIVATE_KEY is not set on a trusted ref (REQUIRE_E2E=true)."
+              exit 1
             fi
-            echo "::error::PRIVATE_KEY is not set on a trusted ref — failing instead of silently skipping."
-            exit 1
+            echo "::warning::PRIVATE_KEY not available — skipping live e2e suite."
+            exit 0
           fi
           go test ./test/... -count=1 -v
