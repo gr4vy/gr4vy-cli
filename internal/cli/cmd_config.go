@@ -300,7 +300,7 @@ func storeKeyForProfile(name string, p *config.Profile, pf *profileFlags, store 
 	}
 	p.KeyRef = config.KeyRefStore
 	if store.Backend() == secret.BackendFile {
-		fmt.Fprintln(os.Stderr, "note: no OS keychain available; private key stored in a 0600 file under ~/.config/gr4vy/secrets")
+		fmt.Fprintln(os.Stderr, "note: no OS keychain available; private key stored in a 0600 file under $XDG_CONFIG_HOME/gr4vy/secrets (default ~/.config/gr4vy/secrets)")
 	}
 	return nil
 }

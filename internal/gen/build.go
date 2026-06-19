@@ -65,15 +65,31 @@ func buildFlattenedOp(g *genOp, selector string, core []*types.Var, sig *types.S
 			decl, isPtr, typeName, _ := bodyParam(pt)
 			g.HasBody = true
 			g.BodyType = typeName
-			pre = append(pre,
-				"var body "+decl,
-				"if len(in.Body) > 0 {",
-				"if err := json.Unmarshal(in.Body, &body); err != nil {",
-				"return nil, err",
-				"}",
-				"}",
-			)
-			callArgs = append(callArgs, ptrPrefix(isPtr)+"body")
+			if isPtr {
+				// Keep the pointer nil unless a body was provided, so optional
+				// bodies are omitted rather than sent as an empty object.
+				pre = append(pre,
+					"var body "+decl,
+					"var bodyPtr *"+decl,
+					"if len(in.Body) > 0 {",
+					"if err := json.Unmarshal(in.Body, &body); err != nil {",
+					"return nil, err",
+					"}",
+					"bodyPtr = &body",
+					"}",
+				)
+				callArgs = append(callArgs, "bodyPtr")
+			} else {
+				pre = append(pre,
+					"var body "+decl,
+					"if len(in.Body) > 0 {",
+					"if err := json.Unmarshal(in.Body, &body); err != nil {",
+					"return nil, err",
+					"}",
+					"}",
+				)
+				callArgs = append(callArgs, "body")
+			}
 		case isStringSlice(pt):
 			fn := kebab(name)
 			pre = append(pre, fmt.Sprintf("%s := commands.StringSlice(in.Flags, %q)", name, fn))
@@ -130,13 +146,6 @@ func scalarArg(name string, t types.Type) (prelude, expr string, fm flagMeta, ok
 		}
 	}
 	return "", "", flagMeta{}, false
-}
-
-func ptrPrefix(isPtr bool) string {
-	if isPtr {
-		return "&"
-	}
-	return ""
 }
 
 // buildRequestStructOp handles methods that take a single operations.*Request.

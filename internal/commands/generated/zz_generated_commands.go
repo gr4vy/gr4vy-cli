@@ -345,12 +345,14 @@ func init() {
 		BodyType: "CheckoutSessionCreate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 			var body components.CheckoutSessionCreate
+			var bodyPtr *components.CheckoutSessionCreate
 			if len(in.Body) > 0 {
 				if err := json.Unmarshal(in.Body, &body); err != nil {
 					return nil, err
 				}
+				bodyPtr = &body
 			}
-			resp, err := c.CheckoutSessions.Create(ctx, commands.OptString(in.Flags, "merchant-account-id"), &body)
+			resp, err := c.CheckoutSessions.Create(ctx, commands.OptString(in.Flags, "merchant-account-id"), bodyPtr)
 			if err != nil {
 				return nil, err
 			}
@@ -1684,12 +1686,14 @@ func init() {
 		BodyType:   "ReportExecutionURLGenerate",
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 			var body components.ReportExecutionURLGenerate
+			var bodyPtr *components.ReportExecutionURLGenerate
 			if len(in.Body) > 0 {
 				if err := json.Unmarshal(in.Body, &body); err != nil {
 					return nil, err
 				}
+				bodyPtr = &body
 			}
-			resp, err := c.Reports.Executions.URL(ctx, in.Args[0], in.Args[1], commands.OptString(in.Flags, "merchant-account-id"), &body)
+			resp, err := c.Reports.Executions.URL(ctx, in.Args[0], in.Args[1], commands.OptString(in.Flags, "merchant-account-id"), bodyPtr)
 			if err != nil {
 				return nil, err
 			}
@@ -2140,12 +2144,14 @@ func init() {
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 			var body components.TransactionRefundAllCreate
+			var bodyPtr *components.TransactionRefundAllCreate
 			if len(in.Body) > 0 {
 				if err := json.Unmarshal(in.Body, &body); err != nil {
 					return nil, err
 				}
+				bodyPtr = &body
 			}
-			resp, err := c.Transactions.Refunds.All.Create(ctx, in.Args[0], commands.OptString(in.Flags, "merchant-account-id"), commands.OptString(in.Flags, "idempotency-key"), &body)
+			resp, err := c.Transactions.Refunds.All.Create(ctx, in.Args[0], commands.OptString(in.Flags, "merchant-account-id"), commands.OptString(in.Flags, "idempotency-key"), bodyPtr)
 			if err != nil {
 				return nil, err
 			}
