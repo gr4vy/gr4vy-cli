@@ -48,7 +48,7 @@ jobs:
         with:
           token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
           branch: auto/regen
-          draft: true
+          draft: false
           title: "feat: regenerate command surface from latest gr4vy-go"
           commit-message: "feat: regenerate command surface from latest gr4vy-go"
           body: |
