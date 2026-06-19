@@ -398,6 +398,8 @@ func pkgQualifier(n *types.Named) string {
 		return "operations"
 	case compPkg:
 		return "components"
+	case rootPkg:
+		return "gr4vygo"
 	default:
 		return "components"
 	}

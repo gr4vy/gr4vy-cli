@@ -47,6 +47,11 @@ func newTokenCmd() *cobra.Command {
 			if len(rawScopes) == 0 {
 				rawScopes = s.Resolved.Profile.DefaultScopes
 			}
+			if len(rawScopes) == 0 {
+				// Enforce the documented fallback (see Long help) rather than
+				// leaving scopes empty and depending on how gr4vy-go treats it.
+				rawScopes = []string{"*.read", "*.write"}
+			}
 			scopeList, err := auth.ParseScopes(rawScopes)
 			if err != nil {
 				return clierr.Usage(err)

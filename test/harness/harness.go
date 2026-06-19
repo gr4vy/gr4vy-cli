@@ -65,6 +65,10 @@ func (c *CLI) Run(t *testing.T, args ...string) Result {
 		"GR4VY_OUTPUT=json",
 		"GR4VY_SECRET_BACKEND=file",
 		"HOME="+t.TempDir(),
+		// Isolate config/secret backends: both honor XDG_CONFIG_HOME ahead of
+		// HOME, so pin it to a temp dir to keep the subprocess hermetic even
+		// when the host sets XDG_CONFIG_HOME (common on Linux).
+		"XDG_CONFIG_HOME="+t.TempDir(),
 	)
 	var stdout, stderr bytes.Buffer
 	cmd.Stdout = &stdout
