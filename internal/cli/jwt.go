@@ -4,6 +4,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"math"
 	"strings"
 )
 
@@ -115,7 +116,11 @@ func parseAllDigits(s string) (int, error) {
 		if r < '0' || r > '9' {
 			return 0, fmt.Errorf("not a number")
 		}
-		n = n*10 + int(r-'0')
+		d := int(r - '0')
+		if n > (math.MaxInt-d)/10 {
+			return 0, fmt.Errorf("number too large")
+		}
+		n = n*10 + d
 	}
 	return n, nil
 }

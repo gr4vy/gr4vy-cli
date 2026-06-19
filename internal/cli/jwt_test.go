@@ -16,6 +16,8 @@ func TestParseTTLSeconds(t *testing.T) {
 		{"", 0, true},
 		{"5x", 0, true},
 		{"1h30", 0, true},
+		{"99999999999999999999", 0, true}, // overflows int
+		{"99999999999999999999d", 0, true},
 	}
 	for _, c := range cases {
 		got, err := parseTTLSeconds(c.in)

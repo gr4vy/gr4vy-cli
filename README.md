@@ -8,8 +8,8 @@ SDK and exposes **every operation the SDK supports** — buyers, transactions, p
 methods, checkout sessions, reports, and more — plus helpers for tokens, Embed, and
 profile management.
 
-The command surface is **generated from the Gr4vy OpenAPI spec**, so it stays in sync with
-the API automatically.
+The command surface is **generated from the `gr4vy-go` SDK's types**, so it stays in sync
+with the SDK automatically.
 
 > The previous TypeScript/npm CLI (`@gr4vy/cli`) is deprecated. This Go rewrite replaces it
 > and is distributed as a self-contained binary.
