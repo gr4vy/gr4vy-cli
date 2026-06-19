@@ -13,12 +13,6 @@ import (
 	"github.com/gr4vy/gr4vy-cli/internal/commands"
 )
 
-var (
-	_ = json.Marshal
-	_ = components.Buyer{}
-	_ = operations.ListBuyersRequest{}
-)
-
 func init() {
 	commands.Register(&commands.Operation{
 		Group:    "account-updater.jobs",
