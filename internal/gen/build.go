@@ -111,8 +111,10 @@ func scalarArg(name string, t types.Type) (prelude, expr string, fm flagMeta, ok
 		switch b.Kind() {
 		case types.String:
 			return "", fmt.Sprintf("commands.OptString(in.Flags, %q)", fn), flagMeta{fn, usageFor(fn), "KindString"}, true
-		case types.Int64, types.Int:
-			return "", fmt.Sprintf("commands.OptInt64(in.Flags, %q)", fn), flagMeta{fn, usageFor(fn), "KindInt"}, true
+		case types.Int64:
+			return "", fmt.Sprintf("commands.OptInt64(in.Flags, %q)", fn), flagMeta{fn, usageFor(fn), "KindInt64"}, true
+		case types.Int:
+			return "", fmt.Sprintf("commands.OptInt(in.Flags, %q)", fn), flagMeta{fn, usageFor(fn), "KindInt"}, true
 		case types.Bool:
 			return "", fmt.Sprintf("commands.OptBool(in.Flags, %q)", fn), flagMeta{fn, usageFor(fn), "KindBool"}, true
 		case types.Float64, types.Float32:
@@ -224,8 +226,11 @@ func queryField(field, flag string, t types.Type) (string, flagMeta, bool) {
 		case types.String:
 			return fmt.Sprintf("req.%s = commands.OptString(in.Flags, %q)", field, flag),
 				flagMeta{Name: flag, Usage: usageFor(flag), Kind: "KindString"}, true
-		case types.Int64, types.Int:
+		case types.Int64:
 			return fmt.Sprintf("req.%s = commands.OptInt64(in.Flags, %q)", field, flag),
+				flagMeta{Name: flag, Usage: usageFor(flag), Kind: "KindInt64"}, true
+		case types.Int:
+			return fmt.Sprintf("req.%s = commands.OptInt(in.Flags, %q)", field, flag),
 				flagMeta{Name: flag, Usage: usageFor(flag), Kind: "KindInt"}, true
 		case types.Bool:
 			return fmt.Sprintf("req.%s = commands.OptBool(in.Flags, %q)", field, flag),

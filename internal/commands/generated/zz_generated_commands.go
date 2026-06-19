@@ -49,7 +49,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "action", Usage: "action parameter", Kind: commands.KindString},
 			{Name: "user-id", Usage: "user-id parameter", Kind: commands.KindString},
 			{Name: "resource-type", Usage: "resource-type parameter", Kind: commands.KindString},
@@ -127,7 +127,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "search", Usage: "free-text search filter", Kind: commands.KindString},
 			{Name: "external-identifier", Usage: "external-identifier parameter", Kind: commands.KindString},
 		},
@@ -733,7 +733,7 @@ func init() {
 			{Name: "buyer-external-identifier", Usage: "buyer-external-identifier parameter", Kind: commands.KindString},
 			{Name: "buyer-id", Usage: "buyer-id parameter", Kind: commands.KindString},
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 			req := operations.ListGiftCardsRequest{}
@@ -815,7 +815,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "search", Usage: "free-text search filter", Kind: commands.KindString},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -978,7 +978,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "buyer-search", Usage: "buyer-search parameter", Kind: commands.KindStringSlice},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1045,7 +1045,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "buyer-id", Usage: "buyer-id parameter", Kind: commands.KindString},
 			{Name: "buyer-external-identifier", Usage: "buyer-external-identifier parameter", Kind: commands.KindString},
 			{Name: "external-identifier", Usage: "external-identifier parameter", Kind: commands.KindString},
@@ -1285,7 +1285,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1374,7 +1374,7 @@ func init() {
 		Optionals: []commands.Flag{
 			{Name: "method", Usage: "method parameter", Kind: commands.KindString},
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "deleted", Usage: "deleted parameter", Kind: commands.KindBool},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
@@ -1503,7 +1503,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1537,7 +1537,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "report-name", Usage: "report-name parameter", Kind: commands.KindString},
 			{Name: "creator-id", Usage: "creator-id parameter", Kind: commands.KindStringSlice},
 		},
@@ -1599,7 +1599,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "schedule-enabled", Usage: "schedule-enabled parameter", Kind: commands.KindBool},
 			{Name: "name", Usage: "name parameter", Kind: commands.KindString},
 		},
@@ -1663,7 +1663,7 @@ func init() {
 		IsList:     true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1736,7 +1736,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
@@ -1862,7 +1862,7 @@ func init() {
 		IsList: true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "search", Usage: "free-text search filter", Kind: commands.KindString},
 			{Name: "buyer-external-identifier", Usage: "buyer-external-identifier parameter", Kind: commands.KindString},
 			{Name: "buyer-id", Usage: "buyer-id parameter", Kind: commands.KindString},
@@ -1872,9 +1872,9 @@ func init() {
 			{Name: "payment-service-transaction-id", Usage: "payment-service-transaction-id parameter", Kind: commands.KindString},
 			{Name: "external-identifier", Usage: "external-identifier parameter", Kind: commands.KindString},
 			{Name: "metadata", Usage: "metadata parameter", Kind: commands.KindStringSlice},
-			{Name: "amount-eq", Usage: "amount-eq parameter", Kind: commands.KindInt},
-			{Name: "amount-lte", Usage: "amount-lte parameter", Kind: commands.KindInt},
-			{Name: "amount-gte", Usage: "amount-gte parameter", Kind: commands.KindInt},
+			{Name: "amount-eq", Usage: "amount-eq parameter", Kind: commands.KindInt64},
+			{Name: "amount-lte", Usage: "amount-lte parameter", Kind: commands.KindInt64},
+			{Name: "amount-gte", Usage: "amount-gte parameter", Kind: commands.KindInt64},
 			{Name: "currency", Usage: "currency parameter", Kind: commands.KindStringSlice},
 			{Name: "country", Usage: "country parameter", Kind: commands.KindStringSlice},
 			{Name: "payment-service-id", Usage: "payment-service-id parameter", Kind: commands.KindStringSlice},
@@ -2060,7 +2060,7 @@ func init() {
 		IsList:     true,
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
-			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 

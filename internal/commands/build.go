@@ -87,6 +87,8 @@ func leafCommand(op *Operation) *cobra.Command {
 	for _, f := range op.Optionals {
 		switch f.Kind {
 		case KindInt:
+			cmd.Flags().Int(f.Name, 0, f.Usage)
+		case KindInt64:
 			cmd.Flags().Int64(f.Name, 0, f.Usage)
 		case KindBool:
 			cmd.Flags().Bool(f.Name, false, f.Usage)

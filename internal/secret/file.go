@@ -1,10 +1,10 @@
 package secret
 
 import (
+	"encoding/hex"
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 )
 
 // fileStore persists secrets as 0600 files under a 0700 directory. It is the
@@ -34,6 +34,12 @@ func defaultSecretsDir() (string, error) {
 
 func (s *fileStore) path(profile string, kind Kind) string {
 	return filepath.Join(s.dir, safeName(profile)+"."+string(kind))
+}
+
+// safeName hex-encodes the profile name so distinct names always map to
+// distinct, filesystem-safe filenames (an injective encoding — no collisions).
+func safeName(s string) string {
+	return hex.EncodeToString([]byte(s))
 }
 
 func (s *fileStore) Get(profile string, kind Kind) (string, error) {
@@ -66,15 +72,3 @@ func (s *fileStore) Delete(profile string, kind Kind) error {
 }
 
 func (s *fileStore) Backend() string { return BackendFile }
-
-// safeName makes a profile name safe to use as a filename component.
-func safeName(s string) string {
-	return strings.Map(func(r rune) rune {
-		switch {
-		case r >= 'a' && r <= 'z', r >= 'A' && r <= 'Z', r >= '0' && r <= '9', r == '-', r == '_':
-			return r
-		default:
-			return '_'
-		}
-	}, s)
-}

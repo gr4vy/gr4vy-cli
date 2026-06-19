@@ -42,7 +42,7 @@ func parseSpec(path string) ([]specOp, error) {
 				Description string `json:"description"`
 			}
 			if err := json.Unmarshal(raw, &o); err != nil {
-				continue
+				return nil, fmt.Errorf("parse operation %s %s: %w", method, p, err)
 			}
 			if o.Group == "" || o.Name == "" {
 				continue // not an SDK-backed operation; out of scope

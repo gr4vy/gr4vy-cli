@@ -16,7 +16,8 @@ type FlagKind int
 
 const (
 	KindString FlagKind = iota
-	KindInt
+	KindInt             // *int
+	KindInt64           // *int64
 	KindBool
 	KindFloat
 	KindStringSlice
@@ -75,7 +76,19 @@ func OptString(fs *pflag.FlagSet, name string) *string {
 	return &v
 }
 
-// OptInt64 returns a pointer to the int flag value if set, else nil.
+// OptInt returns a pointer to the int flag value if set, else nil.
+func OptInt(fs *pflag.FlagSet, name string) *int {
+	if fs == nil || !fs.Changed(name) {
+		return nil
+	}
+	v, err := fs.GetInt(name)
+	if err != nil {
+		return nil
+	}
+	return &v
+}
+
+// OptInt64 returns a pointer to the int64 flag value if set, else nil.
 func OptInt64(fs *pflag.FlagSet, name string) *int64 {
 	if fs == nil || !fs.Changed(name) {
 		return nil
