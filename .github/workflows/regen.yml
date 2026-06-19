@@ -1,0 +1,73 @@
+# NOTE: pin actions to commit SHAs before merging (repo policy).
+# Self-maintenance: regenerate the command surface and bump gr4vy-go when the
+# OpenAPI spec or the SDK changes, then open a draft PR for review.
+name: regen
+
+on:
+  repository_dispatch:
+    types: [openapi_published, sdk_updated]
+  schedule:
+    - cron: "0 1 * * *" # safety net, offset after gr4vy-go's regen
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  regen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Use a token whose pushes trigger CI on the resulting PR.
+          token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: Fetch latest spec
+        run: curl -fSsL https://gr4vy.github.io/openapi/core/openapi.json -o internal/spec/openapi.json
+
+      - name: Bump gr4vy-go
+        run: |
+          go get -u github.com/gr4vy/gr4vy-go@latest
+          go mod tidy
+
+      - name: Regenerate commands
+        run: go generate ./...
+
+      - name: Update golden
+        run: go test ./internal/cli -run TestCommandTreeSnapshot -update || true
+
+      - name: Build & test
+        run: |
+          go build ./...
+          go test ./... -count=1
+
+      - name: Open draft PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          branch: auto/regen
+          draft: true
+          title: "feat: regenerate command surface from latest spec/SDK"
+          commit-message: "feat: regenerate command surface from latest spec/SDK"
+          body: |
+            Automated regeneration triggered by an upstream spec/SDK change.
+
+            - Refreshed `internal/spec/openapi.json`
+            - Bumped `github.com/gr4vy/gr4vy-go`
+            - Regenerated `internal/commands/generated`
+
+            Review the command-tree golden diff before marking ready.
+          labels: automated, spec-sync
+
+      - name: Notify Slack on failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: sdk-updates
+          SLACK_WEBHOOK: ${{ secrets.SLACK_SDK_WEBHOOK_URL }}
+          SLACK_MESSAGE: "gr4vy-cli regen workflow failed"

@@ -1,0 +1,41 @@
+# NOTE: pin actions to commit SHAs before merging (repo policy).
+# Live e2e suite against the shared sandbox (api.sandbox.e2e.gr4vy.app),
+# mirroring the gr4vy SDK repos. Skips on fork PRs (no secret access).
+name: e2e
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "30 8 * * 1-5" # weekday mornings, matching the SDKs
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - name: Run e2e suite
+        env:
+          PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+          IS_FORK_PR: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+        run: |
+          if [ -z "$PRIVATE_KEY" ]; then
+            if [ "$IS_FORK_PR" = "true" ]; then
+              echo "Fork PR without secrets — skipping live e2e suite."
+              exit 0
+            fi
+            echo "::error::PRIVATE_KEY is not set on a trusted ref — failing instead of silently skipping."
+            exit 1
+          fi
+          go test ./test/... -count=1 -v

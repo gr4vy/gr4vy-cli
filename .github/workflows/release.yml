@@ -1,0 +1,46 @@
+# NOTE: pin actions to commit SHAs before merging (repo policy).
+# Versioning + cross-platform release. release-please manages the version and
+# changelog (opening a release PR); merging it tags vX.Y.Z, which triggers
+# goreleaser to build binaries and update the Homebrew tap.
+name: release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # On push to main: maintain the release PR / cut a tag.
+  release-please:
+    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+  # On tag push: build and publish artifacts.
+  goreleaser:
+    if: ${{ startsWith(github.ref, 'refs/tags/') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+      - uses: goreleaser/goreleaser-action@v6
+        with:
+          version: "~> v2"
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
