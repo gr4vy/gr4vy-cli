@@ -1,22 +1,30 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
+  - package-ecosystem: gomod
+    directory: /
     schedule:
-      interval: 'weekly'
-      day: 'saturday'
-    versioning-strategy: 'increase'
+      interval: weekly
+      day: saturday
     labels:
-      - 'dependencies'
+      - dependencies
     open-pull-requests-limit: 5
-    pull-request-branch-name:
-      separator: '-'
     commit-message:
-      # cause a release for non-dev-deps
-      prefix: fix(deps)
-      # no release for dev-deps
-      prefix-development: chore(dev-deps)
+      # Trigger a patch release for dependency bumps.
+      prefix: "deps"
+    groups:
+      go-dependencies:
+        patterns:
+          - "*"
     ignore:
-      - dependency-name: '@salesforce/dev-scripts'
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major']
+      # gr4vy-go is bumped by the regen workflow, not Dependabot.
+      - dependency-name: github.com/gr4vy/gr4vy-go
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: saturday
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "deps"

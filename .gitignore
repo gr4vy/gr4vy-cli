@@ -1,13 +1,17 @@
+# Binaries / build output
+/gr4vy
+/dist
+*.exe
+*.test
+coverage.txt
+
+# Local credentials used by the e2e suite
+*.pem
+private_key.pem
+.gr4vyrc.json
+
+# Editor / OS
 **/.DS_Store
+/.idea
 *-debug.log
 *-error.log
-/.idea
-/.nyc_output
-/dist
-/lib
-/package-lock.json
-/tmp
-node_modules
-oclif.manifest.json
-*.pem
-.gr4vyrc.json
