@@ -22,6 +22,13 @@ with the SDK automatically.
 brew install gr4vy/tap/gr4vy
 ```
 
+### Scoop (Windows)
+
+```powershell
+scoop bucket add gr4vy https://github.com/gr4vy/scoop-bucket
+scoop install gr4vy
+```
+
 ### Go
 
 ```sh
