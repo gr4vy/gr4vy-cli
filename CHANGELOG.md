@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/gr4vy/gr4vy-cli/compare/v1.2.0...v1.2.1) (2026-06-22)
+
+
+### Dependencies
+
+* bump actions/checkout from 4.3.1 to 7.0.0 ([#67](https://github.com/gr4vy/gr4vy-cli/issues/67)) ([4672bbc](https://github.com/gr4vy/gr4vy-cli/commit/4672bbc4a74951bcf395ca2e1f72679a447ebe2a))
+
 ## [1.2.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.1.0...v1.2.0) (2026-06-20)
 
 
