@@ -1,0 +1,123 @@
+gr4vy account-updater jobs create  --data
+gr4vy audit-logs list  --action --cursor --limit --resource-type --user-id
+gr4vy buyers create  --data
+gr4vy buyers delete
+gr4vy buyers get
+gr4vy buyers gift-cards list  --buyer-external-identifier --buyer-id --order-by --sort-by
+gr4vy buyers list  --cursor --external-identifier --limit --search
+gr4vy buyers payment-methods list  --buyer-external-identifier --buyer-id --country --currency --order-by --sort-by
+gr4vy buyers shipping-details create  --data
+gr4vy buyers shipping-details delete
+gr4vy buyers shipping-details get
+gr4vy buyers shipping-details list
+gr4vy buyers shipping-details update  --data
+gr4vy buyers update  --data
+gr4vy card-scheme-definitions list
+gr4vy checkout-sessions create  --data
+gr4vy checkout-sessions delete
+gr4vy checkout-sessions get
+gr4vy checkout-sessions update  --data
+gr4vy config add  --auth-host --auth-method --default-scope --email --environment --id --key-env --key-file --key-path --key-stdin --merchant-account-id --no-input --set-active --token-ttl
+gr4vy config import  --delete-legacy --from --name --set-active
+gr4vy config key  --base64
+gr4vy config list
+gr4vy config path
+gr4vy config remove  --keep-secrets --yes
+gr4vy config show
+gr4vy config use
+gr4vy digital-wallets create  --data
+gr4vy digital-wallets delete
+gr4vy digital-wallets domains create  --data
+gr4vy digital-wallets domains delete  --data
+gr4vy digital-wallets get
+gr4vy digital-wallets list
+gr4vy digital-wallets sessions apple-pay  --data
+gr4vy digital-wallets sessions click-to-pay  --data
+gr4vy digital-wallets sessions google-pay  --data
+gr4vy digital-wallets sessions paze  --data
+gr4vy digital-wallets sessions paze-mobile-session-complete  --data
+gr4vy digital-wallets sessions paze-mobile-session-create  --data
+gr4vy digital-wallets sessions paze-mobile-session-review  --data
+gr4vy digital-wallets update  --data
+gr4vy embed  --checkout-session --mid --param
+gr4vy gift-cards balances list  --data
+gr4vy gift-cards create  --data
+gr4vy gift-cards delete
+gr4vy gift-cards get
+gr4vy gift-cards list  --buyer-external-identifier --buyer-id --cursor --limit
+gr4vy init  --auth-host --auth-method --default-scope --email --environment --id --key-env --key-file --key-path --key-stdin --merchant-account-id --no-input --set-active --token-ttl
+gr4vy login  --email --password-stdin
+gr4vy logout
+gr4vy merchant-accounts create  --data
+gr4vy merchant-accounts get
+gr4vy merchant-accounts list  --cursor --limit --search
+gr4vy merchant-accounts three-ds-configuration create  --data
+gr4vy merchant-accounts three-ds-configuration delete
+gr4vy merchant-accounts three-ds-configuration list  --currency
+gr4vy merchant-accounts three-ds-configuration update  --data
+gr4vy merchant-accounts update  --data
+gr4vy payment-links create  --data
+gr4vy payment-links expire
+gr4vy payment-links get
+gr4vy payment-links list  --buyer-search --cursor --limit
+gr4vy payment-methods create  --data
+gr4vy payment-methods delete
+gr4vy payment-methods get
+gr4vy payment-methods list  --buyer-external-identifier --buyer-id --cursor --external-identifier --limit
+gr4vy payment-methods network-tokens create  --data
+gr4vy payment-methods network-tokens cryptogram create  --data
+gr4vy payment-methods network-tokens delete
+gr4vy payment-methods network-tokens list
+gr4vy payment-methods network-tokens resume
+gr4vy payment-methods network-tokens suspend
+gr4vy payment-methods payment-service-tokens create  --data
+gr4vy payment-methods payment-service-tokens delete
+gr4vy payment-methods payment-service-tokens list  --payment-service-id
+gr4vy payment-methods update  --data
+gr4vy payment-options list  --data
+gr4vy payment-service-definitions get
+gr4vy payment-service-definitions list  --cursor --limit
+gr4vy payment-service-definitions session  --data
+gr4vy payment-services create  --data
+gr4vy payment-services delete
+gr4vy payment-services get
+gr4vy payment-services list  --cursor --deleted --limit --method
+gr4vy payment-services session  --data
+gr4vy payment-services update  --data
+gr4vy payment-services verify  --data
+gr4vy payouts create  --data
+gr4vy payouts get
+gr4vy payouts list  --cursor --limit
+gr4vy refunds get
+gr4vy report-executions list  --creator-id --cursor --limit --report-name
+gr4vy reports create  --data
+gr4vy reports executions get
+gr4vy reports executions list  --cursor --limit
+gr4vy reports executions url  --data
+gr4vy reports get
+gr4vy reports list  --cursor --limit --name --schedule-enabled
+gr4vy reports put  --data
+gr4vy three-ds-scenarios create  --data
+gr4vy three-ds-scenarios delete
+gr4vy three-ds-scenarios list  --cursor --limit
+gr4vy three-ds-scenarios update  --data
+gr4vy token  --expires-in --list-scopes --scope
+gr4vy transactions actions list
+gr4vy transactions cancel
+gr4vy transactions capture  --data --idempotency-key --prefer
+gr4vy transactions captures get
+gr4vy transactions captures list
+gr4vy transactions create  --data --idempotency-key --x-forwarded-for
+gr4vy transactions events list  --cursor --limit
+gr4vy transactions get
+gr4vy transactions list  --amount-eq --amount-gte --amount-lte --buyer-email-address --buyer-external-identifier --buyer-id --buyer-search --checkout-session-id --country --currency --cursor --disputed --error-code --external-identifier --gift-card-id --gift-card-last4 --has-gift-card-redemptions --has-refunds --has-settlements --id --ip-address --is-subsequent-payment --limit --merchant-initiated --metadata --payment-method-bin --payment-method-country --payment-method-fingerprint --payment-method-id --payment-method-label --payment-method-scheme --payment-service-id --payment-service-transaction-id --pending-review --reauthorized-from-transaction-id --reconciliation-id --search --used-3ds
+gr4vy transactions refunds all create  --data --idempotency-key
+gr4vy transactions refunds create  --data --idempotency-key
+gr4vy transactions refunds get
+gr4vy transactions refunds list
+gr4vy transactions settlements get
+gr4vy transactions settlements list
+gr4vy transactions sync
+gr4vy transactions update  --data
+gr4vy transactions void  --idempotency-key --prefer
+gr4vy version

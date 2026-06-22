@@ -1,0 +1,64 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: gofmt
+        run: |
+          out=$(gofmt -l .)
+          if [ -n "$out" ]; then
+            echo "::error::these files are not gofmt'd:"; echo "$out"; exit 1
+          fi
+
+      - name: go vet
+        run: go vet ./...
+
+      - name: build
+        run: go build ./...
+
+      - name: test (unit + golden)
+        run: go test ./... -count=1
+
+      - name: generation is up to date
+        run: |
+          go generate ./...
+          if ! git diff --quiet -- internal/commands/generated docs; then
+            echo "::error::generated commands/docs are stale; run 'go generate ./...' and commit"
+            git --no-pager diff --stat -- internal/commands/generated docs
+            exit 1
+          fi
+
+      - name: smoke test
+        run: |
+          go build -o /tmp/gr4vy .
+          /tmp/gr4vy version
+          /tmp/gr4vy --help >/dev/null
+          /tmp/gr4vy transactions list --help >/dev/null
+
+  # Stable required check for branch protection.
+  ci-complete:
+    needs: [build-test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: verify
+        run: |
+          if [ "${{ needs.build-test.result }}" != "success" ]; then
+            echo "ci failed"; exit 1
+          fi
