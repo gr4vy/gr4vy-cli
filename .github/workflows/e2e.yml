@@ -30,10 +30,13 @@ jobs:
         env:
           PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
           IS_FORK_PR: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository }}
+          IS_DEPENDABOT: ${{ github.actor == 'dependabot[bot]' || github.event.pull_request.user.login == 'dependabot[bot]' }}
           REQUIRE_E2E: ${{ vars.REQUIRE_E2E }}
         run: |
           if [ -z "$PRIVATE_KEY" ]; then
-            if [ "$REQUIRE_E2E" = "true" ] && [ "$IS_FORK_PR" != "true" ]; then
+            # Fork and Dependabot PRs run without repo secrets, so the live suite
+            # can't run there — skip rather than fail.
+            if [ "$REQUIRE_E2E" = "true" ] && [ "$IS_FORK_PR" != "true" ] && [ "$IS_DEPENDABOT" != "true" ]; then
               echo "::error::PRIVATE_KEY is not set on a trusted ref (REQUIRE_E2E=true)."
               exit 1
             fi
