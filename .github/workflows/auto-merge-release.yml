@@ -23,6 +23,9 @@ permissions:
 
 jobs:
   auto-merge:
+    # Dependabot-triggered runs don't have access to DISPATCH_ACCESS_TOKEN and
+    # only ever produce non-bot PRs, so skip them (they'd otherwise error).
+    if: ${{ github.actor != 'dependabot[bot]' }}
     runs-on: ubuntu-latest
     steps:
       # Belt-and-suspenders approval (the gr4vy-code merge already bypasses the
