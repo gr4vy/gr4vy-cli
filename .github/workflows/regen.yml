@@ -22,6 +22,10 @@ jobs:
         with:
           # Use a token whose pushes trigger CI on the resulting PR.
           token: ${{ secrets.DISPATCH_ACCESS_TOKEN }}
+          # create-pull-request pushes with its own token; checkout's persisted
+          # extraheader would otherwise collide and cause a duplicate
+          # Authorization header (HTTP 400) since actions/checkout v5+.
+          persist-credentials: false
       - uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: go.mod
