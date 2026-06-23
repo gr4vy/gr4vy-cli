@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/gr4vy/gr4vy-cli/compare/v1.2.1...v1.2.2) (2026-06-23)
+
+
+### Bug Fixes
+
+* **ci:** disable persisted checkout credentials in regen workflow ([#71](https://github.com/gr4vy/gr4vy-cli/issues/71)) ([9b13763](https://github.com/gr4vy/gr4vy-cli/commit/9b137633cf56257918eb523722363aeef577224e))
+
 ## [1.2.1](https://github.com/gr4vy/gr4vy-cli/compare/v1.2.0...v1.2.1) (2026-06-22)
 
 
