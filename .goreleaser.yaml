@@ -50,11 +50,11 @@ brews:
     test: |
       system "#{bin}/gr4vy version"
 
-# Scoop bucket for Windows (optional; requires gr4vy/scoop-bucket).
+# Scoop bucket for Windows (optional; requires gr4vy/gr4vy-scoop-bucket).
 scoops:
   - repository:
       owner: gr4vy
-      name: scoop-bucket
+      name: gr4vy-scoop-bucket
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
     homepage: "https://github.com/gr4vy/gr4vy-cli"
     description: "The Gr4vy command-line interface"
