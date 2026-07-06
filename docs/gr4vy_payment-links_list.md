@@ -15,7 +15,11 @@ gr4vy payment-links list [flags]
 ### Options
 
 ```
+      --amount-eq int          amount-eq parameter
+      --amount-gte int         amount-gte parameter
+      --amount-lte int         amount-lte parameter
       --buyer-search strings   buyer-search parameter
+      --currency strings       currency parameter
       --cursor string          pagination cursor
   -h, --help                   help for list
       --limit int              maximum number of items to return

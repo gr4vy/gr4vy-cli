@@ -1,25 +1,22 @@
-## gr4vy payouts list
+## gr4vy api-key-pairs create
 
-List payouts created
+Create an API key pair
 
 ### Synopsis
 
-List payouts created
+Create an API key pair
 
-Returns a list of payouts made.
+Create a new API key pair.
 
 ```
-gr4vy payouts list [flags]
+gr4vy api-key-pairs create [flags]
 ```
 
 ### Options
 
 ```
-      --cursor string                      pagination cursor
-      --external-identifier string         external-identifier parameter
-  -h, --help                               help for list
-      --limit int                          maximum number of items to return
-      --payment-service-payout-id string   payment-service-payout-id parameter
+      --data string   request body as JSON: inline, @file, or - for stdin (APIKeyPairCreate)
+  -h, --help          help for create
 ```
 
 ### Options inherited from parent commands
@@ -39,5 +36,5 @@ gr4vy payouts list [flags]
 
 ### SEE ALSO
 
-* [gr4vy payouts](gr4vy_payouts.md)	 - Manage payouts
+* [gr4vy api-key-pairs](gr4vy_api-key-pairs.md)	 - Manage api-key-pairs
 

@@ -36,6 +36,94 @@ func init() {
 		},
 	})
 	commands.Register(&commands.Operation{
+		Group:    "api-key-pairs",
+		Name:     "create",
+		Short:    "Create an API key pair",
+		Long:     "Create an API key pair\n\nCreate a new API key pair.",
+		HasBody:  true,
+		BodyType: "APIKeyPairCreate",
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+			var body components.APIKeyPairCreate
+			if len(in.Body) > 0 {
+				if err := json.Unmarshal(in.Body, &body); err != nil {
+					return nil, err
+				}
+			}
+			resp, err := c.APIKeyPairs.Create(ctx, body)
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "api-key-pairs",
+		Name:       "delete",
+		Short:      "Delete an API key pair",
+		Long:       "Delete an API key pair\n\nPermanently removes an API key pair.",
+		PathParams: []string{"api-key-pair-id"},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			return nil, c.APIKeyPairs.Delete(ctx, in.Args[0])
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "api-key-pairs",
+		Name:       "get",
+		Short:      "Get an API key pair",
+		Long:       "Get an API key pair\n\nFetches an API key pair by its ID.",
+		PathParams: []string{"api-key-pair-id"},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.APIKeyPairs.Get(ctx, in.Args[0])
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:  "api-key-pairs",
+		Name:   "list",
+		Short:  "List all API key pairs",
+		Long:   "List all API key pairs\n\nList all API key pairs.",
+		IsList: true,
+		Optionals: []commands.Flag{
+			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
+		},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.APIKeyPairs.List(ctx, commands.OptString(in.Flags, "cursor"), commands.OptInt64(in.Flags, "limit"))
+			if err != nil {
+				return nil, err
+			}
+			return resp.Result, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "api-key-pairs",
+		Name:       "update",
+		Short:      "Update an API key pair",
+		Long:       "Update an API key pair\n\nUpdates an API key pair.",
+		PathParams: []string{"api-key-pair-id"},
+		HasBody:    true,
+		BodyType:   "APIKeyPairUpdate",
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+			var body components.APIKeyPairUpdate
+			if len(in.Body) > 0 {
+				if err := json.Unmarshal(in.Body, &body); err != nil {
+					return nil, err
+				}
+			}
+			resp, err := c.APIKeyPairs.Update(ctx, in.Args[0], body)
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
 		Group:  "audit-logs",
 		Name:   "list",
 		Short:  "List audit log entries",
@@ -975,11 +1063,23 @@ func init() {
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
 			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
+			{Name: "currency", Usage: "currency parameter", Kind: commands.KindStringSlice},
+			{Name: "amount-eq", Usage: "amount-eq parameter", Kind: commands.KindInt64},
+			{Name: "amount-gte", Usage: "amount-gte parameter", Kind: commands.KindInt64},
+			{Name: "amount-lte", Usage: "amount-lte parameter", Kind: commands.KindInt64},
 			{Name: "buyer-search", Usage: "buyer-search parameter", Kind: commands.KindStringSlice},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
-			buyerSearch := commands.StringSlice(in.Flags, "buyer-search")
-			resp, err := c.PaymentLinks.List(ctx, commands.OptString(in.Flags, "cursor"), commands.OptInt64(in.Flags, "limit"), buyerSearch, commands.OptString(in.Flags, "merchant-account-id"))
+			req := operations.ListPaymentLinksRequest{}
+			req.Cursor = commands.OptString(in.Flags, "cursor")
+			req.Limit = commands.OptInt64(in.Flags, "limit")
+			req.Currency = commands.StringSlice(in.Flags, "currency")
+			req.AmountEq = commands.OptInt64(in.Flags, "amount-eq")
+			req.AmountGte = commands.OptInt64(in.Flags, "amount-gte")
+			req.AmountLte = commands.OptInt64(in.Flags, "amount-lte")
+			req.BuyerSearch = commands.StringSlice(in.Flags, "buyer-search")
+			req.MerchantAccountID = commands.OptString(in.Flags, "merchant-account-id")
+			resp, err := c.PaymentLinks.List(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -1500,10 +1600,17 @@ func init() {
 		Optionals: []commands.Flag{
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
 			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
+			{Name: "external-identifier", Usage: "external-identifier parameter", Kind: commands.KindString},
+			{Name: "payment-service-payout-id", Usage: "payment-service-payout-id parameter", Kind: commands.KindString},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
-
-			resp, err := c.Payouts.List(ctx, commands.OptString(in.Flags, "cursor"), commands.OptInt64(in.Flags, "limit"), commands.OptString(in.Flags, "merchant-account-id"))
+			req := operations.ListPayoutsRequest{}
+			req.Cursor = commands.OptString(in.Flags, "cursor")
+			req.Limit = commands.OptInt64(in.Flags, "limit")
+			req.ExternalIdentifier = commands.OptString(in.Flags, "external-identifier")
+			req.PaymentServicePayoutID = commands.OptString(in.Flags, "payment-service-payout-id")
+			req.MerchantAccountID = commands.OptString(in.Flags, "merchant-account-id")
+			resp, err := c.Payouts.List(ctx, req)
 			if err != nil {
 				return nil, err
 			}
@@ -1885,6 +1992,7 @@ func init() {
 			{Name: "has-refunds", Usage: "has-refunds parameter", Kind: commands.KindBool},
 			{Name: "pending-review", Usage: "pending-review parameter", Kind: commands.KindBool},
 			{Name: "checkout-session-id", Usage: "checkout-session-id parameter", Kind: commands.KindString},
+			{Name: "payment-link-id", Usage: "payment-link-id parameter", Kind: commands.KindString},
 			{Name: "reconciliation-id", Usage: "reconciliation-id parameter", Kind: commands.KindString},
 			{Name: "has-gift-card-redemptions", Usage: "has-gift-card-redemptions parameter", Kind: commands.KindBool},
 			{Name: "gift-card-id", Usage: "gift-card-id parameter", Kind: commands.KindString},
@@ -1926,6 +2034,7 @@ func init() {
 			req.HasRefunds = commands.OptBool(in.Flags, "has-refunds")
 			req.PendingReview = commands.OptBool(in.Flags, "pending-review")
 			req.CheckoutSessionID = commands.OptString(in.Flags, "checkout-session-id")
+			req.PaymentLinkID = commands.OptString(in.Flags, "payment-link-id")
 			req.ReconciliationID = commands.OptString(in.Flags, "reconciliation-id")
 			req.HasGiftCardRedemptions = commands.OptBool(in.Flags, "has-gift-card-redemptions")
 			req.GiftCardID = commands.OptString(in.Flags, "gift-card-id")

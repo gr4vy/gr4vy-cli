@@ -25,6 +25,7 @@ gr4vy is the command-line interface for the Gr4vy payment orchestration platform
 ### SEE ALSO
 
 * [gr4vy account-updater](gr4vy_account-updater.md)	 - Manage account-updater
+* [gr4vy api-key-pairs](gr4vy_api-key-pairs.md)	 - Manage api-key-pairs
 * [gr4vy audit-logs](gr4vy_audit-logs.md)	 - Manage audit-logs
 * [gr4vy buyers](gr4vy_buyers.md)	 - Manage buyers
 * [gr4vy card-scheme-definitions](gr4vy_card-scheme-definitions.md)	 - Manage card-scheme-definitions

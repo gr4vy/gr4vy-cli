@@ -1,25 +1,11 @@
-## gr4vy payouts list
+## gr4vy api-key-pairs
 
-List payouts created
-
-### Synopsis
-
-List payouts created
-
-Returns a list of payouts made.
-
-```
-gr4vy payouts list [flags]
-```
+Manage api-key-pairs
 
 ### Options
 
 ```
-      --cursor string                      pagination cursor
-      --external-identifier string         external-identifier parameter
-  -h, --help                               help for list
-      --limit int                          maximum number of items to return
-      --payment-service-payout-id string   payment-service-payout-id parameter
+  -h, --help   help for api-key-pairs
 ```
 
 ### Options inherited from parent commands
@@ -39,5 +25,10 @@ gr4vy payouts list [flags]
 
 ### SEE ALSO
 
-* [gr4vy payouts](gr4vy_payouts.md)	 - Manage payouts
+* [gr4vy](gr4vy.md)	 - The Gr4vy CLI
+* [gr4vy api-key-pairs create](gr4vy_api-key-pairs_create.md)	 - Create an API key pair
+* [gr4vy api-key-pairs delete](gr4vy_api-key-pairs_delete.md)	 - Delete an API key pair
+* [gr4vy api-key-pairs get](gr4vy_api-key-pairs_get.md)	 - Get an API key pair
+* [gr4vy api-key-pairs list](gr4vy_api-key-pairs_list.md)	 - List all API key pairs
+* [gr4vy api-key-pairs update](gr4vy_api-key-pairs_update.md)	 - Update an API key pair
 
