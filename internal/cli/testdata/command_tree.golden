@@ -1,4 +1,9 @@
 gr4vy account-updater jobs create  --data
+gr4vy api-key-pairs create  --data
+gr4vy api-key-pairs delete
+gr4vy api-key-pairs get
+gr4vy api-key-pairs list  --cursor --limit
+gr4vy api-key-pairs update  --data
 gr4vy audit-logs list  --action --cursor --limit --resource-type --user-id
 gr4vy buyers create  --data
 gr4vy buyers delete
@@ -59,7 +64,7 @@ gr4vy merchant-accounts update  --data
 gr4vy payment-links create  --data
 gr4vy payment-links expire
 gr4vy payment-links get
-gr4vy payment-links list  --buyer-search --cursor --limit
+gr4vy payment-links list  --amount-eq --amount-gte --amount-lte --buyer-search --currency --cursor --limit
 gr4vy payment-methods create  --data
 gr4vy payment-methods delete
 gr4vy payment-methods get
@@ -87,7 +92,7 @@ gr4vy payment-services update  --data
 gr4vy payment-services verify  --data
 gr4vy payouts create  --data
 gr4vy payouts get
-gr4vy payouts list  --cursor --limit
+gr4vy payouts list  --cursor --external-identifier --limit --payment-service-payout-id
 gr4vy refunds get
 gr4vy report-executions list  --creator-id --cursor --limit --report-name
 gr4vy reports create  --data
@@ -110,7 +115,7 @@ gr4vy transactions captures list
 gr4vy transactions create  --data --idempotency-key --x-forwarded-for
 gr4vy transactions events list  --cursor --limit
 gr4vy transactions get
-gr4vy transactions list  --amount-eq --amount-gte --amount-lte --buyer-email-address --buyer-external-identifier --buyer-id --buyer-search --checkout-session-id --country --currency --cursor --disputed --error-code --external-identifier --gift-card-id --gift-card-last4 --has-gift-card-redemptions --has-refunds --has-settlements --id --ip-address --is-subsequent-payment --limit --merchant-initiated --metadata --payment-method-bin --payment-method-country --payment-method-fingerprint --payment-method-id --payment-method-label --payment-method-scheme --payment-service-id --payment-service-transaction-id --pending-review --reauthorized-from-transaction-id --reconciliation-id --search --used-3ds
+gr4vy transactions list  --amount-eq --amount-gte --amount-lte --buyer-email-address --buyer-external-identifier --buyer-id --buyer-search --checkout-session-id --country --currency --cursor --disputed --error-code --external-identifier --gift-card-id --gift-card-last4 --has-gift-card-redemptions --has-refunds --has-settlements --id --ip-address --is-subsequent-payment --limit --merchant-initiated --metadata --payment-link-id --payment-method-bin --payment-method-country --payment-method-fingerprint --payment-method-id --payment-method-label --payment-method-scheme --payment-service-id --payment-service-transaction-id --pending-review --reauthorized-from-transaction-id --reconciliation-id --search --used-3ds
 gr4vy transactions refunds all create  --data --idempotency-key
 gr4vy transactions refunds create  --data --idempotency-key
 gr4vy transactions refunds get

@@ -41,6 +41,7 @@ gr4vy transactions list [flags]
       --limit int                                 maximum number of items to return
       --merchant-initiated                        merchant-initiated parameter
       --metadata strings                          metadata parameter
+      --payment-link-id string                    payment-link-id parameter
       --payment-method-bin string                 payment-method-bin parameter
       --payment-method-country string             payment-method-country parameter
       --payment-method-fingerprint string         payment-method-fingerprint parameter

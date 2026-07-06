@@ -1,25 +1,23 @@
-## gr4vy payouts list
+## gr4vy api-key-pairs list
 
-List payouts created
+List all API key pairs
 
 ### Synopsis
 
-List payouts created
+List all API key pairs
 
-Returns a list of payouts made.
+List all API key pairs.
 
 ```
-gr4vy payouts list [flags]
+gr4vy api-key-pairs list [flags]
 ```
 
 ### Options
 
 ```
-      --cursor string                      pagination cursor
-      --external-identifier string         external-identifier parameter
-  -h, --help                               help for list
-      --limit int                          maximum number of items to return
-      --payment-service-payout-id string   payment-service-payout-id parameter
+      --cursor string   pagination cursor
+  -h, --help            help for list
+      --limit int       maximum number of items to return
 ```
 
 ### Options inherited from parent commands
@@ -39,5 +37,5 @@ gr4vy payouts list [flags]
 
 ### SEE ALSO
 
-* [gr4vy payouts](gr4vy_payouts.md)	 - Manage payouts
+* [gr4vy api-key-pairs](gr4vy_api-key-pairs.md)	 - Manage api-key-pairs
 
