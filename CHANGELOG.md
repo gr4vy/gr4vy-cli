@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.6.0...v1.7.0) (2026-07-08)
+
+
+### Features
+
+* regenerate command surface from latest gr4vy-go ([a12dff8](https://github.com/gr4vy/gr4vy-cli/commit/a12dff86002773796726d5c023fc765c6bd77f1e))
+
 ## [1.6.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.5.0...v1.6.0) (2026-07-07)
 
 
