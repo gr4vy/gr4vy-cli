@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Announce Failure
         id: slack
-        uses: slackapi/slack-github-action@936158bbe252e9a6062e793ea4609642c966e302 # v1.21.0
+        uses: slackapi/slack-github-action@0d95c9a7becc1e6e297d76df9bc735c44f4cbcbc # v3.0.5
         env:
           # for non-CLI-team-owned plugins, you can send this anywhere you like
           SLACK_WEBHOOK_URL: ${{ secrets.CLI_ALERTS_SLACK_WEBHOOK }}
