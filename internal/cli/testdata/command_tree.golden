@@ -116,6 +116,8 @@ gr4vy transactions create  --data --idempotency-key --x-forwarded-for
 gr4vy transactions events list  --cursor --limit
 gr4vy transactions get
 gr4vy transactions list  --amount-eq --amount-gte --amount-lte --buyer-email-address --buyer-external-identifier --buyer-id --buyer-search --checkout-session-id --country --currency --cursor --disputed --error-code --external-identifier --gift-card-id --gift-card-last4 --has-gift-card-redemptions --has-refunds --has-settlements --id --ip-address --is-subsequent-payment --limit --merchant-initiated --metadata --payment-link-id --payment-method-bin --payment-method-country --payment-method-fingerprint --payment-method-id --payment-method-label --payment-method-scheme --payment-service-id --payment-service-transaction-id --pending-review --reauthorized-from-transaction-id --reconciliation-id --search --used-3ds
+gr4vy transactions refund-settlements get
+gr4vy transactions refund-settlements list
 gr4vy transactions refunds all create  --data --idempotency-key
 gr4vy transactions refunds create  --data --idempotency-key
 gr4vy transactions refunds get

@@ -34,6 +34,7 @@ Manage transactions
 * [gr4vy transactions events](gr4vy_transactions_events.md)	 - Manage transactions events
 * [gr4vy transactions get](gr4vy_transactions_get.md)	 - Get transaction
 * [gr4vy transactions list](gr4vy_transactions_list.md)	 - List transactions
+* [gr4vy transactions refund-settlements](gr4vy_transactions_refund-settlements.md)	 - Manage transactions refund-settlements
 * [gr4vy transactions refunds](gr4vy_transactions_refunds.md)	 - Manage transactions refunds
 * [gr4vy transactions settlements](gr4vy_transactions_settlements.md)	 - Manage transactions settlements
 * [gr4vy transactions sync](gr4vy_transactions_sync.md)	 - Sync transaction
