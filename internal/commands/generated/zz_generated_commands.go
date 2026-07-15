@@ -2179,6 +2179,37 @@ func init() {
 		},
 	})
 	commands.Register(&commands.Operation{
+		Group:      "transactions.refund-settlements",
+		Name:       "get",
+		Short:      "Get transaction refund settlement",
+		Long:       "Get transaction refund settlement\n\nRetrieve a specific refund settlement for a transaction by its unique identifier.",
+		PathParams: []string{"transaction-id", "settlement-id"},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.Transactions.RefundSettlements.Get(ctx, in.Args[0], in.Args[1], commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "transactions.refund-settlements",
+		Name:       "list",
+		Short:      "List transaction refund settlements",
+		Long:       "List transaction refund settlements\n\nList all refund settlements for a specific transaction.",
+		PathParams: []string{"transaction-id"},
+		IsList:     true,
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.Transactions.RefundSettlements.List(ctx, in.Args[0], commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
 		Group:      "transactions.refunds",
 		Name:       "create",
 		Short:      "Create transaction refund",
