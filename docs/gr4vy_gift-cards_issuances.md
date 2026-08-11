@@ -1,11 +1,11 @@
-## gr4vy gift-cards
+## gr4vy gift-cards issuances
 
-Manage gift-cards
+Manage gift-cards issuances
 
 ### Options
 
 ```
-  -h, --help   help for gift-cards
+  -h, --help   help for issuances
 ```
 
 ### Options inherited from parent commands
@@ -25,12 +25,6 @@ Manage gift-cards
 
 ### SEE ALSO
 
-* [gr4vy](gr4vy.md)	 - The Gr4vy CLI
-* [gr4vy gift-cards activations](gr4vy_gift-cards_activations.md)	 - Manage gift-cards activations
-* [gr4vy gift-cards balances](gr4vy_gift-cards_balances.md)	 - Manage gift-cards balances
-* [gr4vy gift-cards create](gr4vy_gift-cards_create.md)	 - Create gift card
-* [gr4vy gift-cards delete](gr4vy_gift-cards_delete.md)	 - Delete a gift card
-* [gr4vy gift-cards get](gr4vy_gift-cards_get.md)	 - Get gift card
-* [gr4vy gift-cards issuances](gr4vy_gift-cards_issuances.md)	 - Manage gift-cards issuances
-* [gr4vy gift-cards list](gr4vy_gift-cards_list.md)	 - List gift cards
+* [gr4vy gift-cards](gr4vy_gift-cards.md)	 - Manage gift-cards
+* [gr4vy gift-cards issuances create](gr4vy_gift-cards_issuances_create.md)	 - Issue a gift card
 
