@@ -834,6 +834,30 @@ func init() {
 		},
 	})
 	commands.Register(&commands.Operation{
+		Group:    "gift-cards.activations",
+		Name:     "create",
+		Short:    "Activate a gift card",
+		Long:     "Activate a gift card\n\nActivate a physical gift card through the primary gift card service. Set `store` to `true` to also store the activated gift card.",
+		HasBody:  true,
+		BodyType: "GiftCardActivationCreate",
+		Optionals: []commands.Flag{
+			{Name: "idempotency-key", Usage: "unique key to make the request idempotent", Kind: commands.KindString},
+		},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+			var body components.GiftCardActivationCreate
+			if len(in.Body) > 0 {
+				if err := json.Unmarshal(in.Body, &body); err != nil {
+					return nil, err
+				}
+			}
+			resp, err := c.GiftCards.Activations.Create(ctx, body, commands.OptString(in.Flags, "idempotency-key"), commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
 		Group:    "gift-cards.balances",
 		Name:     "list",
 		Short:    "List gift card balances",
@@ -849,6 +873,30 @@ func init() {
 				}
 			}
 			resp, err := c.GiftCards.Balances.List(ctx, body, commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:    "gift-cards.issuances",
+		Name:     "create",
+		Short:    "Issue a gift card",
+		Long:     "Issue a gift card\n\nIssue a new virtual gift card through the primary gift card service.",
+		HasBody:  true,
+		BodyType: "GiftCardIssuanceCreate",
+		Optionals: []commands.Flag{
+			{Name: "idempotency-key", Usage: "unique key to make the request idempotent", Kind: commands.KindString},
+		},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+			var body components.GiftCardIssuanceCreate
+			if len(in.Body) > 0 {
+				if err := json.Unmarshal(in.Body, &body); err != nil {
+					return nil, err
+				}
+			}
+			resp, err := c.GiftCards.Issuances.Create(ctx, body, commands.OptString(in.Flags, "idempotency-key"), commands.OptString(in.Flags, "merchant-account-id"))
 			if err != nil {
 				return nil, err
 			}
@@ -1953,6 +2001,31 @@ func init() {
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 
 			resp, err := c.Transactions.Get(ctx, in.Args[0], commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "transactions",
+		Name:       "increment-authorization",
+		Short:      "Increment transaction authorization",
+		Long:       "Increment transaction authorization\n\nIncrement the transaction authorization amount of a given transaction_id.",
+		PathParams: []string{"transaction-id"},
+		HasBody:    true,
+		BodyType:   "TransactionAuthorizationIncrementCreate",
+		Optionals: []commands.Flag{
+			{Name: "idempotency-key", Usage: "unique key to make the request idempotent", Kind: commands.KindString},
+		},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+			var body components.TransactionAuthorizationIncrementCreate
+			if len(in.Body) > 0 {
+				if err := json.Unmarshal(in.Body, &body); err != nil {
+					return nil, err
+				}
+			}
+			resp, err := c.Transactions.IncrementAuthorization(ctx, in.Args[0], body, commands.OptString(in.Flags, "merchant-account-id"), commands.OptString(in.Flags, "idempotency-key"))
 			if err != nil {
 				return nil, err
 			}

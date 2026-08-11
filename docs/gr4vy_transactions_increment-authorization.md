@@ -1,11 +1,23 @@
-## gr4vy gift-cards
+## gr4vy transactions increment-authorization
 
-Manage gift-cards
+Increment transaction authorization
+
+### Synopsis
+
+Increment transaction authorization
+
+Increment the transaction authorization amount of a given transaction_id.
+
+```
+gr4vy transactions increment-authorization <transaction-id> [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for gift-cards
+      --data string              request body as JSON: inline, @file, or - for stdin (TransactionAuthorizationIncrementCreate)
+  -h, --help                     help for increment-authorization
+      --idempotency-key string   unique key to make the request idempotent
 ```
 
 ### Options inherited from parent commands
@@ -25,12 +37,5 @@ Manage gift-cards
 
 ### SEE ALSO
 
-* [gr4vy](gr4vy.md)	 - The Gr4vy CLI
-* [gr4vy gift-cards activations](gr4vy_gift-cards_activations.md)	 - Manage gift-cards activations
-* [gr4vy gift-cards balances](gr4vy_gift-cards_balances.md)	 - Manage gift-cards balances
-* [gr4vy gift-cards create](gr4vy_gift-cards_create.md)	 - Create gift card
-* [gr4vy gift-cards delete](gr4vy_gift-cards_delete.md)	 - Delete a gift card
-* [gr4vy gift-cards get](gr4vy_gift-cards_get.md)	 - Get gift card
-* [gr4vy gift-cards issuances](gr4vy_gift-cards_issuances.md)	 - Manage gift-cards issuances
-* [gr4vy gift-cards list](gr4vy_gift-cards_list.md)	 - List gift cards
+* [gr4vy transactions](gr4vy_transactions.md)	 - Manage transactions
 

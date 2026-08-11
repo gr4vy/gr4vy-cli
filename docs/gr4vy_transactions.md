@@ -33,6 +33,7 @@ Manage transactions
 * [gr4vy transactions create](gr4vy_transactions_create.md)	 - Create transaction
 * [gr4vy transactions events](gr4vy_transactions_events.md)	 - Manage transactions events
 * [gr4vy transactions get](gr4vy_transactions_get.md)	 - Get transaction
+* [gr4vy transactions increment-authorization](gr4vy_transactions_increment-authorization.md)	 - Increment transaction authorization
 * [gr4vy transactions list](gr4vy_transactions_list.md)	 - List transactions
 * [gr4vy transactions refund-settlements](gr4vy_transactions_refund-settlements.md)	 - Manage transactions refund-settlements
 * [gr4vy transactions refunds](gr4vy_transactions_refunds.md)	 - Manage transactions refunds

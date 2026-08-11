@@ -45,10 +45,12 @@ gr4vy digital-wallets sessions paze-mobile-session-create  --data
 gr4vy digital-wallets sessions paze-mobile-session-review  --data
 gr4vy digital-wallets update  --data
 gr4vy embed  --checkout-session --mid --param
+gr4vy gift-cards activations create  --data --idempotency-key
 gr4vy gift-cards balances list  --data
 gr4vy gift-cards create  --data
 gr4vy gift-cards delete
 gr4vy gift-cards get
+gr4vy gift-cards issuances create  --data --idempotency-key
 gr4vy gift-cards list  --buyer-external-identifier --buyer-id --cursor --limit
 gr4vy init  --auth-host --auth-method --default-scope --email --environment --id --key-env --key-file --key-path --key-stdin --merchant-account-id --no-input --set-active --token-ttl
 gr4vy login  --email --password-stdin
@@ -115,6 +117,7 @@ gr4vy transactions captures list
 gr4vy transactions create  --data --idempotency-key --x-forwarded-for
 gr4vy transactions events list  --cursor --limit
 gr4vy transactions get
+gr4vy transactions increment-authorization  --data --idempotency-key
 gr4vy transactions list  --amount-eq --amount-gte --amount-lte --buyer-email-address --buyer-external-identifier --buyer-id --buyer-search --checkout-session-id --country --currency --cursor --disputed --error-code --external-identifier --gift-card-id --gift-card-last4 --has-gift-card-redemptions --has-refunds --has-settlements --id --ip-address --is-subsequent-payment --limit --merchant-initiated --metadata --payment-link-id --payment-method-bin --payment-method-country --payment-method-fingerprint --payment-method-id --payment-method-label --payment-method-scheme --payment-service-id --payment-service-transaction-id --pending-review --reauthorized-from-transaction-id --reconciliation-id --search --used-3ds
 gr4vy transactions refund-settlements get
 gr4vy transactions refund-settlements list
