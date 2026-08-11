@@ -15,6 +15,7 @@ import (
 
 	"github.com/gr4vy/gr4vy-cli/internal/config"
 	"github.com/gr4vy/gr4vy-cli/internal/secret"
+	"github.com/gr4vy/gr4vy-cli/internal/useragent"
 )
 
 // sessionPath is the (internal, unpublished) endpoint for email/password
@@ -212,6 +213,9 @@ func doSession(ctx context.Context, client *http.Client, method, host string, bo
 		req.Header.Set("Content-Type", "application/json")
 	}
 	req.Header.Set("Accept", "application/json")
+	// This path bypasses the SDK, so net/http would otherwise send its
+	// anonymous "Go-http-client/1.1" default.
+	req.Header.Set("User-Agent", useragent.String())
 	if bearer != "" {
 		req.Header.Set("Authorization", "Bearer "+bearer)
 	}

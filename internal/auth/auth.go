@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
 	"os"
 	"strings"
 	"time"
@@ -16,6 +17,7 @@ import (
 
 	"github.com/gr4vy/gr4vy-cli/internal/config"
 	"github.com/gr4vy/gr4vy-cli/internal/secret"
+	"github.com/gr4vy/gr4vy-cli/internal/useragent"
 )
 
 // Credential-related environment variables.
@@ -28,6 +30,9 @@ const (
 
 // defaultTokenTTL is the lifetime, in seconds, of JWTs minted for API calls.
 const defaultTokenTTL = 3600
+
+// sdkClientTimeout mirrors the default gr4vy-go applies when no client is set.
+const sdkClientTimeout = 60 * time.Second
 
 // TokenProvider yields a valid bearer token for an API call, minting or
 // refreshing as needed.
@@ -86,6 +91,9 @@ func NewClient(r config.Resolved, p TokenProvider, timeout time.Duration) (*gr4v
 		gr4vygo.WithID(r.Profile.ID),
 		gr4vygo.WithServer(serverFor(r.Profile.Environment)),
 		gr4vygo.WithSecuritySource(SecuritySource(p)),
+		// Supplying a client opts out of the SDK's default, so carry its 60s
+		// timeout over. WithTimeout, when set, still applies on top.
+		gr4vygo.WithClient(useragent.WrapClient(&http.Client{Timeout: sdkClientTimeout})),
 	}
 	if r.Profile.MerchantAccountID != "" {
 		opts = append(opts, gr4vygo.WithMerchantAccountID(r.Profile.MerchantAccountID))
