@@ -12,6 +12,7 @@ import (
 	"github.com/gr4vy/gr4vy-cli/internal/clierr"
 	"github.com/gr4vy/gr4vy-cli/internal/commands"
 	_ "github.com/gr4vy/gr4vy-cli/internal/commands/generated" // registers generated API commands
+	"github.com/gr4vy/gr4vy-cli/internal/useragent"
 )
 
 // BuildInfo carries version metadata stamped into the binary at build time.
@@ -29,6 +30,7 @@ var build BuildInfo
 // process exit code.
 func Execute(bi BuildInfo) {
 	build = bi
+	useragent.SetVersion(bi.Version)
 	root := NewRootCmd()
 	if err := root.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, "error: "+clierr.FormatError(err))
