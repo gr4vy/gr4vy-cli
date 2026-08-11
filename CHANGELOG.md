@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.19.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.18.0...v1.19.0) (2026-08-11)
+
+
+### Features
+
+* identify CLI traffic with a User-Agent product token ([#118](https://github.com/gr4vy/gr4vy-cli/issues/118)) ([d8c1692](https://github.com/gr4vy/gr4vy-cli/commit/d8c169201eb9fd116a75db1f7562926a7f4d54c2))
+
 ## [1.18.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.17.0...v1.18.0) (2026-08-11)
 
 
