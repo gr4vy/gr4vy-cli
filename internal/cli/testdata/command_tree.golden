@@ -104,6 +104,7 @@ gr4vy reports executions url  --data
 gr4vy reports get
 gr4vy reports list  --cursor --limit --name --schedule-enabled
 gr4vy reports put  --data
+gr4vy roles list  --cursor --limit
 gr4vy three-ds-scenarios create  --data
 gr4vy three-ds-scenarios delete
 gr4vy three-ds-scenarios list  --cursor --limit

@@ -47,6 +47,7 @@ gr4vy is the command-line interface for the Gr4vy payment orchestration platform
 * [gr4vy refunds](gr4vy_refunds.md)	 - Manage refunds
 * [gr4vy report-executions](gr4vy_report-executions.md)	 - Manage report-executions
 * [gr4vy reports](gr4vy_reports.md)	 - Manage reports
+* [gr4vy roles](gr4vy_roles.md)	 - Manage roles
 * [gr4vy three-ds-scenarios](gr4vy_three-ds-scenarios.md)	 - Manage three-ds-scenarios
 * [gr4vy token](gr4vy_token.md)	 - Generate a server-to-server API access token (JWT)
 * [gr4vy transactions](gr4vy_transactions.md)	 - Manage transactions
