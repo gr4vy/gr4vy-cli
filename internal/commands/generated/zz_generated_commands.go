@@ -1850,6 +1850,25 @@ func init() {
 		},
 	})
 	commands.Register(&commands.Operation{
+		Group:  "roles",
+		Name:   "list",
+		Short:  "List all roles",
+		Long:   "List all roles\n\nList all roles available in the instance.",
+		IsList: true,
+		Optionals: []commands.Flag{
+			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
+			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
+		},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.Roles.List(ctx, commands.OptString(in.Flags, "cursor"), commands.OptInt64(in.Flags, "limit"))
+			if err != nil {
+				return nil, err
+			}
+			return resp.Result, nil
+		},
+	})
+	commands.Register(&commands.Operation{
 		Group:    "three-ds-scenarios",
 		Name:     "create",
 		Short:    "Create a 3DS scenario",
