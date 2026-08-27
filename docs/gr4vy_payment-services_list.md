@@ -15,11 +15,12 @@ gr4vy payment-services list [flags]
 ### Options
 
 ```
-      --cursor string   pagination cursor
-      --deleted         deleted parameter
-  -h, --help            help for list
-      --limit int       maximum number of items to return
-      --method string   method parameter
+      --cursor string    pagination cursor
+      --deleted          deleted parameter
+  -h, --help             help for list
+      --include-fields   include-fields parameter
+      --limit int        maximum number of items to return
+      --method string    method parameter
 ```
 
 ### Options inherited from parent commands

@@ -1520,6 +1520,7 @@ func init() {
 			{Name: "cursor", Usage: "pagination cursor", Kind: commands.KindString},
 			{Name: "limit", Usage: "maximum number of items to return", Kind: commands.KindInt64},
 			{Name: "deleted", Usage: "deleted parameter", Kind: commands.KindBool},
+			{Name: "include-fields", Usage: "include-fields parameter", Kind: commands.KindBool},
 		},
 		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
 			req := operations.ListPaymentServicesRequest{}
@@ -1530,6 +1531,7 @@ func init() {
 			req.Cursor = commands.OptString(in.Flags, "cursor")
 			req.Limit = commands.OptInt64(in.Flags, "limit")
 			req.Deleted = commands.OptBool(in.Flags, "deleted")
+			req.IncludeFields = commands.OptBool(in.Flags, "include-fields")
 			req.MerchantAccountID = commands.OptString(in.Flags, "merchant-account-id")
 			resp, err := c.PaymentServices.List(ctx, req)
 			if err != nil {
