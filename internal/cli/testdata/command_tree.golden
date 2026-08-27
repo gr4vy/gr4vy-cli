@@ -88,7 +88,7 @@ gr4vy payment-service-definitions session  --data
 gr4vy payment-services create  --data
 gr4vy payment-services delete
 gr4vy payment-services get
-gr4vy payment-services list  --cursor --deleted --limit --method
+gr4vy payment-services list  --cursor --deleted --include-fields --limit --method
 gr4vy payment-services session  --data
 gr4vy payment-services update  --data
 gr4vy payment-services verify  --data
