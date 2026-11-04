@@ -78,12 +78,14 @@ jobs:
     steps:
       - run: echo "Release approved."
 
-  # release-please tags the release PR's merge commit and creates the GitHub
-  # release; GoReleaser then builds that tag into it and updates the Homebrew tap
-  # and Scoop bucket, all as gr4vy-sdk-release. If a later step fails, use
-  # "Re-run failed jobs" on this run: once the tag exists the gate won't publish
-  # again, but a re-run reuses its decision, release-please skips the existing
-  # release and GoReleaser replaces any partial assets.
+  # release-please tags the release PR's merge commit and creates a draft GitHub
+  # release; GoReleaser then builds that tag into it, publishes it (immutable
+  # releases lock it from then on) and updates the Homebrew tap and Scoop
+  # bucket, all as gr4vy-sdk-release. The archives and checksums get a build
+  # provenance attestation. If a step before publishing fails, use "Re-run failed
+  # jobs" on this run: once the tag exists the gate won't publish again, but a
+  # re-run reuses its decision, release-please skips the existing draft and
+  # GoReleaser replaces any partial assets.
   publish:
     needs: [gate, approve]
     if: >-
@@ -92,6 +94,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: sdk-release
+    permissions:
+      attestations: write
+      contents: read
+      id-token: write
     steps:
       - name: Mint a gr4vy-sdk-release token for the release
         id: release-token
@@ -160,6 +166,14 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ steps.publish-token.outputs.token }}
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: |
+            dist/*.tar.gz
+            dist/*.zip
+            dist/checksums.txt
 
   notify:
     needs: [gate, publish]

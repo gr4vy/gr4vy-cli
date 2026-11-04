@@ -61,10 +61,12 @@ scoops:
     description: "The Gr4vy command-line interface"
     license: MIT
 
-# release-please creates the release first; GoReleaser keeps its notes and adds
-# the binaries.
+# release-please creates the release as a draft with its tag; GoReleaser keeps
+# its notes, adds the binaries, then publishes it. Immutable releases lock it
+# from then on.
 release:
   draft: false
+  use_existing_draft: true
   prerelease: auto
   mode: keep-existing
   replace_existing_artifacts: true

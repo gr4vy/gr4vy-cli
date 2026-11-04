@@ -38,7 +38,13 @@ go install github.com/gr4vy/gr4vy-cli@latest
 ### Binaries
 
 Download a prebuilt archive for your platform from the
-[releases page](https://github.com/gr4vy/gr4vy-cli/releases).
+[releases page](https://github.com/gr4vy/gr4vy-cli/releases). Releases can't be
+changed once published, and every archive carries a build provenance
+attestation. To check one was built by this repo's release workflow:
+
+```sh
+gh attestation verify gr4vy_<version>_<os>_<arch>.tar.gz --repo gr4vy/gr4vy-cli
+```
 
 ## Quick start
 
