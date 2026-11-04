@@ -22,7 +22,7 @@ jobs:
       pr: ${{ steps.bot.outputs.pr }}
     steps:
       - id: bot
-        uses: gr4vy/sdk-release/release-bot@384567db3a6674fce07e4f34c58f72e604b394da
+        uses: gr4vy/sdk-release/release-bot@c8db692714898b3bed56d5a7df32f44db9b2055c
         with:
           sdk: cli
           run-id: ${{ github.event.workflow_run.id }}
