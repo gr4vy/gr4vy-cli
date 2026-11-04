@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.52.1](https://github.com/gr4vy/gr4vy-cli/compare/v1.52.0...v1.52.1) (2026-11-04)
+
+
+### Dependencies
+
+* update golang.org/x modules and goreleaser-action ([#192](https://github.com/gr4vy/gr4vy-cli/issues/192)) ([b757cca](https://github.com/gr4vy/gr4vy-cli/commit/b757cca18809b42106c79ded3ead1e1544fe92e8))
+
 ## [1.52.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.51.0...v1.52.0) (2026-11-04)
 
 
