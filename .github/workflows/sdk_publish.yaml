@@ -82,10 +82,11 @@ jobs:
   # release; GoReleaser then builds that tag into it, publishes it (immutable
   # releases lock it from then on) and updates the Homebrew tap and Scoop
   # bucket, all as gr4vy-sdk-release. The archives and checksums get a build
-  # provenance attestation. If a step before publishing fails, use "Re-run failed
-  # jobs" on this run: once the tag exists the gate won't publish again, but a
-  # re-run reuses its decision, release-please skips the existing draft and
-  # GoReleaser replaces any partial assets.
+  # provenance attestation. If any step fails, use "Re-run failed jobs" on this
+  # run: once the tag exists the gate won't publish again, but a re-run reuses
+  # its decision and release-please skips the existing release. While it's still
+  # a draft, GoReleaser replaces any partial assets; once published, the re-run
+  # attests the published files.
   publish:
     needs: [gate, approve]
     if: >-
@@ -160,12 +161,29 @@ jobs:
           repositories: ${{ github.event.repository.name }},homebrew-tap,gr4vy-scoop-bucket
           permission-contents: write
 
-      - uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
+      # Only a draft can still take files. A re-run after GoReleaser published
+      # the release attests the published files instead.
+      - name: Is the release still a draft?
+        id: release
+        env:
+          GH_TOKEN: ${{ steps.release-token.outputs.token }}
+          VERSION: ${{ needs.gate.outputs.version }}
+        run: echo "draft=$(gh release view "v$VERSION" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)" >> "$GITHUB_OUTPUT"
+
+      - if: steps.release.outputs.draft == 'true'
+        uses: goreleaser/goreleaser-action@a4f02ab5355a589de60d917a659ce617ed19b3de # v7.3.0
         with:
           version: v2.18.3
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ steps.publish-token.outputs.token }}
+
+      - name: Fetch the published files
+        if: steps.release.outputs.draft != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.gate.outputs.version }}
+        run: gh release download "v$VERSION" --repo "$GITHUB_REPOSITORY" --dir dist --pattern '*.tar.gz' --pattern '*.zip' --pattern checksums.txt
 
       - name: Attest build provenance
         uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
