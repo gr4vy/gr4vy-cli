@@ -53,9 +53,9 @@ jobs:
       - name: generation is up to date
         run: |
           go generate ./...
-          if ! git diff --quiet -- internal/commands/generated docs; then
+          if [ -n "$(git status --porcelain -- internal/commands/generated docs)" ]; then
             echo "::error::generated commands/docs are stale; run 'go generate ./...' and commit"
-            git --no-pager diff --stat -- internal/commands/generated docs
+            git status --short -- internal/commands/generated docs
             exit 1
           fi
 
