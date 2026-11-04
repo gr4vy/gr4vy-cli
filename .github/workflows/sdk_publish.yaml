@@ -65,9 +65,12 @@ jobs:
     steps:
       - run: echo "Release approved."
 
-  # release-please tags the commit and creates the GitHub release; GoReleaser
-  # then builds the binaries into it and updates the Homebrew tap and Scoop
-  # bucket, all as gr4vy-sdk-release.
+  # release-please tags the release PR's merge commit and creates the GitHub
+  # release; GoReleaser then builds that tag into it and updates the Homebrew tap
+  # and Scoop bucket, all as gr4vy-sdk-release. If a later step fails, use
+  # "Re-run failed jobs" on this run: once the tag exists the gate won't publish
+  # again, but a re-run reuses its decision, release-please skips the existing
+  # release and GoReleaser replaces any partial assets.
   publish:
     needs: [gate, approve]
     if: >-
@@ -97,6 +100,9 @@ jobs:
           target-branch: main
           skip-github-pull-request: true
 
+      # The tag is on the release PR's merge commit, which is the gated commit
+      # or, if something merged after it, an ancestor of it. The gate checked
+      # every merge up to the gated commit, so either way it covers the tag.
       - name: Check the tag
         env:
           GH_TOKEN: ${{ github.token }}
@@ -104,8 +110,13 @@ jobs:
           SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
         run: |
           tagged=$(gh api "repos/$GITHUB_REPOSITORY/commits/v$VERSION" --jq .sha 2>/dev/null || true)
-          if [ "$tagged" != "$SHA" ]; then
-            echo "::error::v$VERSION points at ${tagged:-nothing}, not $SHA"
+          if [ -z "$tagged" ]; then
+            echo "::error::release-please did not create v$VERSION"
+            exit 1
+          fi
+          status=$(gh api "repos/$GITHUB_REPOSITORY/compare/$SHA...$tagged" --jq .status)
+          if [ "$status" != "identical" ] && [ "$status" != "behind" ]; then
+            echo "::error::v$VERSION points at $tagged, which is not $SHA or one of its ancestors ($status)"
             exit 1
           fi
 
