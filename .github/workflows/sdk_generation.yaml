@@ -1,0 +1,160 @@
+name: Generate CLI
+# When gr4vy-go has a new release, bump it, regenerate the command surface from
+# its types and open a PR as gr4vy-sdk-generate. The release bot merges it if it
+# only touches generated files (gr4vy/sdk-release config/cli.json).
+#
+# Two jobs: `generate` runs Go with no secrets and hands its commit over as a
+# patch; `push` holds the App key and runs no Go.
+permissions:
+  contents: read
+"on":
+  workflow_dispatch: {}
+  schedule:
+    - cron: 0 1 * * *
+concurrency:
+  group: generate
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+      version: ${{ steps.bump.outputs.version }}
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      # gr4vy-go may need a newer Go than go.mod names. Let go fetch that
+      # toolchain and raise the go line, which the guard allows.
+      - name: Bump gr4vy-go
+        id: bump
+        run: |
+          echo "GOTOOLCHAIN=auto" >> "$GITHUB_ENV"
+          GOTOOLCHAIN=auto go get github.com/gr4vy/gr4vy-go@latest
+          GOTOOLCHAIN=auto go mod tidy
+          echo "version=$(GOTOOLCHAIN=auto go list -m -f '{{.Version}}' github.com/gr4vy/gr4vy-go)" >> "$GITHUB_OUTPUT"
+
+      - name: Regenerate commands and docs
+        run: |
+          go generate ./...
+          go test ./internal/cli -run TestCommandTreeSnapshot -update -count=1 || true
+
+      - name: Build and test
+        run: |
+          go build ./...
+          go list ./... | grep -v '/test\(/\|$\)' | xargs go test -count=1
+
+      - name: Commit
+        id: commit
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Already on gr4vy-go $VERSION; nothing to do."
+            exit 0
+          fi
+          git config user.name "gr4vy-sdk-generate[bot]"
+          git config user.email "350364636+gr4vy-sdk-generate[bot]@users.noreply.github.com"
+          git add -A
+          git commit -qm "feat: regenerate command surface from gr4vy-go $VERSION"
+          git format-patch -1 --stdout > "$RUNNER_TEMP/regen.patch"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Hand the commit to the push job
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: regen-patch
+          path: ${{ runner.temp }}/regen.patch
+          retention-days: 1
+
+  push:
+    needs: generate
+    if: needs.generate.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: sdk-generate
+    steps:
+      - name: Check the version
+        env:
+          VERSION: ${{ needs.generate.outputs.version }}
+        run: |
+          if ! [[ "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error::$VERSION is not a gr4vy-go release version"
+            exit 1
+          fi
+
+      - name: Check out the repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          name: regen-patch
+          path: ${{ runner.temp }}
+
+      - name: Apply the commit
+        run: |
+          git config user.name "gr4vy-sdk-generate[bot]"
+          git config user.email "350364636+gr4vy-sdk-generate[bot]@users.noreply.github.com"
+          git am --committer-date-is-author-date "$RUNNER_TEMP/regen.patch"
+
+      - name: Mint a gr4vy-sdk-generate token
+        id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SDK_GENERATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SDK_GENERATE_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - name: Push and open the PR
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          VERSION: ${{ needs.generate.outputs.version }}
+          BRANCH: cli-regen
+        run: |
+          remote="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git fetch -q "$remote" "$BRANCH" 2>/dev/null && git diff --quiet FETCH_HEAD HEAD; then
+            echo "$BRANCH already has this change."
+            exit 0
+          fi
+          git push -q --force "$remote" "HEAD:refs/heads/$BRANCH"
+          title="feat: regenerate command surface from gr4vy-go $VERSION"
+          body="Bumps \`github.com/gr4vy/gr4vy-go\` to $VERSION and regenerates the commands, docs and command-tree golden file from its types."
+          pr=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --state open --json number --jq '.[0].number')
+          if [ -n "$pr" ]; then
+            gh pr edit "$pr" --repo "$GITHUB_REPOSITORY" --title "$title" --body "$body"
+          else
+            gh pr create --repo "$GITHUB_REPOSITORY" --head "$BRANCH" --base main --title "$title" --body "$body"
+          fi
+
+  notify:
+    needs: [generate, push]
+    runs-on: ubuntu-latest
+    if: ${{ always() && contains(needs.*.result, 'failure') }}
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2
+        if: github.ref == 'refs/heads/main'
+        env:
+            SLACK_USERNAME: CLI
+            SLACK_TITLE: CLI
+            SLACK_WEBHOOK: ${{ secrets.SLACK_SDK_WEBHOOK_URL }}
+            SLACK_CHANNEL: sdk-updates
+            SLACK_MSG_AUTHOR: gr4vy
+            SLACK_ICON_EMOJI: ":gr4vy-sdk:"
+            SLACK_COLOR: "failure"
+            SLACK_MESSAGE_ON_FAILURE: "CLI generation failed"
+            SLACK_FOOTER: ""

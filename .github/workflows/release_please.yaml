@@ -1,0 +1,38 @@
+name: Release PR
+# Keeps release-please's release PR (version + CHANGELOG) up to date, as
+# gr4vy-sdk-generate. The release bot merges it when every change since the last
+# release came from a bot; otherwise a person merges it. Publish SDK creates the
+# tag and release.
+permissions:
+  contents: read
+"on":
+  push:
+    branches:
+      - main
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: sdk-generate
+    steps:
+      - name: Mint a gr4vy-sdk-generate token
+        id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SDK_GENERATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SDK_GENERATE_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ steps.app.outputs.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          skip-github-release: true

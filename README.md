@@ -168,10 +168,13 @@ choices (e.g. `token --scope`) complete their values.
 ## How it stays up to date
 
 The CLI generates one typed command per SDK operation directly from the `gr4vy-go` types —
-the resource tree, method signatures, and doc comments. When a new SDK is published (an
-`sdk_updated` dispatch, or a daily cron), a workflow bumps `gr4vy-go`, regenerates, and opens
-a draft PR — so the CLI self-maintains. There's no dependency on the OpenAPI spec: a typed
-CLI can only expose what the SDK ships.
+the resource tree, method signatures, and doc comments. Every night a workflow bumps `gr4vy-go`
+to its latest release, regenerates, and opens a PR as the `gr4vy-sdk-generate` App. The
+`gr4vy-sdk-release` App merges it when it only touches generated files, then merges
+release-please's release PR when every change since the last release came from a bot, and
+publishes the binaries, Homebrew formula and Scoop manifest. Anything a person changed waits
+for a person. The rules are in [gr4vy/sdk-release](https://github.com/gr4vy/sdk-release).
+There's no dependency on the OpenAPI spec: a typed CLI can only expose what the SDK ships.
 
 ## Development
 

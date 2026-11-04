@@ -1,0 +1,181 @@
+name: Publish SDK
+"on":
+  workflow_run: # zizmor: ignore[dangerous-triggers] never checks out or runs PR code
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  gate:
+    if: >-
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
+      (github.event.workflow_run.event == 'push' && github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+      contents: read
+      pull-requests: read
+    outputs:
+      publish: ${{ steps.gate.outputs.publish }}
+      mode: ${{ github.event_name == 'workflow_dispatch' && 'manual' || steps.gate.outputs.mode }}
+      version: ${{ steps.gate.outputs.version }}
+    steps:
+      - name: Require a green CI run on this commit
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+        run: |
+          passed=$(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/ci.yaml/runs?head_sha=$SHA&branch=main&event=push&status=success" --jq '.total_count')
+          if [ "$passed" = "0" ]; then
+            echo "::error::CI hasn't passed on main for $SHA, so it can't be released"
+            exit 1
+          fi
+
+      - id: gate
+        uses: gr4vy/sdk-release/publish-gate@384567db3a6674fce07e4f34c58f72e604b394da
+        with:
+          head-sha: ${{ github.event.workflow_run.head_sha || github.sha }}
+          bot-login: gr4vy-sdk-release[bot]
+          version-source: release-please
+
+  request-approval:
+    needs: gate
+    if: needs.gate.outputs.publish == 'true' && needs.gate.outputs.mode == 'manual'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2
+        env:
+            SLACK_USERNAME: CLI
+            SLACK_TITLE: CLI
+            SLACK_WEBHOOK: ${{ secrets.SLACK_SDK_WEBHOOK_URL }}
+            SLACK_CHANNEL: sdk-updates
+            SLACK_MSG_AUTHOR: gr4vy
+            SLACK_ICON_EMOJI: ":gr4vy-sdk:"
+            SLACK_COLOR: "#F3AB0E"
+            SLACK_MESSAGE: "v${{ needs.gate.outputs.version }} is waiting for release approval: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+            SLACK_FOOTER: ""
+
+  approve:
+    needs: gate
+    if: needs.gate.outputs.publish == 'true' && needs.gate.outputs.mode == 'manual'
+    runs-on: ubuntu-latest
+    environment: release-manual
+    steps:
+      - run: echo "Release approved."
+
+  # release-please tags the release PR's merge commit and creates the GitHub
+  # release; GoReleaser then builds that tag into it and updates the Homebrew tap
+  # and Scoop bucket, all as gr4vy-sdk-release. If a later step fails, use
+  # "Re-run failed jobs" on this run: once the tag exists the gate won't publish
+  # again, but a re-run reuses its decision, release-please skips the existing
+  # release and GoReleaser replaces any partial assets.
+  publish:
+    needs: [gate, approve]
+    if: >-
+      always() && needs.gate.outputs.publish == 'true' &&
+      (needs.gate.outputs.mode == 'auto' || needs.approve.result == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: sdk-release
+    steps:
+      - name: Mint a gr4vy-sdk-release token for the release
+        id: release-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SDK_RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SDK_RELEASE_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }}
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
+
+      - name: Tag and create the GitHub release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ steps.release-token.outputs.token }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          target-branch: main
+          skip-github-pull-request: true
+
+      # The tag is on the release PR's merge commit, which is the gated commit
+      # or, if something merged after it, an ancestor of it. The gate checked
+      # every merge up to the gated commit, so either way it covers the tag.
+      - name: Check the tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.gate.outputs.version }}
+          SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+        run: |
+          tagged=$(gh api "repos/$GITHUB_REPOSITORY/commits/v$VERSION" --jq .sha 2>/dev/null || true)
+          if [ -z "$tagged" ]; then
+            echo "::error::release-please did not create v$VERSION"
+            exit 1
+          fi
+          status=$(gh api "repos/$GITHUB_REPOSITORY/compare/$SHA...$tagged" --jq .status)
+          if [ "$status" != "identical" ] && [ "$status" != "behind" ]; then
+            echo "::error::v$VERSION points at $tagged, which is not $SHA or one of its ancestors ($status)"
+            exit 1
+          fi
+
+      - name: Check out the release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: v${{ needs.gate.outputs.version }}
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+          cache: false
+
+      - name: Mint a gr4vy-sdk-release token for GoReleaser
+        id: publish-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.SDK_RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.SDK_RELEASE_APP_PRIVATE_KEY }}
+          repositories: ${{ github.event.repository.name }},homebrew-tap,gr4vy-scoop-bucket
+          permission-contents: write
+
+      - uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
+        with:
+          version: v2.18.3
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ steps.publish-token.outputs.token }}
+
+  notify:
+    needs: [gate, publish]
+    runs-on: ubuntu-latest
+    if: always() && (needs.gate.result == 'failure' || needs.publish.result != 'skipped')
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@e31e87e03dd19038e411e38ae27cbad084a90661 # v2
+        env:
+            SLACK_USERNAME: CLI
+            SLACK_TITLE: CLI
+            SLACK_WEBHOOK: ${{ secrets.SLACK_SDK_WEBHOOK_URL }}
+            SLACK_CHANNEL: sdk-updates
+            SLACK_MSG_AUTHOR: gr4vy
+            SLACK_ICON_EMOJI: ":gr4vy-sdk:"
+            SLACK_COLOR: "${{ contains(needs.*.result, 'failure') && 'failure' || 'success' }}"
+            SLACK_MESSAGE_ON_SUCCESS: "CLI publishing succeeded - `${{ github.event.workflow_run.head_commit.message || 'manual dispatch' }}`"
+            SLACK_MESSAGE_ON_FAILURE: "CLI publishing failed - `${{ github.event.workflow_run.head_commit.message || 'manual dispatch' }}`"
+            SLACK_FOOTER: ""
