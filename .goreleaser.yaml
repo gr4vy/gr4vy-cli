@@ -37,29 +37,34 @@ changelog:
   use: github
   sort: asc
 
-# Homebrew tap (requires the gr4vy/homebrew-tap repo and HOMEBREW_TAP_TOKEN).
+# Homebrew tap. Publish SDK runs GoReleaser with a gr4vy-sdk-release token that
+# can write to this repo and the Scoop bucket.
 brews:
   - name: gr4vy
     repository:
       owner: gr4vy
       name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+      token: "{{ .Env.GITHUB_TOKEN }}"
     homepage: "https://github.com/gr4vy/gr4vy-cli"
     description: "The Gr4vy command-line interface"
     license: "MIT"
     test: |
       system "#{bin}/gr4vy version"
 
-# Scoop bucket for Windows (optional; requires gr4vy/gr4vy-scoop-bucket).
+# Scoop bucket for Windows.
 scoops:
   - repository:
       owner: gr4vy
       name: gr4vy-scoop-bucket
-      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+      token: "{{ .Env.GITHUB_TOKEN }}"
     homepage: "https://github.com/gr4vy/gr4vy-cli"
     description: "The Gr4vy command-line interface"
     license: MIT
 
+# release-please creates the release first; GoReleaser keeps its notes and adds
+# the binaries.
 release:
   draft: false
   prerelease: auto
+  mode: keep-existing
+  replace_existing_artifacts: true
