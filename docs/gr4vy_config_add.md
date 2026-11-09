@@ -14,29 +14,29 @@ gr4vy config add <name> [flags]
       --default-scope strings        default token scope (repeatable)
       --email string                 login email (for auth-method=login)
       --environment string           sandbox or production
-  -h, --help                         help for add
+  -h, --help[=true|false]            help for add
       --id string                    Gr4vy instance id
       --key-env string               name of an env var holding the PEM private key
       --key-file string              path to a PEM private key to import into the secret store
       --key-path string              reference a PEM file in place (not copied into the store)
-      --key-stdin                    read the PEM private key from stdin
+      --key-stdin[=true|false]       read the PEM private key from stdin
       --merchant-account-id string   default merchant account id
-      --no-input                     never prompt; fail if a required field is missing
-      --set-active                   make this the active profile
+      --no-input[=true|false]        never prompt; fail if a required field is missing
+      --set-active[=true|false]      make this the active profile
       --token-ttl string             default token lifetime, e.g. 1h
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact            compact single-line JSON output
-      --config string      path to the config file (env: GR4VY_CONFIG)
-      --debug              print debug information to stderr
-  -o, --output string      output format: json|yaml|table (env: GR4VY_OUTPUT)
-      --profile string     configuration profile to use (env: GR4VY_PROFILE)
-      --server string      server environment: sandbox|production (env: GR4VY_SERVER)
-      --timeout duration   per-request timeout, e.g. 30s
-      --token string       pre-generated bearer token; skips JWT signing (env: GR4VY_TOKEN)
+      --compact[=true|false]   compact single-line JSON output
+      --config string          path to the config file (env: GR4VY_CONFIG)
+      --debug[=true|false]     print debug information to stderr
+  -o, --output string          output format: json|yaml|table (env: GR4VY_OUTPUT)
+      --profile string         configuration profile to use (env: GR4VY_PROFILE)
+      --server string          server environment: sandbox|production (env: GR4VY_SERVER)
+      --timeout duration       per-request timeout, e.g. 30s
+      --token string           pre-generated bearer token; skips JWT signing (env: GR4VY_TOKEN)
 ```
 
 ### SEE ALSO

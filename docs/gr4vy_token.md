@@ -13,18 +13,18 @@ gr4vy token [flags]
 ### Options
 
 ```
-  -e, --expires-in string   token lifetime, e.g. 1h, 30m, 10d, 3600 (default 1h)
-  -h, --help                help for token
-      --list-scopes         list all valid scopes and exit
-  -s, --scope strings       scope to include (repeatable); see --list-scopes
+  -e, --expires-in string          token lifetime, e.g. 1h, 30m, 10d, 3600 (default 1h)
+  -h, --help[=true|false]          help for token
+      --list-scopes[=true|false]   list all valid scopes and exit
+  -s, --scope strings              scope to include (repeatable); see --list-scopes
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
+      --debug[=true|false]           print debug information to stderr
       --id string                    Gr4vy instance id used for the API host (env: GR4VY_ID)
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)
