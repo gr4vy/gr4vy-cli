@@ -26,20 +26,20 @@ gr4vy transactions list [flags]
       --country strings                           country parameter
       --currency strings                          currency parameter
       --cursor string                             pagination cursor
-      --disputed                                  disputed parameter
+      --disputed[=true|false]                     disputed parameter
       --error-code strings                        error-code parameter
       --external-identifier string                external-identifier parameter
       --gift-card-id string                       gift-card-id parameter
       --gift-card-last4 string                    gift-card-last4 parameter
-      --has-gift-card-redemptions                 has-gift-card-redemptions parameter
-      --has-refunds                               has-refunds parameter
-      --has-settlements                           has-settlements parameter
-  -h, --help                                      help for list
+      --has-gift-card-redemptions[=true|false]    has-gift-card-redemptions parameter
+      --has-refunds[=true|false]                  has-refunds parameter
+      --has-settlements[=true|false]              has-settlements parameter
+  -h, --help[=true|false]                         help for list
       --id string                                 id parameter
       --ip-address string                         ip-address parameter
-      --is-subsequent-payment                     is-subsequent-payment parameter
+      --is-subsequent-payment[=true|false]        is-subsequent-payment parameter
       --limit int                                 maximum number of items to return
-      --merchant-initiated                        merchant-initiated parameter
+      --merchant-initiated[=true|false]           merchant-initiated parameter
       --metadata strings                          metadata parameter
       --payment-link-id string                    payment-link-id parameter
       --payment-method-bin string                 payment-method-bin parameter
@@ -50,19 +50,19 @@ gr4vy transactions list [flags]
       --payment-method-scheme strings             payment-method-scheme parameter
       --payment-service-id strings                payment-service-id parameter
       --payment-service-transaction-id string     payment-service-transaction-id parameter
-      --pending-review                            pending-review parameter
+      --pending-review[=true|false]               pending-review parameter
       --reauthorized-from-transaction-id string   reauthorized-from-transaction-id parameter
       --reconciliation-id string                  reconciliation-id parameter
       --search string                             free-text search filter
-      --used-3ds                                  used-3ds parameter
+      --used-3ds[=true|false]                     used-3ds parameter
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
+      --debug[=true|false]           print debug information to stderr
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)
       --profile string               configuration profile to use (env: GR4VY_PROFILE)

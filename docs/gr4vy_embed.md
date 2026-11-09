@@ -13,18 +13,18 @@ gr4vy embed <amount> <currency> [key=value ...] [flags]
 ### Options
 
 ```
-      --checkout-session    create a checkout session and pin its id into the token
-  -h, --help                help for embed
-      --mid string          merchant account id for the checkout session (with --checkout-session)
-      --param stringArray   extra embed parameter as key=value (repeatable)
+      --checkout-session[=true|false]   create a checkout session and pin its id into the token
+  -h, --help[=true|false]               help for embed
+      --mid string                      merchant account id for the checkout session (with --checkout-session)
+      --param stringArray               extra embed parameter as key=value (repeatable)
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
+      --debug[=true|false]           print debug information to stderr
       --id string                    Gr4vy instance id used for the API host (env: GR4VY_ID)
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)
