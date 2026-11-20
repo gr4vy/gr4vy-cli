@@ -9,10 +9,10 @@ gr4vy is the command-line interface for the Gr4vy payment orchestration platform
 ### Options
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
-  -h, --help                         help for gr4vy
+      --debug[=true|false]           print debug information to stderr
+  -h, --help[=true|false]            help for gr4vy
       --id string                    Gr4vy instance id used for the API host (env: GR4VY_ID)
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)

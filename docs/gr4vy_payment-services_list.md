@@ -15,20 +15,20 @@ gr4vy payment-services list [flags]
 ### Options
 
 ```
-      --cursor string    pagination cursor
-      --deleted          deleted parameter
-  -h, --help             help for list
-      --include-fields   include-fields parameter
-      --limit int        maximum number of items to return
-      --method string    method parameter
+      --cursor string                 pagination cursor
+      --deleted[=true|false]          deleted parameter
+  -h, --help[=true|false]             help for list
+      --include-fields[=true|false]   include-fields parameter
+      --limit int                     maximum number of items to return
+      --method string                 method parameter
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
+      --debug[=true|false]           print debug information to stderr
       --id string                    Gr4vy instance id used for the API host (env: GR4VY_ID)
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)
