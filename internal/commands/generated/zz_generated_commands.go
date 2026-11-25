@@ -1168,6 +1168,21 @@ func init() {
 	})
 	commands.Register(&commands.Operation{
 		Group:      "payment-methods",
+		Name:       "detokenize",
+		Short:      "Detokenize a payment method",
+		Long:       "Detokenize a payment method\n\nRetrieve the card number and expiration date of a stored card, encrypted to the merchant account's public key. Requests are rate limited.",
+		PathParams: []string{"payment-method-id"},
+		Run: func(ctx context.Context, c *gr4vygo.Gr4vy, in commands.Inputs) (any, error) {
+
+			resp, err := c.PaymentMethods.Detokenize(ctx, in.Args[0], commands.OptString(in.Flags, "merchant-account-id"))
+			if err != nil {
+				return nil, err
+			}
+			return resp, nil
+		},
+	})
+	commands.Register(&commands.Operation{
+		Group:      "payment-methods",
 		Name:       "get",
 		Short:      "Get payment method",
 		Long:       "Get payment method\n\nRetrieve a payment method.",
