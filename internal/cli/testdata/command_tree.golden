@@ -69,6 +69,7 @@ gr4vy payment-links get
 gr4vy payment-links list  --amount-eq --amount-gte --amount-lte --buyer-search --currency --cursor --limit
 gr4vy payment-methods create  --data
 gr4vy payment-methods delete
+gr4vy payment-methods detokenize
 gr4vy payment-methods get
 gr4vy payment-methods list  --buyer-external-identifier --buyer-id --cursor --external-identifier --limit
 gr4vy payment-methods network-tokens create  --data

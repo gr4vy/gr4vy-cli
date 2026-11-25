@@ -28,6 +28,7 @@ Manage payment-methods
 * [gr4vy](gr4vy.md)	 - The Gr4vy CLI
 * [gr4vy payment-methods create](gr4vy_payment-methods_create.md)	 - Create payment method
 * [gr4vy payment-methods delete](gr4vy_payment-methods_delete.md)	 - Delete payment method
+* [gr4vy payment-methods detokenize](gr4vy_payment-methods_detokenize.md)	 - Detokenize a payment method
 * [gr4vy payment-methods get](gr4vy_payment-methods_get.md)	 - Get payment method
 * [gr4vy payment-methods list](gr4vy_payment-methods_list.md)	 - List all payment methods
 * [gr4vy payment-methods network-tokens](gr4vy_payment-methods_network-tokens.md)	 - Manage payment-methods network-tokens
