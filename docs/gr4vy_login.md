@@ -13,17 +13,17 @@ gr4vy login [flags]
 ### Options
 
 ```
-      --email string     login email
-  -h, --help             help for login
-      --password-stdin   read the password from stdin
+      --email string                  login email
+  -h, --help[=true|false]             help for login
+      --password-stdin[=true|false]   read the password from stdin
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --compact                      compact single-line JSON output
+      --compact[=true|false]         compact single-line JSON output
       --config string                path to the config file (env: GR4VY_CONFIG)
-      --debug                        print debug information to stderr
+      --debug[=true|false]           print debug information to stderr
       --id string                    Gr4vy instance id used for the API host (env: GR4VY_ID)
       --merchant-account-id string   merchant account id (env: GR4VY_MERCHANT_ACCOUNT_ID)
   -o, --output string                output format: json|yaml|table (env: GR4VY_OUTPUT)
