@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.62.1](https://github.com/gr4vy/gr4vy-cli/compare/v1.62.0...v1.62.1) (2026-11-27)
+
+
+### Dependencies
+
+* bump pflag, x/term and x/tools, and regenerate docs ([#226](https://github.com/gr4vy/gr4vy-cli/issues/226)) ([9965cc3](https://github.com/gr4vy/gr4vy-cli/commit/9965cc3eac8f28ec4a63661ddc3d3136934a5fa3))
+
 ## [1.62.0](https://github.com/gr4vy/gr4vy-cli/compare/v1.61.0...v1.62.0) (2026-11-27)
 
 
